@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='UTF-8' />
+        <title>Education Portfolio - Add Activiy</title>
+    </head>
+    <body>
+        <% @account.all do |row| %>
+        
+        <a href="/home/">Home</a>
+        <a href="/accounts/<%= row[:account_id] %>">Account</a>
+        <a href="/dashboard/<%= row[:account_id] %>">Dashboard</a>
+        <a href="/activities/<%= row[:account_id] %>">Activities</a>
+        <a href="/books/<%= row[:account_id] %>">Books</a>
+        <a href="/subjects/<%= row[:account_id] %>">Subjects</a>
+        
+        <h1>Add New Activity</h1>
+        
+        <form method="post" action="/activities/create/<%= row[:account_id] %>">
+            <table>
+                <tr>
+                    <td><label for="activity_date">Date:</label></td>
+                    <td><input type="date" name="activity_date"></td>
+                </tr>
+                <tr>
+                    <td><label for="title">Title:</label></td>
+                    <td><input type="text" name="title"></td>
+                </tr>
+                <tr>
+                    <td><label for="student_id[]">Student(s):</label></td>
+                    <% @students.each do |row| %>
+                    <td><input type="checkbox" name="student_id[]" value="<%= row[:student_id] %>"><%= row[:stud_first_name] %></td>
+                    <% end %>
+                </tr>
+                <tr>
+                    <td><label for="duration">Duration:</label></td>
+                    <td><input type="number" name="duration">minutes</td>
+                </tr>
+                <!--'Subjects'  label plus first three subject options-->
+                <tr>
+                    <td><label for="subject_id[]">Subject(s):</label></td>
+                    <% subarray = @subjects.to_a %>
+                    <% subarray[0..2].each do |row| %>
+                    <td><input type="checkbox" name="subject_id[]" value="<%= row[:subject_id] %>"><%= row[:subject_name] %></td>
+                    <% end %>
+                </tr>
+                <!--All remaining subject options organized three/row-->
+                <% i = 3 %>
+                <% sublength = subarray.length %>
+                <% while i < sublength do %>
+                <tr>
+                    <td></td>
+                    <% subarray[i..(i + 2)].each do |row| %>
+                    <td><input type="checkbox" name="subject_id[]" value="<%= row[:subject_id] %>"><%= row[:subject_name] %></td>
+                    <% end %>
+                    <% i += 3 %>
+                </tr>
+                <% end %><!--End 'while' loop for listing of subjects-->
+                <tr>
+                    <td><label for="description">Description:</label></td>
+                    <td><input type="text" name="description"></td>
+                </tr>
+                <tr>
+                    <td><input type="submit"></td>
+                </tr>
+            </table>
+        </form>
+        
+        <% end %>
+        
+    </body>
+</html>

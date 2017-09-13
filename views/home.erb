@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='UTF-8' />
+        <title>Home Page</title>
+    </head>
+    
+    <body>
+        <h1>WELCOME!</h1>
+        <h1>Start Creating Your Home-Education Portfolio Today</h1>
+        <h2>Select Your Account</h2>
+        <ul><% @accounts.each do |row| %>
+            <li>
+                <a href="/accounts/<%= row[:account_id] %>"><%= row[:acct_first_name] %> <%= row[:acct_last_name] %></a>
+            </li>
+            <% end %>
+        </ul>
+        
+        <button type="button">Login</button><br>
+        <button type="button"><a href="/accounts/new">Create New Account</a></button>
+        <!--<h3><a href="/accounts/new">Create New Account</a></h3> -->
+    </body>
+</html>

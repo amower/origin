@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='UTF-8' />
+        <title>Student Portfolio</title>
+    </head>
+    
+    <body>
+        <% @account.all do |row| %>
+        
+        <a href="/home/">Home</a>
+        <a href="/accounts/<%= row[:account_id] %>">Account</a>
+        <a href="/dashboard/<%= row[:account_id] %>">Dashboard</a>
+        <a href="/activities/<%= row[:account_id] %>">Activities</a>
+        <a href="/books/<%= row[:account_id] %>">Books</a>
+        <a href="/subjects/<%= row[:account_id] %>">Subjects</a>
+        
+        <% end %>
+        
+        <% @student.each do |row| %> 
+            <h1><%= row[:stud_first_name] %>'s Education Portfolio</h1>
+            
+            <!--List of subjects with count of related activities for the current student -->
+            <!--So far, list and count are correct, but have not connected to page that shows a list of just the appropriate student-related activities-->
+            <h2><strong>View Activities by Subject:</strong></h2>
+            
+            <!--<p>Subjects:</p>--> 
+            <% @subjects.each do |row| %>
+                <a href="/portfolio/<%= row[:account_id] %>/<% @student.all do |row| %><%= row[:student_id] %><% end %>/<%= row[:subject_id] %>"><%= row[:subject_name] %> (<%= @activities.right_outer_join(:activities_subjects, :activity_id => :activity_id).where(Sequel[:activities_subjects][:subject_id] => row[:subject_id]).count %>)</a><br>
+            <% end %>
+            
+            <h2><strong><%= row[:stud_first_name] %>'s Activities</strong></h2>
+            
+            <a href="/activities/new/<%= row[:account_id] %>">Add New Activity</a>
+            
+            <ol>
+            <% @activities.each do |row| %>
+                <li>
+                    <a href="/activities/<%= row[:account_id] %>/<%= row[:activity_id] %>"><%= row[:activity_date] %>: <%= row[:title] %>, 
+                        <% ActivitiesSubject.join(:subjects, :subject_id => :subject_id).where(:activity_id => row[:activity_id]).each do |row| %>
+                            <%= row[:subject_name] %>
+                        <% end %>
+                        <%= row[:duration] %> minutes</a>
+                </li>
+            <% end %>
+            </ol>
+          
+            <h2><strong><%= row[:stud_first_name] %>'s Books</strong></h2>
+            
+            <a href="/books/new/<%= row[:account_id] %>">Add New Book</a>
+            
+            <ol>
+            <% @student_books.each do |row| %>
+                <li>
+                    <a href="/books/<%= row[:account_id] %>/<%= row[:book_id] %>"><%= row[:title] %></a> by <a href="/books/author/<%= row[:account_id] %>/<%= row[:student_id] %>/<%= row[:author] %>"><%= row[:author] %></a>, Finished <%= row[:finish_date] %>
+                </li>
+            <% end %>
+            </ol>
+            
+        <% end %>
+        
+    </body>
+</html>

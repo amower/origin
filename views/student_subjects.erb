@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='UTF-8' />
+        <title>Student Subject</title>
+    </head>
+    
+    <body>
+        <% @student.each do |row| %>
+        
+        <a href="/home/">Home</a>
+        <a href="/accounts/<%= row[:account_id] %>">Account</a>
+        <a href="/dashboard/<%= row[:account_id] %>">Dashboard</a>
+        <a href="/activities/<%= row[:account_id] %>">Activities</a>
+        <a href="/books/<%= row[:account_id] %>">Books</a>
+        <a href="/subjects/<%= row[:account_id] %>">Subjects</a>
+        
+        <h1><%= row[:stud_first_name] %>'s <% @subject.all do |row| %><%= row[:subject_name] %><% end %> Activities</h1>
+        
+        <ol><% @activity_subjects.join(:activities_students, :activity_id => :activity_id).where(student_id: row[:student_id]).each do |row| %>
+            <li>
+                <a href="/activities/<%= row[:account_id] %>/<%= row[:activity_id] %>"><%= row[:activity_date] %>: <%= row[:title] %>, 
+                    <% ActivitiesSubject.join(:subjects, :subject_id => :subject_id).where(:activity_id => row[:activity_id]).each do |row| %>
+                        <%= row[:subject_name] %>,
+                    <% end %>
+                    <%= row[:duration] %> minutes</a>
+            </li>
+            <% end %>
+        </ol><br>
+        
+        <!-- list books by student/subject -->  
+        <% end %>
+        
+    </body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='UTF-8' />
+        <title>Add Account</title>
+    </head>
+    <body>
+        <h1>Add Account</h1>
+        
+        <form method="post" action="/accounts/create">
+            <table>
+                <tr>
+                    <td><label for="acct_first_name">First Name:</label></td>
+                    <td><input type="text" name="acct_first_name"></td>
+                </tr>
+                <tr>
+                    <td><label for="acct_last_name">Last Name:</label></td>
+                    <td><input type="text" name="acct_last_name"></td>
+                </tr>
+                <tr>
+                    <td><label for="zipcode">Zipcode:</label></td>
+                    <td><input type="text" name="zipcode"></td>
+                </tr>
+                <tr>
+                    <td><label for="email">Email:</label></td>
+                    <td><input type="text" name="email"></td>
+                </tr>
+                <tr>
+                    <td><label for="password">Password:</label></td>
+                    <td><input type="password" name="password" maxlength="10"></td>
+                </tr>
+                <tr>
+                    <td><label for="join_date">Date:</label></td>
+                    <td><input type="date" name="join_date"></td>
+                </tr>
+                <tr>
+                    <td><input type="submit"></td>
+                </tr>
+            </table>
+        </form>
+        
+        <a href="/home/">Return Home</a>
+        
+    </body>
+</html>

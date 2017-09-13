@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='UTF-8' />
+        <title>Book Title</title>
+    </head>
+    <body>
+        <% @book.each do |row| %>
+        
+        <a href="/home/">Home</a>
+        <a href="/accounts/<%= row[:account_id] %>">Account</a>
+        <a href="/dashboard/<%= row[:account_id] %>">Dashboard</a>
+        <a href="/activities/<%= row[:account_id] %>">Activities</a>
+        <a href="/books/<%= row[:account_id] %>">Books</a>
+        <a href="/subjects/<%= row[:account_id] %>">Subjects</a>
+        
+        <h1><%= row[:title] %></h1>
+        
+        <table>
+            <tr>
+                <td><strong>Author:</strong></td>
+                <td><%= row[:author] %></td>
+            </tr>
+            <tr>
+                <td><strong>Rating:</strong></td>
+                <td><%= row[:rating] %> STARS</td>
+            </tr>
+            <tr>
+                <td><strong>Genre:</strong></td>
+                <td><% if(row[:fiction]) %>
+                        <%= "Fiction" %>
+                    <% else %>
+                        <%= "Nonfiction" %>
+                    <% end %></td>
+            </tr>
+            <tr>
+                <td><strong>Student(s):</strong></td>
+                <% @book_students.each do |row| %>
+                <td><%= row[:stud_first_name] %></td>
+                <% end %>
+            </tr>
+            <tr>
+                <td><strong>Subject(s):</strong></td>
+                <% @book_subjects.each do |row| %>
+                <td><%= row[:subject_name] %></td>
+                <% end %>
+            </tr>
+            <tr>
+                <td><strong>Date Finished:</strong></td>
+                <td><%= row[:finish_date] %></td>
+            </tr>
+        </table>
+        <% end %>
+        
+    </body>
+</html>
