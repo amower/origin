@@ -8,6 +8,9 @@ DB = Sequel.connect('mysql://portfolio_god:password@localhost/hs_portfolio')
 #This makes all Sequel::Model subclasses support many_through_many associations
 #Sequel::Model.plugin :many_through_many
 
+
+
+#Note: When a model class is created, it parses the schema in the table from the database, and automatically sets up accessor methods for all of the columns in the table. Sequel model classes assume that the table name is an underscored plural of the class name
 class Account < Sequel::Model #dataset for DB[:accounts]
     attr_accessor :account_id, :acct_first_name, :acct_last_name, :zipcode, :email, :password, :join_date, :account_hash
     
