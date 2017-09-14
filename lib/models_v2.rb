@@ -12,7 +12,9 @@ DB = Sequel.connect('mysql://portfolio_god:password@localhost/hs_portfolio')
 
 #Note: When a model class is created, it parses the schema in the table from the database, and automatically sets up accessor methods for all of the columns in the table. Sequel model classes assume that the table name is an underscored plural of the class name
 class Account < Sequel::Model #dataset for DB[:accounts]
-    attr_accessor :account_id, :acct_first_name, :acct_last_name, :zipcode, :email, :password, :join_date, :account_hash
+    #attr_accessor :account_id, :acct_first_name, :acct_last_name, :zipcode, :email, :password, :join_date, :account_hash
+    
+    
     
     one_to_many :students
     one_to_many :activities
