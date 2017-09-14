@@ -1,5 +1,5 @@
 require 'sinatra' #load the gem
-require 'models' #load the ruby file
+require 'models_v2' #load the ruby file
 require 'erb'
 #require 'sequel' #load sequel
 require 'time' #load gem?

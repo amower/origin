@@ -1,6 +1,6 @@
-require 'sequel'
+#require 'sequel'
 
-DB = Sequel.connect('mysql://portfolio_god:password@localhost/hs_portfolio')
+#DB = Sequel.connect('mysql://portfolio_god:password@localhost/hs_portfolio')
 
 #Another way to connect to the database
 #DB = Sequel.connect(:adapter=>'mysql', :host=>'localhost', :database=>'hs_portfolio', :user=>'portfolio_god', :password=>'password')
