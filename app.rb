@@ -13,14 +13,14 @@ require 'time' #load gem?
 #Sequel::Model.plugin :many_through_many
 
 #accounts = DB[:accounts]
-activities = DB[:activities]
-activities_students = DB[:activities_students]
-activities_subjects = DB[:activities_subjects].inner_join(:subjects, :subject_id => :subject_id)
-books = DB[:books]
-books_students = DB[:books_students]
-books_subjects = DB[:books_subjects]
-students = DB[:students]
-subjects = DB[:subjects]
+#activities = DB[:activities]
+#activities_students = DB[:activities_students]
+#activities_subjects = DB[:activities_subjects].inner_join(:subjects, :subject_id => :subject_id)
+#books = DB[:books]
+#books_students = DB[:books_students]
+#books_subjects = DB[:books_subjects]
+#students = DB[:students]
+#subjects = DB[:subjects]
 
 ################################################################# THE REAL DEAL
 #Homepage currently with just a list of account holders
