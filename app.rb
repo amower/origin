@@ -12,6 +12,7 @@ require 'time' #load gem?
 #subjects = ['Foreign Language', 'Health & Fitness', 'Home Economics', 'Language Arts', 'Mathematics', 'Performing & Visual Arts', 'Social Studies', 'Science', 'Technology']
 #Sequel::Model.plugin :many_through_many
 
+#Dataset Creators
 #accounts = DB[:accounts]
 #activities = DB[:activities]
 #activities_students = DB[:activities_students]
@@ -37,10 +38,11 @@ end
 #Insert data into accounts table
 post('/accounts/create') do
    @account = Account.new
-   #Define variable values from the 'new student' form
-   acct_first_name = params['acct_first_name']
-   acct_last_name = params['acct_last_name']
-   zipcode = params['zipcode']
+   
+   #Define variable values from the 'new account' form
+   acct_first_name = params[:acct_first_name]
+   acct_last_name = params[:acct_last_name]
+   zipcode = params[:zipcode]
    email = params[:email]
    password = params[:password]
    join_date = params[:join_date]
