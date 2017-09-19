@@ -5,53 +5,54 @@
         <title>Student Name</title>
     </head>
     <body>
-        <% @account.all do |row| %>
+        <% @account.all do |a| %>
         
         <a href="/home/">Home</a>
-        <a href="/accounts/<%= row[:account_id] %>">Account</a>
-        <a href="/dashboard/<%= row[:account_id] %>">Dashboard</a>
-        <a href="/activities/<%= row[:account_id] %>">Activities</a>
-        <a href="/books/<%= row[:account_id] %>">Books</a>
-        <a href="/subjects/<%= row[:account_id] %>">Subjects</a>
+        <a href="/accounts/<%= a.account_id %>">Account</a>
+        <a href="/dashboard/<%= a.account_id %>">Dashboard</a>
+        <a href="/activities/<%= a.account_id %>">Activities</a>
+        <a href="/books/<%= a.account_id %>">Books</a>
+        <a href="/subjects/<%= a.account_id %>">Subjects</a>
         
-        <h1><%= row[:acct_first_name] %> <%= row[:acct_last_name] %> Account Info</h1>
+        <h1><%= a.acct_first_name %> <%= a.acct_last_name %> Account Info</h1>
         
         <table>
             <tr>
                 <td><strong>Email:</strong></td>
-                <td><%= row[:email] %></td>
+                <td><%= a.email %></td>
             </tr>
             <tr>
                 <td><strong>Zipcode:</strong></td>
-                <td><%= row[:zipcode] %></td>
+                <td><%= a.zipcode %></td>
             </tr>
             <tr>
                 <td><strong>Join Date:</strong></td>
-                <td><%= row[:join_date].month %>-<%= row[:join_date].day %>-<%= row[:join_date].year %></td>
+                <td><%= a.join_date.month %>-<%= a.join_date.day %>-<%= a.join_date.year %></td>
             </tr>
             <tr>
                 <td><strong>Password:</strong></td>
-                <td><%= row[:password] %></td>
+                <td><%= a.password %></td>
             </tr>
         </table>
         
-        <a href="/accounts/update/<%= row[:account_id] %>">Edit Account</a><br>
-        <a href="/accounts/change/<%= row[:account_id] %>">Delete Account</a>
+        <a href="/accounts/update/<%= a.account_id %>">Edit Account</a><br>
+        <a href="/accounts/change/<%= a.account_id %>">Delete Account</a>
         
         <h3>Student(s) Enrolled:</h3>
         
-        <ol><% @students.each do |row| %>
+        <ol>
+        <% @students.each do |s| %>
             <li>
-                <p><a href="/students/<%= row[:account_id] %>/<%= row[:student_id] %>"><%= row[:stud_first_name] %></a> (<a href="/students/update/<%= row[:student_id] %>">Edit</a>) (<a href="/students/change/<%= row[:account_id] %>/<%= row[:student_id] %>">Delete</a>)
+                <p><a href="/students/<%= s.account_id %>/<%= s.student_id %>"><%= s.stud_first_name %></a> (<a href="/students/update/<%= s.student_id %>">Edit</a>) (<a href="/students/change/<%= s.account_id %>/<%= s.student_id %>">Delete</a>)
                 </p>
             </li>
-            <% end %>
+        <% end %>
         </ol>
         
-        <a href="/students/new/<%= row[:account_id] %>">Add New Student</a><br>
+        <a href="/students/new/<%= a.account_id %>">Add New Student</a><br>
         
         <h2>
-            <a href="/dashboard/<%= row[:account_id] %>">Go to My Dashboard</a>
+            <a href="/dashboard/<%= a.account_id %>">Go to My Dashboard</a>
         </h2>
         
         <% end %>
