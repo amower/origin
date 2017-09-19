@@ -35,28 +35,17 @@ get('/accounts/new') do
    erb :new_account
 end
 
-#Insert data into accounts table
+#Post new_account form data into accounts table & insert basic subjects
 post('/accounts/create') do
-   @account = Account.new
-   
-   #Define variable values from the 'new account' form
-   acct_first_name = params[:acct_first_name]
-   acct_last_name = params[:acct_last_name]
-   zipcode = params[:zipcode]
-   email = params[:email]
-   password = params[:password]
-   join_date = params[:join_date]
-   account_hash = params[:acct_last_name].downcase
-   
-   #Insert values into the db
+   #Insert new_account form values into accounts table as new object
    Account.insert(
-      :acct_first_name => acct_first_name, 
-      :acct_last_name => acct_last_name, 
-      :zipcode => zipcode,
-      :email => email,
-      :password => password,
-      :join_date => join_date,
-      :account_hash => account_hash)
+      :acct_first_name => params[:acct_first_name],
+      :acct_last_name => params[:acct_last_name],
+      :zipcode => params[:zipcode],
+      :email => params[:email],
+      :password => params[:password],
+      :join_date => params[:join_date],
+      :account_hash => params[:acct_last_name].downcase)
    
    #Snag newly-created auto-incremented account_id   
    last_insert_id = Account.max(:account_id)
@@ -64,7 +53,7 @@ post('/accounts/create') do
    #Set static subjects to a variable
    static_subjects = ['Foreign Language', 'Health & Fitness', 'Home Economics', 'Language Arts', 'Mathematics', 'Performing & Visual Arts', 'Science', 'Social Studies', 'Technology']
    
-   #Insert static subjects automatically when new account is created
+   #Insert basic subjects automatically when new account is created
    static_subjects.each do |name|
       Subject.insert(
          :account_id => last_insert_id,
