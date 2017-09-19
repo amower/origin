@@ -14,10 +14,10 @@ DB = Sequel.connect('mysql://portfolio_god:password@localhost/hs_portfolio')
 class Account < Sequel::Model #dataset for DB[:accounts]
     #attr_accessor :account_id, :acct_first_name, :acct_last_name, :zipcode, :email, :password, :join_date, :account_hash
     
-    one_to_many :students
-    one_to_many :activities
-    one_to_many :books
-    one_to_many :subjects
+#    one_to_many :students
+#    one_to_many :activities
+#    one_to_many :books
+#    one_to_many :subjects
 end
 
 class Activity < Sequel::Model #dataset for DB[:activities]
