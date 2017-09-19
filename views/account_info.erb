@@ -8,12 +8,14 @@
         <% @account.all do |a| %>
         
         <a href="/home/">Home</a>
-        <a href="/accounts/<%= a.account_id %>">Account</a>
-        <a href="/dashboard/<%= a.account_id %>">Dashboard</a>
-        <a href="/activities/<%= a.account_id %>">Activities</a>
-        <a href="/books/<%= a.account_id %>">Books</a>
-        <a href="/subjects/<%= a.account_id %>">Subjects</a>
+        <!--Sequel model pk method retrieves record's primary key value (in this case the account_id)-->
+        <a href="/accounts/<%= a.pk %>">Account</a>
+        <a href="/dashboard/<%= a.pk %>">Dashboard</a>
+        <a href="/activities/<%= a.pk %>">Activities</a>
+        <a href="/books/<%= a.pk %>">Books</a>
+        <a href="/subjects/<%= a.pk %>">Subjects</a>
         
+        <!--You can read record values as object attributes if attribute names are valid columns in the dataset (i.e. row.account_id). If attribute names are not valid columns, you can access values with [] (i.e. row[:account_id]).-->
         <h1><%= a.acct_first_name %> <%= a.acct_last_name %> Account Info</h1>
         
         <table>
@@ -35,24 +37,24 @@
             </tr>
         </table>
         
-        <a href="/accounts/update/<%= a.account_id %>">Edit Account</a><br>
-        <a href="/accounts/change/<%= a.account_id %>">Delete Account</a>
+        <a href="/accounts/update/<%= a.pk %>">Edit Account</a><br>
+        <a href="/accounts/change/<%= a.pk %>">Delete Account</a>
         
         <h3>Student(s) Enrolled:</h3>
         
         <ol>
         <% @students.each do |s| %>
             <li>
-                <p><a href="/students/<%= s.account_id %>/<%= s.student_id %>"><%= s.stud_first_name %></a> (<a href="/students/update/<%= s.student_id %>">Edit</a>) (<a href="/students/change/<%= s.account_id %>/<%= s.student_id %>">Delete</a>)
+                <p><a href="/students/<%= s.account_id %>/<%= s.pk %>"><%= s.stud_first_name %></a> (<a href="/students/update/<%= s.pk %>">Edit</a>) (<a href="/students/change/<%= s.account_id %>/<%= s.pk %>">Delete</a>)
                 </p>
             </li>
         <% end %>
         </ol>
         
-        <a href="/students/new/<%= a.account_id %>">Add New Student</a><br>
+        <a href="/students/new/<%= a.pk %>">Add New Student</a><br>
         
         <h2>
-            <a href="/dashboard/<%= a.account_id %>">Go to My Dashboard</a>
+            <a href="/dashboard/<%= a.pk %>">Go to My Dashboard</a>
         </h2>
         
         <% end %>
