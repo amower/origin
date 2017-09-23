@@ -173,8 +173,8 @@ post('/activities/create/:acct_id') do
       :description => params[:description],
       :activity_slug => params[:title].downcase.strip.gsub(' ', '-').gsub('&', 'and').gsub(/[^\w-]/, ''))
     
-   #Grab the newly-created auto-incremented activity_id   
-   last_insert_id = Activity.max(:activity_id)
+   #Grab the newly-created auto-incremented activity_id on this account   
+   last_insert_id = Activity.where(account_id: i).max(:activity_id)
     
    #Insert meta data into the activities_students table
    params[:student_id].each do |id|
