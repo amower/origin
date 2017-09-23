@@ -50,6 +50,9 @@ post('/accounts/create') do
    #Snag newly-created auto-incremented account_id   
    last_insert_id = Account.max(:account_id)
    
+   #Alternate way to snag new account_id (doesn't work)
+   #last_id = Account.order(:account_id).last
+   
    #Set static subjects to a variable
    static_subjects = ['Foreign Language', 'Health & Fitness', 'Home Economics', 'Language Arts', 'Mathematics', 'Performing & Visual Arts', 'Science', 'Social Studies', 'Technology']
    
