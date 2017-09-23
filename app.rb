@@ -67,77 +67,71 @@ end
 
 #Personal account information page
 get('/accounts/:acct_id') do
-   acct_id = params['acct_id'].to_i
+   i = params['acct_id'].to_i
    
-   @account = Account.where(account_id: acct_id)
-   @students = Student.where(account_id: acct_id).order(:birth_date)
+   @account = Account.where(account_id: i)
+   @students = Student.where(account_id: i).order(:birth_date)
    
    erb :account_info
 end
 
 get('/accounts/update/:acct_id') do
-   acct_id = params['acct_id'].to_i
+   i = params['acct_id'].to_i
    
-   @account = Account.where(account_id: acct_id)
+   @account = Account.where(account_id: i)
    
    erb :update_account
 end
 
 #Update an existing account
 post('/accounts/create/:acct_id') do
-   acct_id = params['acct_id'].to_i
-   acct_first_name = params[:acct_first_name]
-   acct_last_name = params[:acct_last_name]
-   zipcode = params[:zipcode]
-   email = params[:email]
-   password = params[:password]
-   account_hash = params[:acct_last_name].downcase
+   i = params['acct_id'].to_i
    
-   Account.where(:account_id => acct_id).update(
-      :acct_first_name => acct_first_name,
-      :acct_last_name => acct_last_name,
-      :zipcode => zipcode,
-      :email => email,
-      :password => password,
-      :account_hash => account_hash)
+   Account.where(:account_id => i).update(
+      :acct_first_name => params[:acct_first_name],
+      :acct_last_name => params[:acct_last_name],
+      :zipcode => params[:zipcode],
+      :email => params[:email],
+      :password => params[:password],
+      :account_hash => params[:acct_last_name].downcase)
    
-   redirect "/accounts/#{acct_id}"
+   redirect "/accounts/#{i}"
 end
 
 get('/accounts/change/:acct_id') do
-   account_id = params['acct_id'].to_i
+   i = params['acct_id'].to_i
    
-   @account = Account.where(account_id: account_id)
+   @account = Account.where(account_id: i)
    
    erb :delete_account
 end
 
 post('/accounts/delete/:acct_id') do
-   account_id = params['acct_id'].to_i
+   i = params['acct_id'].to_i
    
-   ActivitiesStudent.where(:account_id => account_id).delete
-   ActivitiesSubject.where(:account_id => account_id).delete
-   Activity.where(:account_id => account_id).delete
-   BooksStudent.where(:account_id => account_id).delete
-   BooksSubject.where(:account_id => account_id).delete
-   Book.where(:account_id => account_id).delete
-   Subject.where(:account_id => account_id).delete
-   Student.where(:account_id => account_id).delete
-   Account.where(:account_id => account_id).delete
+   ActivitiesStudent.where(:account_id => i).delete
+   ActivitiesSubject.where(:account_id => i).delete
+   Activity.where(:account_id => i).delete
+   BooksStudent.where(:account_id => i).delete
+   BooksSubject.where(:account_id => i).delete
+   Book.where(:account_id => i).delete
+   Subject.where(:account_id => i).delete
+   Student.where(:account_id => i).delete
+   Account.where(:account_id => i).delete
    
    redirect "/home/"
 end
 
 #Personal Account Dashboard
 get('/dashboard/:acct_id') do
-   acct_id = params['acct_id'].to_i
+   i = params['acct_id'].to_i
    
-   @account = Account.where(account_id: acct_id)
-   @activities = Activity.where(account_id: acct_id).reverse_order(:activity_date).limit(10)
+   @account = Account.where(account_id: i)
+   @activities = Activity.where(account_id: i).reverse_order(:activity_date).limit(10)
    @activity_subjects = ActivitiesSubject.join(:subjects, :subject_id => :subject_id)
-   @subjects = Subject.where(account_id: acct_id).order(:subject_name)
-   @books = Book.where(account_id: acct_id).reverse_order(:finish_date).limit(10)
-   @students = Student.where(account_id: acct_id).order(:birth_date)
+   @subjects = Subject.where(account_id: i).order(:subject_name)
+   @books = Book.where(account_id: i).reverse_order(:finish_date).limit(10)
+   @students = Student.where(account_id: i).order(:birth_date)
    
    erb :dashboard
 end
@@ -156,11 +150,11 @@ end
 
 #Form for submittig a new activity in a given account
 get('/activities/new/:acct_id') do
-   acct_id = params['acct_id'].to_i
+   i = params['acct_id'].to_i
    
-   @account = Account.where(account_id: acct_id)
-   @students = Student.where(account_id: acct_id).reverse_order(:birth_date)
-   @subjects = Subject.where(account_id: acct_id).order(:subject_name)
+   @account = Account.where(account_id: i)
+   @students = Student.where(account_id: i).reverse_order(:birth_date)
+   @subjects = Subject.where(account_id: i).order(:subject_name)
   
    erb :new_activity
 end
@@ -168,21 +162,16 @@ end
 #Insert rows from the 'new activity' form into the database
 post('/activities/create/:acct_id') do
    #Define variables from form input
-   account_id = params['acct_id'].to_i
-   activity_date = params[:activity_date]
-   title = params[:title]
-   duration = params[:duration]
-   description = params[:description]
-   activity_slug = params[:title].downcase.strip.gsub(' ', '-').gsub('&', 'and').gsub(/[^\w-]/, '')
+   i = params['acct_id'].to_i
    
    #Insert said data into the database
    Activity.insert(
-      :account_id => account_id,
-      :activity_date => activity_date, 
-      :title => title,
-      :duration => duration,
-      :description => description,
-      :activity_slug => activity_slug)
+      :account_id => i,
+      :activity_date => params[:activity_date], 
+      :title => params[:title],
+      :duration => params[:duration],
+      :description => params[:description],
+      :activity_slug => params[:title].downcase.strip.gsub(' ', '-').gsub('&', 'and').gsub(/[^\w-]/, ''))
     
    #Grab the newly-created auto-incremented activity_id   
    last_insert_id = Activity.max(:activity_id)
@@ -192,7 +181,7 @@ post('/activities/create/:acct_id') do
       ActivitiesStudent.insert(
          :activity_id => last_insert_id,
          :student_id => id,
-         :account_id => account_id) 
+         :account_id => i) 
    end
     
    #Insert meta data into the activities_subjects table
@@ -200,42 +189,36 @@ post('/activities/create/:acct_id') do
       ActivitiesSubject.insert(
          :activity_id => last_insert_id,
          :subject_id => id,
-         :account_id => account_id)
+         :account_id => i)
    end
    
-   redirect "/activities/#{account_id}"
+   redirect "/activities/#{i}"
 end
 
 #Form to update a particular activity prepopulated with current info
 get('/activities/update/:acct_id/:act_id') do
-   acct_id = params['acct_id'].to_i
+   i = params['acct_id'].to_i
    act_id = params['act_id'].to_i
    
    @activity = Activity.where(activity_id: act_id)
-   @students = Student.where(account_id: acct_id)
-   @subjects = Subject.where(account_id: acct_id)
+   @students = Student.where(account_id: i)
+   @subjects = Subject.where(account_id: i)
    
    erb :update_activity
 end
 
 #Update input in the db
 post('/activities/create/:acct_id/:act_id') do
-   acct_id = params['acct_id'].to_i
+   i = params['acct_id'].to_i
    act_id = params['act_id'].to_i
-   
-   activity_date = params[:activity_date]
-   title = params[:title]
-   duration = params[:duration]
-   description = params[:description]
-   activity_slug = params[:title].downcase.strip.gsub(' ', '-').gsub('&', 'and').gsub(/[^\w-]/, '')
    
    #Insert said data into the database
    Activity.where(activity_id: act_id).update(
-      :activity_date => activity_date, 
-      :title => title,
-      :duration => duration,
-      :description => description,
-      :activity_slug => activity_slug)
+      :activity_date => params[:activity_date], 
+      :title => params[:title],
+      :duration => params[:duration],
+      :description => params[:description],
+      :activity_slug => params[:title].downcase.strip.gsub(' ', '-').gsub('&', 'and').gsub(/[^\w-]/, ''))
     
    ActivitiesStudent.where(activity_id: act_id).delete
    ActivitiesSubject.where(activity_id: act_id).delete
@@ -245,7 +228,7 @@ post('/activities/create/:acct_id/:act_id') do
       ActivitiesStudent.insert(
          :activity_id => act_id,
          :student_id => id,
-         :account_id => acct_id) 
+         :account_id => i) 
    end
     
    #Insert updated meta data into the activities_subjects table
@@ -253,30 +236,30 @@ post('/activities/create/:acct_id/:act_id') do
       ActivitiesSubject.insert(
          :activity_id => act_id,
          :subject_id => id,
-         :account_id => acct_id)
+         :account_id => i)
    end
    
-   redirect "/activities/#{acct_id}/#{act_id}"
+   redirect "/activities/#{i}/#{act_id}"
 end
 
 #Retrieve the form to delete an activity
 get('/activities/change/:act_id') do
-   activity_id = params['act_id'].to_i
+   act_id = params['act_id'].to_i
    
-   @activity = Activity.where(activity_id: activity_id)
+   @activity = Activity.where(activity_id: act_id)
    
    erb :delete_activity
 end
 
 post('/activities/delete/:acct_id/:act_id') do
-   account_id = params['acct_id'].to_i
-   activity_id = params['act_id'].to_i
+   i = params['acct_id'].to_i
+   act_id = params['act_id'].to_i
    
-   ActivitiesStudent.where(activity_id: activity_id).delete
-   ActivitiesSubject.where(activity_id: activity_id).delete
-   Activity.where(activity_id: activity_id).delete
+   ActivitiesStudent.where(activity_id: act_id).delete
+   ActivitiesSubject.where(activity_id: act_id).delete
+   Activity.where(activity_id: act_id).delete
    
-   redirect "/dashboard/#{account_id}"
+   redirect "/dashboard/#{i}"
 end
 
 ################################################################################################################################################################################################################################# BOOKS
