@@ -6,7 +6,7 @@
     </head>
     
     <body>
-        <% @account.all do |row| %>
+        <% @subject.all do |row| %>
         
         <a href="/home/">Home</a>
         <a href="/accounts/<%= row[:account_id] %>">Account</a>

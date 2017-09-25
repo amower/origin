@@ -35,13 +35,13 @@
             </tr>
             <tr>
                 <td><strong>Student(s):</strong></td>
-                <% @book_students.each do |row| %>
+                <% @students.each do |row| %>
                 <td><%= row[:stud_first_name] %></td>
                 <% end %>
             </tr>
             <tr>
                 <td><strong>Subject(s):</strong></td>
-                <% @book_subjects.each do |row| %>
+                <% @subjects.each do |row| %>
                 <td><%= row[:subject_name] %></td>
                 <% end %>
             </tr>

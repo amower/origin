@@ -398,7 +398,9 @@ get('/books/author/:acct_id/:stud_id/:author') do
    s = params['stud_id'].to_i
    author = params['author']
    
-   @books = BooksStudent.join(:books, :book_id => :book_id).where(Sequel[:books_students][:account_id] => i).where(Sequel[:books_students][:student_id] => s).where(Sequel.like(:author, "#{author}%"))
+   #@books = BooksStudent.join(:books, :book_id => :book_id).where(Sequel[:books_students][:account_id] => i).where(Sequel[:books_students][:student_id] => s).where(Sequel.like(:author, "#{author}%"))
+   
+   @books = Book.association_join(:books_students).where(Sequel[:books_students][:account_id] => i).where(Sequel[:books_students][:student_id] => s).where(Sequel.like(:author, "#{author}%"))
    
    erb :student_author
 end
@@ -411,7 +413,7 @@ get('/subjects/:acct_id') do
    #Define instance variables for filtering
    @account = Account.where(account_id: i)
    @subjects = Subject.where(account_id: i).order(:subject_name)
-   @activities = Activity.join(:activities_subjects, :activity_id => :activity_id).join(:subjects, :subject_id => Sequel[:activities_subjects][:subject_id]).where(Sequel[:activities][:account_id] => i).reverse_order(:activity_date)
+   @activities = Activity.association_join(:activities_subjects).join(:subjects, :subject_id => Sequel[:activities_subjects][:subject_id]).where(Sequel[:activities][:account_id] => i).reverse_order(:activity_date)
    
    erb :show_subjects
 end
@@ -579,9 +581,8 @@ get('/portfolio/:acct_id/:stud_id') do
    @account = Account.where(account_id: i)
    @student = Student.where(student_id: s)
    @subjects = Subject.where(account_id: i).order(:subject_name)
-   @activities = ActivitiesStudent.join(:activities, :activity_id => :activity_id).where(student_id: s).reverse_order(:activity_date)
-   #@student_subjects = ActivitiesSubject.join(:activities, :activity_id => :activity_id).where(student_id: id).order(:subject_name)
-   @student_books = BooksStudent.join(:books, :book_id => :book_id).where(student_id: s).reverse_order(:finish_date)
+   @activities = Activity.association_join(:activities_students).where(student_id: s).reverse_order(:activity_date)
+   @books = Book.association_join(:books_students).where(student_id: s).reverse_order(:finish_date)
    
    erb :student_portfolio
 end
@@ -594,8 +595,8 @@ get('/activities/:acct_id/:act_id') do
    #Define instance variables for filtering
    @account = Account.where(account_id: i)
    @activity = Activity.where(activity_id: a)
-   @activity_students = ActivitiesStudent.join(:students, :student_id => :student_id).where(activity_id: a)
-   @activity_subjects = ActivitiesSubject.join(:subjects, :subject_id => :subject_id).where(activity_id: a)
+   @students = Student.association_join(:activities_students).where(activity_id: a)
+   @subjects = Subject.association_join(:activities_subjects).where(activity_id: a)
    
    erb :activity_info
 end
@@ -608,8 +609,8 @@ get('/books/:acct_id/:bk_id') do
    #Define instance variables for filtering
    @account = Account.where(account_id: i)
    @book = Book.where(book_id: b)
-   @book_students = BooksStudent.inner_join(:students, :student_id => :student_id).where(book_id: b)
-   @book_subjects = BooksSubject.inner_join(:subjects, :subject_id => :subject_id).where(book_id: b)
+   @students = Student.association_join(:books_students).where(book_id: b)
+   @subjects = Subject.association_join(:books_subjects).where(book_id: b)
    
    erb :book_info
 end
@@ -630,12 +631,12 @@ get('/subjects/:acct_id/:subj_id') do
    i = params['acct_id'].to_i
    j = params['subj_id'].to_i
    
-   @account = Account.where(account_id: i)
-   @subject = Subject.where(subject_id: j)
-   @activities = Activity.join(:activities_subjects, :activity_id => :activity_id).join(:subjects, :subject_id => Sequel[:activities_subjects][:subject_id]).where(Sequel[:activities_subjects][:subject_id] => j).reverse_order(:activity_date)
-   @students = Student.join(:activities_students, :student_id => :student_id)
-   @books = Book.join(:books_subjects, :book_id => :book_id).join(:subjects, :subject_id => Sequel[:books_subjects][:subject_id]).where(Sequel[:books_subjects][:subject_id] => j).reverse_order(:finish_date)
-   @book_students = Student.join(:books_students, :student_id => :student_id)
+   #@account = Account.where(account_id: i)
+   @subject = Subject.where(subject_id: j, account_id: i)
+   @activities = Activity.association_join(:activities_subjects).join(:subjects, :subject_id => Sequel[:activities_subjects][:subject_id]).where(Sequel[:activities_subjects][:subject_id] => j).reverse_order(:activity_date)
+   @students = Student.association_join(:activities_students)
+   @books = Book.association_join(:books_subjects).join(:subjects, :subject_id => Sequel[:books_subjects][:subject_id]).where(Sequel[:books_subjects][:subject_id] => j).reverse_order(:finish_date)
+   @book_students = Student.association_join(:books_students)
    
    erb :subject_filter
 end
@@ -646,11 +647,11 @@ get('/portfolio/:acct_id/:stud_id/:subj_id') do
    s = params['stud_id'].to_i
    j = params['subj_id'].to_i
    
-   @account = Account.where(account_id: i)
-   @student = Student.where(student_id: s)
+   #@account = Account.where(account_id: i)
+   @student = Student.where(student_id: s, account_id: i)
    @subject = Subject.where(subject_id: j)
-   #@activities = Activity.join(:activities_students, :activity_id => :activity_id).join(:students, :student_id => Sequel[:activities_students][:student_id]).join(:activities_subjects, :activity_id => :activity_id).join(:subjects, :subject_id => Sequel[:activities_subjects][:subject_id]).where(Sequel[:activities_students][:student_id] => stud_id).where(Sequel[:activities_subjects][:subject_id] => subj_id)
-   @activity_subjects = ActivitiesSubject.join(:activities, :activity_id => :activity_id).where(subject_id: j)
+   @activities = Activity.association_join(:activities_subjects).where(subject_id: j).association_join(:activities_students).where(student_id: s)
+   @books = Book.association_join(:books_subjects).where(subject_id: j).association_join(:books_students).where(student_id: s)
    
    erb :student_subjects
 end

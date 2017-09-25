@@ -37,7 +37,7 @@
             <% @activities.each do |row| %>
                 <li>
                     <a href="/activities/<%= row[:account_id] %>/<%= row[:activity_id] %>"><%= row[:activity_date] %>: <%= row[:title] %>, 
-                        <% ActivitiesSubject.join(:subjects, :subject_id => :subject_id).where(:activity_id => row[:activity_id]).each do |row| %>
+                        <% Subject.association_join(:activities_subjects).where(:activity_id => row[:activity_id]).each do |row| %>
                             <%= row[:subject_name] %>
                         <% end %>
                         <%= row[:duration] %> minutes</a>
@@ -50,7 +50,7 @@
             <a href="/books/new/<%= row[:account_id] %>">Add New Book</a>
             
             <ol>
-            <% @student_books.each do |row| %>
+            <% @books.each do |row| %>
                 <li>
                     <a href="/books/<%= row[:account_id] %>/<%= row[:book_id] %>"><%= row[:title] %></a> by <a href="/books/author/<%= row[:account_id] %>/<%= row[:student_id] %>/<%= row[:author] %>"><%= row[:author] %></a>, Finished <%= row[:finish_date] %>
                 </li>

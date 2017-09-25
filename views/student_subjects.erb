@@ -17,16 +17,29 @@
         
         <h1><%= row[:stud_first_name] %>'s <% @subject.all do |row| %><%= row[:subject_name] %><% end %> Activities</h1>
         
-        <ol><% @activity_subjects.join(:activities_students, :activity_id => :activity_id).where(student_id: row[:student_id]).each do |row| %>
+        <ol><% @activities.each do |row| %>
             <li>
                 <a href="/activities/<%= row[:account_id] %>/<%= row[:activity_id] %>"><%= row[:activity_date] %>: <%= row[:title] %>, 
-                    <% ActivitiesSubject.join(:subjects, :subject_id => :subject_id).where(:activity_id => row[:activity_id]).each do |row| %>
+                    <% Subject.association_join(:activities_subjects).where(:activity_id => row[:activity_id]).each do |row| %>
                         <%= row[:subject_name] %>,
                     <% end %>
                     <%= row[:duration] %> minutes</a>
             </li>
             <% end %>
         </ol><br>
+        
+        <h1><%= row[:stud_first_name] %>'s <% @subject.all do |row| %><%= row[:subject_name] %><% end %> Books</h1>
+        
+        <ol><% @books.each do |b| %>
+            <li>
+                <a href="/books/<%= b.account_id %>/<%= b.pk %>"><%= b.title %></a> by <%= b.author %>,
+                    <% Subject.association_join(:books_subjects).where(:book_id => b.pk).each do |j| %>
+                        <%= j.subject_name %>,
+                    <% end %>
+                    Finished on <%= b.finish_date %>
+            </li>
+            <% end %>
+        </ol>
         
         <!-- list books by student/subject -->  
         <% end %>

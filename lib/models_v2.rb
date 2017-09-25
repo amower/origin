@@ -14,10 +14,14 @@ DB = Sequel.connect('mysql://portfolio_god:password@localhost/hs_portfolio')
 class Account < Sequel::Model #dataset for DB[:accounts]
     #attr_accessor :account_id, :acct_first_name, :acct_last_name, :zipcode, :email, :password, :join_date, :account_hash
     
-#    one_to_many :students
-#    one_to_many :activities
-#    one_to_many :books
-#    one_to_many :subjects
+    one_to_many :students
+    one_to_many :activities
+    one_to_many :activities_students
+    one_to_many :activities_subjects
+    one_to_many :books
+    one_to_many :books_students
+    one_to_many :books_subjects
+    one_to_many :subjects
 end
 
 class Activity < Sequel::Model #dataset for DB[:activities]
@@ -34,16 +38,16 @@ end
 #I'm not sure this class is named correctly
 class ActivitiesStudent < Sequel::Model #dataset for DB[:activities_students]
     #attr_accessor :activities_students_id, :activity_id, :student_id, :account_id
-    
+    many_to_one :account
     many_to_one :activity
-    many_to_one :student
+    #many_to_one :student
 end
 
 class ActivitiesSubject < Sequel::Model #dataset for DB[:activities_subjects]
     #attr_accessor :activities_subjects_id, :activity_id, :subject_id, :account_id
-    
+    many_to_one :account
     many_to_one :activity
-    many_to_many :subject
+    #many_to_many :subject
 end
 
 class Book < Sequel::Model #dataset for DB[:books]
@@ -68,15 +72,16 @@ end
 class BooksStudent < Sequel::Model #dataset for DB[:books_students]
     #attr_accessor :books_students_id, :book_id, :student_id, :account_id
 
+    many_to_one :account
     many_to_one :book
-    many_to_one :student
+    #many_to_many :student
 end
 
 class BooksSubject < Sequel::Model #dataset for DB[:books_subjects]
     #attr_accessor :books_subjects_id, :book_id, :subject_id, :account_id
-    
+    many_to_one :account
     many_to_one :book
-    many_to_one :subject
+    #many_to_many :subject
 end
 
 class Student < Sequel::Model #dataset for DB[:students]
@@ -91,14 +96,6 @@ class Subject < Sequel::Model #dataset for DB[:subjects]
     #attr_accessor :subject_id, :subject_name, :subject_slug, :account_id, :description
 
     many_to_one :account
-    many_to_many :activities_subjects
+    one_to_many :activities_subjects
     one_to_many :books_subjects
-    
-    def create(subject)
-        Subject.insert(
-          :account_id => subject.account_id,
-          :subject_name => subject.subject_name,
-          :description => subject.description,
-          :subject_slug => subject.subject_slug)
-    end
 end
