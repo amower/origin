@@ -1,16 +1,12 @@
 require 'sinatra' #load the gem
 require 'models_v2' #load the ruby file
 require 'erb'
-#require 'sequel' #load sequel
 require 'time' #load gem?
 
 #require 'string_helpers' #load gem (allows use of .slug!)
 
-#Connect to the database
-#DB = Sequel.connect('mysql://portfolio_god:password@localhost/hs_portfolio')
-
-#subjects = ['Foreign Language', 'Health & Fitness', 'Home Economics', 'Language Arts', 'Mathematics', 'Performing & Visual Arts', 'Social Studies', 'Science', 'Technology']
-#Sequel::Model.plugin :many_through_many
+#Set static subjects to a variable
+static_subjects = ['Foreign Language', 'Health & Fitness', 'Home Economics', 'Language Arts', 'Mathematics', 'Performing & Visual Arts', 'Science', 'Social Studies', 'Technology']
 
 ################################################################# THE REAL DEAL
 #Homepage currently with just a list of account holders
@@ -38,12 +34,8 @@ post('/accounts/create') do
    
    #Snag newly-created auto-incremented account_id   
    last_insert_id = Account.max(:account_id)
-   
    #Alternate way to snag new account_id (doesn't work)
    #last_id = Account.order(:account_id).last
-   
-   #Set static subjects to a variable
-   static_subjects = ['Foreign Language', 'Health & Fitness', 'Home Economics', 'Language Arts', 'Mathematics', 'Performing & Visual Arts', 'Science', 'Social Studies', 'Technology']
    
    #Insert basic subjects automatically when new account is created
    static_subjects.each do |name|
