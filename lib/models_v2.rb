@@ -5,7 +5,7 @@ DB = Sequel.connect('mysql://portfolio_god:password@localhost/hs_portfolio')
 #Another way to connect to the database
 #DB = Sequel.connect(:adapter=>'mysql', :host=>'localhost', :database=>'hs_portfolio', :user=>'portfolio_god', :password=>'password')
 
-#Note: When a model class is created, it parses the schema in the table from the database, and automatically sets up accessor methods for all of the columns in the table. Sequel model classes assume that the table name is an underscored plural of the class name
+#Note: When a model class is created, it parses the schema in the table from the database, and automatically sets up accessor methods for all of the columns in the table. Sequel model classes assume that the table name is an underscored plural of the class name.
 
 
 class Account < Sequel::Model #dataset for DB[:accounts]
