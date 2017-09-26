@@ -27,6 +27,13 @@ end
 
 
 
+#Form to login to existing account
+get('/accounts/login') do
+   erb :login
+end
+
+
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 #Create new_account & insert basic subjects
 post('/accounts/create') do
