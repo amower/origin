@@ -8,19 +8,27 @@ require 'time' #load gem?
 #Set static subjects to a variable
 static_subjects = ['Foreign Language', 'Health & Fitness', 'Home Economics', 'Language Arts', 'Mathematics', 'Performing & Visual Arts', 'Science', 'Social Studies', 'Technology']
 
-################################################################# THE REAL DEAL
+########################################################################################################################################################################################################################## THE REAL DEAL
+
+
+
 #Homepage currently with just a list of account holders
 get('/home/') do
    @accounts = Account.order(:acct_first_name)
    erb :home
 end
 
+
+
 #Form to create a new account
 get('/accounts/new') do
    erb :new_account
 end
 
-#Post new_account form data into accounts table & insert basic subjects
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+#Create new_account & insert basic subjects
 post('/accounts/create') do
    #Insert new_account form values into accounts table as new object
    Account.insert(
@@ -48,6 +56,9 @@ post('/accounts/create') do
    #Go immediately to account info page   
    redirect "/accounts/#{last_insert_id}"
 end
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
 
 #Personal account information page
 get('/accounts/:acct_id') do
@@ -59,6 +70,8 @@ get('/accounts/:acct_id') do
    erb :account_info
 end
 
+
+
 #Form to update account info
 get('/accounts/update/:acct_id') do
    i = params['acct_id'].to_i
@@ -67,6 +80,8 @@ get('/accounts/update/:acct_id') do
    
    erb :update_account
 end
+
+
 
 #Update an existing account
 post('/accounts/create/:acct_id') do
@@ -83,6 +98,8 @@ post('/accounts/create/:acct_id') do
    redirect "/accounts/#{i}"
 end
 
+
+
 #Form to confirm account deletion
 get('/accounts/change/:acct_id') do
    i = params['acct_id'].to_i
@@ -92,10 +109,13 @@ get('/accounts/change/:acct_id') do
    erb :delete_account
 end
 
+
+
 #Delete selected account and all associated data
 post('/accounts/delete/:acct_id') do
    i = params['acct_id'].to_i
    
+   #First delete metadata
    ActivitiesStudent.where(:account_id => i).delete
    ActivitiesSubject.where(:account_id => i).delete
    Activity.where(:account_id => i).delete
@@ -108,6 +128,8 @@ post('/accounts/delete/:acct_id') do
    
    redirect "/home/"
 end
+
+
 
 #Personal Account Dashboard
 get('/dashboard/:acct_id') do
@@ -123,7 +145,12 @@ get('/dashboard/:acct_id') do
    erb :dashboard
 end
 
-#################################################################### ACTIVITIES
+
+
+############################################################################################################################################################################################################################## ACTIVITIES
+
+
+
 #List of all activities for a given account
 get('/activities/:acct_id') do
    i = params['acct_id'].to_i
@@ -134,6 +161,8 @@ get('/activities/:acct_id') do
    
    erb :show_activities
 end
+
+
 
 #Form for submittig a new activity in a given account
 get('/activities/new/:acct_id') do
@@ -146,6 +175,9 @@ get('/activities/new/:acct_id') do
    erb :new_activity
 end
 
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 #Insert rows from the 'new activity' form into the database
 post('/activities/create/:acct_id') do
    #Define variables from form input
@@ -181,6 +213,9 @@ post('/activities/create/:acct_id') do
    
    redirect "/activities/#{i}"
 end
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
 
 #Form to update a particular activity prepopulated with current info
 get('/activities/update/:acct_id/:act_id') do
@@ -194,6 +229,9 @@ get('/activities/update/:acct_id/:act_id') do
    erb :update_activity
 end
 
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 #Update input in the db
 post('/activities/create/:acct_id/:act_id') do
    i = params['acct_id'].to_i
@@ -228,6 +266,9 @@ post('/activities/create/:acct_id/:act_id') do
    
    redirect "/activities/#{i}/#{a}"
 end
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
 
 #Retrieve the form to confirm deletion of an activity
 get('/activities/change/:act_id') do
@@ -237,6 +278,8 @@ get('/activities/change/:act_id') do
    
    erb :delete_activity
 end
+
+
 
 #Delete selected activity
 post('/activities/delete/:acct_id/:act_id') do
@@ -250,7 +293,12 @@ post('/activities/delete/:acct_id/:act_id') do
    redirect "/dashboard/#{i}"
 end
 
+
+
 ################################################################################################################################################################################################################################# BOOKS
+
+
+
 #Display list of books for a given account
 get('/books/:acct_id') do
    i = params['acct_id'].to_i
@@ -260,6 +308,8 @@ get('/books/:acct_id') do
    
    erb :show_books
 end
+
+
 
 #Form to submit new book in a given account
 get('/books/new/:acct_id') do
@@ -272,6 +322,9 @@ get('/books/new/:acct_id') do
    erb :new_book
 end
 
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 #Insert new book into 'books' table in the database
 post('/books/create/:acct_id') do
    #Assign variables
@@ -310,6 +363,9 @@ post('/books/create/:acct_id') do
    
    redirect "/dashboard/#{i}"
 end
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
 
 #Form to update a particular book prepopulated with current info
 get('/books/update/:acct_id/:book_id') do
@@ -323,6 +379,9 @@ get('/books/update/:acct_id/:book_id') do
    erb :update_book
 end
 
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 #Submit updated input into the db
 post('/books/create/:acct_id/:book_id') do
    i = params['acct_id'].to_i
@@ -360,6 +419,9 @@ post('/books/create/:acct_id/:book_id') do
    
    redirect "/dashboard/#{i}"
 end
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
 
 #Get form to confirm deletion of said book
 get('/books/change/:book_id') do
@@ -369,6 +431,8 @@ get('/books/change/:book_id') do
    
    erb :delete_book
 end
+
+
 
 #Delete selected book
 post('/books/delete/:acct_id/:book_id') do
@@ -382,6 +446,8 @@ post('/books/delete/:acct_id/:book_id') do
    redirect "/dashboard/#{i}"
 end
 
+
+
 #View all books by selected author in selected account
 get('/books/author/:acct_id/:author') do
    i = params['acct_id'].to_i
@@ -392,20 +458,25 @@ get('/books/author/:acct_id/:author') do
    erb :show_author
 end
 
+
+
 #View all books by selected author, read by selected student, in selected account
 get('/books/author/:acct_id/:stud_id/:author') do
    i = params['acct_id'].to_i
    s = params['stud_id'].to_i
    author = params['author']
    
-   #@books = BooksStudent.join(:books, :book_id => :book_id).where(Sequel[:books_students][:account_id] => i).where(Sequel[:books_students][:student_id] => s).where(Sequel.like(:author, "#{author}%"))
-   
    @books = Book.association_join(:books_students).where(Sequel[:books_students][:account_id] => i).where(Sequel[:books_students][:student_id] => s).where(Sequel.like(:author, "#{author}%"))
    
    erb :student_author
 end
 
-###################################################################### SUBJECTS
+
+
+################################################################################################################################################################################################################################ SUBJECTS
+
+
+
 #Page that displays list of subjects with all related activities
 get('/subjects/:acct_id') do
    i = params['acct_id'].to_i
@@ -418,6 +489,8 @@ get('/subjects/:acct_id') do
    erb :show_subjects
 end
 
+
+
 #Form for creating a new subject for said account
 get('/subjects/new/:acct_id') do
    i = params['acct_id'].to_i
@@ -427,6 +500,8 @@ get('/subjects/new/:acct_id') do
    
    erb :new_subject
 end
+
+
 
 #Insert new subject into db for said account
 post('/subjects/create/:acct_id') do
@@ -442,6 +517,8 @@ post('/subjects/create/:acct_id') do
    redirect "/accounts/#{i}"
 end
 
+
+
 #Form to edit a subject
 get('/subjects/update/:acct_id/:subj_id') do
    i = params['acct_id'].to_i
@@ -452,6 +529,8 @@ get('/subjects/update/:acct_id/:subj_id') do
    
    erb :update_subject
 end
+
+
 
 #Update the subject in the db
 post('/subjects/create/:acct_id/:subj_id') do
@@ -467,6 +546,8 @@ post('/subjects/create/:acct_id/:subj_id') do
    redirect "/accounts/#{i}"
 end
 
+
+
 #Form to delete a subject
 get('/subjects/change/:subj_id') do
    j = params['subj_id'].to_i
@@ -475,6 +556,8 @@ get('/subjects/change/:subj_id') do
    
    erb :delete_subject
 end
+
+
 
 #Delete selected subject from subjects and metadata tables   
 post('/subjects/delete/:acct_id/:subj_id') do
@@ -488,7 +571,12 @@ post('/subjects/delete/:acct_id/:subj_id') do
    redirect "/accounts/#{i}"
 end
 
-###################################################################### STUDENTS
+
+
+############################################################################################################################################################################################################################### STUDENTS
+
+
+
 #Page that displays list of students related to the current account
 get('/students/:acct_id') do
    i = params['acct_id'].to_i
@@ -500,6 +588,8 @@ get('/students/:acct_id') do
    erb :show_students
 end
 
+
+
 #Form for submitting a new student
 get('/students/new/:acct_id') do
    i = params['acct_id'].to_i
@@ -508,6 +598,8 @@ get('/students/new/:acct_id') do
    
    erb :new_student
 end
+
+
 
 #Data inserted into the 'students' table in the database
 post('/students/create/:acct_id') do
@@ -524,6 +616,8 @@ post('/students/create/:acct_id') do
    redirect "/accounts/#{i}"
 end
 
+
+
 #Form for updating student info - prepopulated with current info
 get('/students/update/:stud_id') do
    s = params['stud_id'].to_i
@@ -532,6 +626,8 @@ get('/students/update/:stud_id') do
    
    erb :update_student
 end
+
+
 
 #All data input is updated for the current row
 post('/students/create/:acct_id/:stud_id') do
@@ -547,6 +643,8 @@ post('/students/create/:acct_id/:stud_id') do
    redirect "/students/#{i}/#{s}"
 end
 
+
+
 #Form to confirm student deletion
 get('/students/change/:acct_id/:stud_id') do
    i = params['acct_id'].to_i
@@ -557,6 +655,8 @@ get('/students/change/:acct_id/:stud_id') do
    
    erb :delete_student
 end
+
+
 
 #Delete selected student from students table and metadata
 post('/students/delete/:acct_id/:stud_id') do
@@ -570,7 +670,11 @@ post('/students/delete/:acct_id/:stud_id') do
    redirect "/accounts/#{i}"
 end
 
-################################################################## DETAIL PAGES
+
+
+########################################################################################################################################################################################################################### DETAIL PAGES
+
+
 
 #Page to view individual student portfolio
 get('/portfolio/:acct_id/:stud_id') do
@@ -587,6 +691,8 @@ get('/portfolio/:acct_id/:stud_id') do
    erb :student_portfolio
 end
 
+
+
 #Page to view individual activity info
 get('/activities/:acct_id/:act_id') do
    i = params['acct_id'].to_i
@@ -600,6 +706,8 @@ get('/activities/:acct_id/:act_id') do
    
    erb :activity_info
 end
+
+
 
 #Page to view individual book info
 get('/books/:acct_id/:bk_id') do
@@ -615,6 +723,8 @@ get('/books/:acct_id/:bk_id') do
    erb :book_info
 end
 
+
+
 #Page to view student personal info
 get('/students/:acct_id/:stud_id') do
    i = params['acct_id'].to_i
@@ -625,6 +735,8 @@ get('/students/:acct_id/:stud_id') do
    
    erb :student_info
 end
+
+
 
 #Page to view all activities & books for a given subject
 get('/subjects/:acct_id/:subj_id') do
@@ -640,6 +752,8 @@ get('/subjects/:acct_id/:subj_id') do
    
    erb :subject_filter
 end
+
+
 
 #Page to view all activities & books for a given student and a given subject
 get('/portfolio/:acct_id/:stud_id/:subj_id') do
