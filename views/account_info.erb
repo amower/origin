@@ -2,59 +2,48 @@
 <html>
     <head>
         <meta charset='UTF-8' />
-        <% @account.all do |a| %>
-        <title><%= a.acct_last_name %> Portfolio</title>
+        <% @account.all do |i| %>
+        <title><%= i.acct_last_name %> Portfolio</title>
     </head>
     <body>
         <a href="/home/">Home</a>
         <!--Sequel model pk method retrieves record's primary key value (in this case the account_id)-->
-        <a href="/accounts/<%= a.pk %>">Account</a>
-        <a href="/dashboard/<%= a.pk %>">Dashboard</a>
-        <a href="/activities/<%= a.pk %>">Activities</a>
-        <a href="/books/<%= a.pk %>">Books</a>
-        <a href="/subjects/<%= a.pk %>">Subjects</a>
+        <a href="/accounts/<%= i.pk %>">Account</a>
+        <a href="/dashboard/<%= i.pk %>">Dashboard</a>
+        <a href="/activities/<%= i.pk %>">Activities</a>
+        <a href="/books/<%= i.pk %>">Books</a>
+        <a href="/subjects/<%= i.pk %>">Subjects</a>
         
         <!--You can read record values as object attributes if attribute names are valid columns in the dataset (i.e. row.account_id). If attribute names are not valid columns, you can access values with [] (i.e. row[:account_id]).-->
-        <h1><%= a.acct_first_name %> <%= a.acct_last_name %> Account Info</h1>
+        <h1><%= i.acct_first_name %> <%= i.acct_last_name %> Account Info</h1>
         
         <table>
             <tr>
                 <td><strong>Email:</strong></td>
-                <td><%= a.email %></td>
+                <td><%= i.email %></td>
             </tr>
             <tr>
                 <td><strong>Zipcode:</strong></td>
-                <td><%= a.zipcode %></td>
+                <td><%= i.zipcode %></td>
             </tr>
             <tr>
                 <td><strong>Join Date:</strong></td>
-                <td><%= a.join_date.month %>-<%= a.join_date.day %>-<%= a.join_date.year %></td>
+                <td><%= i.join_date.month %>-<%= i.join_date.day %>-<%= i.join_date.year %></td>
             </tr>
             <tr>
                 <td><strong>Password:</strong></td>
-                <td><%= a.password %></td>
+                <td><%= i.password %></td>
             </tr>
         </table>
         
-        <a href="/accounts/update/<%= a.pk %>">Edit Account</a><br>
-        <a href="/accounts/change/<%= a.pk %>">Delete Account</a>
+        <a href="/accounts/update/<%= i.pk %>">Edit Account</a><br>
+        <a href="/accounts/change/<%= i.pk %>">Delete Account</a>
         
-        <h3>Student(s) Enrolled:</h3>
+        <h3><a href="/students/<%= i.pk %>">Manage Students</a></h3>
         
-        <ol>
-        <% @students.each do |s| %>
-            <li>
-                <p><a href="/students/<%= s.account_id %>/<%= s.pk %>"><%= s.stud_first_name %></a> (<a href="/students/update/<%= s.pk %>">Edit</a>) (<a href="/students/change/<%= s.account_id %>/<%= s.pk %>">Delete</a>)
-                </p>
-            </li>
-        <% end %><!--End students loop-->
-        </ol>
+        <h3><a href="/subjects/<%= i.pk %>">Manage Subjects</a></h3>
         
-        <a href="/students/new/<%= a.pk %>">Add New Student</a><br>
-        
-        <h2>
-            <a href="/dashboard/<%= a.pk %>">Go to My Dashboard</a>
-        </h2>
+        <h3><a href="/dashboard/<%= i.pk %>">My Dashboard</a></h3>
         
         <% end %><!--End account data access-->
         

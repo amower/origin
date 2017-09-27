@@ -5,41 +5,38 @@
         <title>Manage Subjects</title>
     </head>
     <body>
-        <% @account.all do |row| %>
+        <% @account.all do |i| %>
         
         <a href="/home/">Home</a>
-        <a href="/accounts/<%= row[:account_id] %>">Account</a>
-        <a href="/dashboard/<%= row[:account_id] %>">Dashboard</a>
-        <a href="/activities/<%= row[:account_id] %>">Activities</a>
-        <a href="/books/<%= row[:account_id] %>">Books</a>
-        <a href="/subjects/<%= row[:account_id] %>">Subjects</a>
-        
-        
+        <a href="/accounts/<%= i.pk %>">Account</a>
+        <a href="/dashboard/<%= i.pk %>">Dashboard</a>
+        <a href="/activities/<%= i.pk %>">Activities</a>
+        <a href="/books/<%= i.pk %>">Books</a>
+        <a href="/subjects/<%= i.pk %>">Subjects</a>
         
         <h2>My Portfolio Subjects:</h2>
         
-        <ol><% @subjects.each do |row| %>
+        <ol><% @subjects.each do |j| %>
             <li>
-                <%= row[:subject_name] %> (<a href="/subjects/update/<%= row[:account_id] %>/<%= row[:subject_id] %>">Edit</a>) (<a href="/subjects/change/<%= row[:subject_id] %>">Delete</a>)
+                <%= j.subject_name %> (<a href="/subjects/update/<%= j.account_id %>/<%= j.pk %>">Edit</a>) (<a href="/subjects/change/<%= j.pk %>">Delete</a>)
             </li>
-            <% end %>
+            <% end %><!--End subject loop-->
         </ol>
         
-        <a href="/subjects/new/<%= row[:account_id] %>">Add New Subject</a><br>
-        <% end %>
+        <a href="/subjects/new/<%= i.pk %>">Add New Subject</a><br>
+        <% end %><!--End account data access-->
         
         <h1>All Activities Organized by Subject</h1>
         
-        <!--Link to account_id below is not working-->
         <ul>
-            <% @subjects.each do |row| %>
-            <li><a href="/subjects/<%= row[:account_id] %>/<%= row[:subject_id] %>"><%= row[:subject_name] %> (<%= @activities.where(Sequel[:activities_subjects][:subject_id] => row[:subject_id]).count %>)</a>
-                <ol><% @activities.where(Sequel[:activities_subjects][:subject_id] => row[:subject_id]).each do |row| %>
-                    <li><%= row[:title] %>, <%= row[:activity_date] %></li>
-                    <% end %>
+            <% @subjects.each do |j| %>
+            <li><a href="/subjects/<%= j.account_id %>/<%= j.pk %>"><%= j.subject_name %> (<%= @activities.where(Sequel[:activities_subjects][:subject_id] => j.pk).count %>)</a>
+                <ol><% @activities.where(Sequel[:activities_subjects][:subject_id] => j.pk).each do |a| %>
+                    <li><%= a.title %>, <%= a.activity_date %></li>
+                    <% end %><!--End activity loop-->
                 </ol>
             </li>
-            <% end %>
+            <% end %><!--End subject loop-->
         </ul>
         
     </body>

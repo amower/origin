@@ -73,7 +73,6 @@ get('/accounts/:acct_id') do
    i = params['acct_id'].to_i
    
    @account = Account.where(account_id: i)
-   @students = Student.where(account_id: i).by_birth
    
    erb :account_info
 end
