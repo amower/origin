@@ -2,32 +2,31 @@
 <html>
     <head>
         <meta charset='UTF-8' />
-        <title>Book Title</title>
+        <% @book.each do |b| %>
+        <title><%= b.title %></title>
     </head>
     <body>
-        <% @book.each do |row| %>
-        
         <a href="/home/">Home</a>
-        <a href="/accounts/<%= row[:account_id] %>">Account</a>
-        <a href="/dashboard/<%= row[:account_id] %>">Dashboard</a>
-        <a href="/activities/<%= row[:account_id] %>">Activities</a>
-        <a href="/books/<%= row[:account_id] %>">Books</a>
-        <a href="/subjects/<%= row[:account_id] %>">Subjects</a>
+        <a href="/accounts/<%= b.account_id %>">Account</a>
+        <a href="/dashboard/<%= b.account_id %>">Dashboard</a>
+        <a href="/activities/<%= b.account_id %>">Activities</a>
+        <a href="/books/<%= b.account_id %>">Books</a>
+        <a href="/subjects/<%= b.account_id %>">Subjects</a>
         
-        <h1><%= row[:title] %></h1>
+        <h1><%= b.title %></h1>
         
         <table>
             <tr>
                 <td><strong>Author:</strong></td>
-                <td><%= row[:author] %></td>
+                <td><%= b.author %></td>
             </tr>
             <tr>
                 <td><strong>Rating:</strong></td>
-                <td><%= row[:rating] %> STARS</td>
+                <td><%= b.rating %> STARS</td>
             </tr>
             <tr>
                 <td><strong>Genre:</strong></td>
-                <td><% if(row[:fiction]) %>
+                <td><% if(b.fiction) %>
                         <%= "Fiction" %>
                     <% else %>
                         <%= "Nonfiction" %>
@@ -35,22 +34,22 @@
             </tr>
             <tr>
                 <td><strong>Student(s):</strong></td>
-                <% @students.each do |row| %>
-                <td><%= row[:stud_first_name] %></td>
-                <% end %>
+                <% @students.each do |s| %>
+                <td><%= s.stud_first_name %></td>
+                <% end %><!--End students loop-->
             </tr>
             <tr>
                 <td><strong>Subject(s):</strong></td>
-                <% @subjects.each do |row| %>
-                <td><%= row[:subject_name] %></td>
-                <% end %>
+                <% @subjects.each do |j| %>
+                <td><%= j.subject_name %></td>
+                <% end %><!--End subjects loop-->
             </tr>
             <tr>
                 <td><strong>Date Finished:</strong></td>
-                <td><%= row[:finish_date] %></td>
+                <td><%= b.finish_date %></td>
             </tr>
         </table>
-        <% end %>
+        <% end %><!--End book data access-->
         
     </body>
 </html>

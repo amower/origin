@@ -5,22 +5,22 @@
         <title>Delete Subject</title>
     </head>
     <body>
-        <% @subject.all do |row| %>
+        <% @subject.all do |j| %>
         
         <a href="/home/">Home</a>
-        <a href="/accounts/<%= row[:account_id] %>">Account</a>
-        <a href="/dashboard/<%= row[:account_id] %>">Dashboard</a>
-        <a href="/activities/<%= row[:account_id] %>">Activities</a>
-        <a href="/books/<%= row[:account_id] %>">Books</a>
-        <a href="/subjects/<%= row[:account_id] %>">Subjects</a>
+        <a href="/accounts/<%= j.account_id %>">Account</a>
+        <a href="/dashboard/<%= j.account_id %>">Dashboard</a>
+        <a href="/activities/<%= j.account_id %>">Activities</a>
+        <a href="/books/<%= j.account_id %>">Books</a>
+        <a href="/subjects/<%= j.account_id %>">Subjects</a>
         
         <h1>Delete Subject</h1>
         
-        <h3>Deleting <%= row[:subject_name] %> from your account will delete the subject from all activities and books.</h3>
+        <h3>Deleting <%= j.subject_name %> from your account will delete the subject from all activities and books.</h3>
         
-        <h3>Are you sure you want to delete <%= row[:subject_name] %>?</h3>
+        <h3>Are you sure you want to delete <%= j.subject_name %>?</h3>
         
-        <form method="post" action="/subjects/delete/<%= row[:account_id] %>/<%= row[:subject_id] %>">
+        <form method="post" action="/subjects/delete/<%= j.account_id %>/<%= j.pk %>">
             <table>   
                 <tr>
                     <td><label for="submit">Delete Subject</label></td>

@@ -5,20 +5,20 @@
         <title>Delete Book</title>
     </head>
     <body>
-        <% @book.all do |row| %>
+        <% @book.all do |b| %>
         
         <a href="/home/">Home</a>
-        <a href="/accounts/<%= row[:account_id] %>">Account</a>
-        <a href="/dashboard/<%= row[:account_id] %>">Dashboard</a>
-        <a href="/activities/<%= row[:account_id] %>">Activities</a>
-        <a href="/books/<%= row[:account_id] %>">Books</a>
-        <a href="/subjects/<%= row[:account_id] %>">Subjects</a>
+        <a href="/accounts/<%= b.account_id %>">Account</a>
+        <a href="/dashboard/<%= b.account_id %>">Dashboard</a>
+        <a href="/activities/<%= b.account_id %>">Activities</a>
+        <a href="/books/<%= b.account_id %>">Books</a>
+        <a href="/subjects/<%= b.account_id %>">Subjects</a>
         
         <h1>Delete Book</h1>
         
-        <h3>Are you sure you want to delete <%= row[:title] %>?</h3>
+        <h3>Are you sure you want to delete <%= b.title %>?</h3>
         
-        <form method="post" action="/books/delete/<%= row[:account_id] %>/<%= row[:book_id] %>">
+        <form method="post" action="/books/delete/<%= b.account_id %>/<%= b.pk %>">
             <table>   
                 <tr>
                     <td><label for="submit">Delete Book</label></td>

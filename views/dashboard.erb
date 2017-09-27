@@ -2,52 +2,52 @@
 <html>
     <head>
         <meta charset='UTF-8' />
-        <title>MyDashboard</title>
+        <title>My Dashboard</title>
     </head>
     <body>
-        <% @account.all do |row| %>
+        <% @account.all do |i| %>
         
         <a href="/home/">Home</a>
-        <a href="/accounts/<%= row[:account_id] %>">Account</a>
-        <a href="/dashboard/<%= row[:account_id] %>">Dashboard</a>
-        <a href="/activities/<%= row[:account_id] %>">Activities</a>
-        <a href="/books/<%= row[:account_id] %>">Books</a>
-        <a href="/subjects/<%= row[:account_id] %>">Subjects</a>
+        <a href="/accounts/<%= i.pk %>">Account</a>
+        <a href="/dashboard/<%= i.pk %>">Dashboard</a>
+        <a href="/activities/<%= i.pk %>">Activities</a>
+        <a href="/books/<%= i.pk %>">Books</a>
+        <a href="/subjects/<%= i.pk %>">Subjects</a>
         
-        <h3>Welcome Back, <%= row[:acct_first_name] %>!</h3>
+        <h3>Welcome Back, <%= i.acct_first_name %>!</h3>
         
         <h1>My Dashboard</h1>
         
         <h3>Student Portfolios:
-        <% @students.each do |row| %>
-            <a href="/portfolio/<%= row[:account_id] %>/<%= row[:student_id] %>"><%= row[:stud_first_name] %></a>
-        <% end %>
+        <% @students.each do |s| %>
+            <a href="/portfolio/<%= s.account_id %>/<%= s.pk %>"><%= s.stud_first_name %></a>
+        <% end %><!--End student loop-->
         </h3> 
         
         <p><strong>Recent Activities:</strong></p>
         
-        <ol><% @activities.each do |row| %>
+        <ol><% @activities.each do |a| %>
             <li>
-                <a href="/activities/<%= row[:account_id] %>/<%= row[:activity_id] %>"><%= row[:title] %></a>, 
-                    <% @activity_subjects.where(:activity_id => row[:activity_id]).each do |row| %>
-                        (<%= row[:subject_name] %>)
+                <a href="/activities/<%= a.account_id %>/<%= a.pk %>"><%= a.title %></a>, 
+                    <% @activity_subjects.where(:activity_id => a.pk).each do |aj| %>
+                        (<%= aj.subject_name %>)
                     <% end %>
-                    <%= row[:activity_date] %> (<a href="/activities/update/<%= row[:account_id] %>/<%= row[:activity_id] %>">Edit</a>) (<a href="/activities/change/<%= row[:activity_id] %>">Delete</a>)
-            </li><% end %>
+                    <%= a.activity_date %> (<a href="/activities/update/<%= a.account_id %>/<%= a.pk %>">Edit</a>) (<a href="/activities/change/<%= a.pk %>">Delete</a>)
+            </li><% end %><!--End activity loop-->
         </ol>
         
-        <a href="/activities/new/<%= row[:account_id] %>">Add New Activity</a><br><br>
+        <a href="/activities/new/<%= i.pk %>">Add New Activity</a><br><br>
         
         <p><strong>Recent Books:</strong></p>
         
-        <ol><% @books.each do |row| %>
+        <ol><% @books.each do |b| %>
             <li>
-                <a href="/books/<%= row[:account_id] %>/<%= row[:book_id] %>"><%= row[:title] %></a>, written by <a href="/books/author/<%= row[:account_id] %>/<%= row[:author] %>"><%= row[:author] %></a>, Finish Date: <%= row[:finish_date] %> (<a href="/books/update/<%= row[:account_id] %>/<%= row[:book_id] %>">Edit</a>) (<a href="/books/change/<%= row[:book_id] %>">Delete</a>)
-            </li><% end %>
+                <a href="/books/<%= b.account_id %>/<%= b.pk %>"><%= b.title %></a>, written by <a href="/books/author/<%= b.account_id %>/<%= b.author %>"><%= b.author %></a>, Finish Date: <%= b.finish_date %> (<a href="/books/update/<%= b.account_id %>/<%= b.pk %>">Edit</a>) (<a href="/books/change/<%= b.pk %>">Delete</a>)
+            </li><% end %><!--End book loop-->
         </ol>
         
-        <a href="/books/new/<%= row[:account_id] %>">Add New Book</a><br><br>
+        <a href="/books/new/<%= i.pk %>">Add New Book</a><br><br>
         
-        <% end %>
+        <% end %><!--End account data access-->
     </body>
 </html>

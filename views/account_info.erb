@@ -2,11 +2,10 @@
 <html>
     <head>
         <meta charset='UTF-8' />
-        <title>Student Name</title>
+        <% @account.all do |a| %>
+        <title><%= a.acct_last_name %> Portfolio</title>
     </head>
     <body>
-        <% @account.all do |a| %>
-        
         <a href="/home/">Home</a>
         <!--Sequel model pk method retrieves record's primary key value (in this case the account_id)-->
         <a href="/accounts/<%= a.pk %>">Account</a>
@@ -48,7 +47,7 @@
                 <p><a href="/students/<%= s.account_id %>/<%= s.pk %>"><%= s.stud_first_name %></a> (<a href="/students/update/<%= s.pk %>">Edit</a>) (<a href="/students/change/<%= s.account_id %>/<%= s.pk %>">Delete</a>)
                 </p>
             </li>
-        <% end %>
+        <% end %><!--End students loop-->
         </ol>
         
         <a href="/students/new/<%= a.pk %>">Add New Student</a><br>
@@ -57,7 +56,7 @@
             <a href="/dashboard/<%= a.pk %>">Go to My Dashboard</a>
         </h2>
         
-        <% end %>
+        <% end %><!--End account data access-->
         
     </body>
 </html>
