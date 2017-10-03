@@ -472,6 +472,7 @@ get('/books/author/:acct_id/:author') do
    i = params['acct_id'].to_i
    author = params['author']
    
+   @account = Account.where(account_id: i)
    @books = Book.where(account_id: i).where(Sequel.like(:author, "#{author}%")).by_date.reverse
    
    erb :show_author
