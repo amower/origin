@@ -5,8 +5,10 @@
         <title>Books</title>
     </head>
     <body>
+        <!--Access account data-->
         <% @account.all do |i| %>
         
+        <!--MENU-->
         <a href="/home/">Home</a>
         <a href="/accounts/<%= i.pk %>">Account</a>
         <a href="/dashboard/<%= i.pk %>">Dashboard</a>
@@ -14,37 +16,83 @@
         <a href="/books/<%= i.pk %>">Books</a>
         <a href="/subjects/<%= i.pk %>">Subjects</a>
         
-        <h1>Books</h1>
+        <h1>Book List</h1>
         
+         <!--Link to add a new book-->
         <a href="/books/new/<%= i.pk %>">Add New Book</a><br>
         
+<!------Setup alphabetical sorting of authors---------------------------> 
+        
+        <!--Table to allow for name & data on the same line-->
+        <!--Probably worthless when design comes into play-->
+        <table>
+        <tr>
+            <td>
+                <h4>Sort by Author:</h4>
+            </td>
+            
+            <td>
+                <!--Create array for author's last-name initial-->
+                <% initial_array = [] %>
+                
+                <!--Create array containing alphabet-->
+                <% alphabet = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"] %>
+                
+                <!--Iterate through all books and push author's initial into an array-->
+                <% @books.each do |b| %>
+                    <% letter = b.author.initial %>
+                    <% initial_array.push(letter) %>
+                <% end %>
+                
+                <!--Iterate through alphabet-->
+                <% alphabet.each do |l| %>
+                    <!--If an author exists with the initial, link the value-->
+                    <% if initial_array.include?(l) %>
+                        <a href="/books/sort/<%= i.pk %>/<%= l %>"><%= l %></a>
+                    <!--If there are no authors under the current letter, print value only-->
+                    <% else %>
+                        <%= l %>
+                    <% end %><!--End if statement-->
+                <% end %><!--End alphabet loop-->
+            </td>
+        </tr>
+        </table>
+        
 <!------Setup to organize books by year---------------------------------->
+        
         <!--Create empty array for years-->    
         <% year_array = [] %>
+        
         <!--Iterate through all activities and assign the year to a variable-->
         <% @books.each do |b| %>
             <% year = b.finish_date.year %>
             <!--Push each value into the array-->
             <% year_array.push(year) %>
-        <% end %>
-        <!--Remove duplicate elements in the array, then iterate through each unique value-->
-        <% year_array.uniq.each { |year| %>
+        <% end %><!--End book loop-->
         
+        <!--Remove duplicate elements in the array, then iterate through each unique value-->
+        <% year_array.uniq.each do |year| %>
+        
+        <!--Year heading-->
         <h3><strong><%= year %></strong></h3>
         <ol>
+            <!--Iterate through all books in given year-->
             <% @books.where(Sequel.like(:finish_date, "#{year}%")).each do |b| %>
             <li>
-                <a href="/books/<%= b.account_id %>/<%= b.pk %>"><%= b.title %></a>, by <a href="/books/author/<%= b.account_id %>/<%= b.author %>"><%= b.author %></a>. Finished on <%= b.finish_date.month %>/<%= b.finish_date.day %>. Rated <%= b.rating %> stars.  
-                    <% if(b.fiction) %>
-                        <%= "Fiction" %>
-                    <% else %>
-                        <%= "Nonfiction" %>
-                    <% end %>
+                <!--Linked title-->
+                <a href="/books/<%= b.account_id %>/<%= b.pk %>"><%= b.title %></a>, 
+                
+                <!--Linked author-->
+                by <a href="/books/author/<%= b.account_id %>/<%= b.author %>"><%= b.author %></a>. 
+                
+                <!--Finish_date-->
+                Finished on <%= b.finish_date.month %>/<%= b.finish_date.day %>
             </li>
-            <% end %><!--End book loop-->
+            <% end %><!--End books loop for given year-->
         </ol>
   
-        <% } %><!--End year iteration-->
+        <% end %><!--End iteration through years-->
+<!------------------------------------------------------------------------>
         
         <% end %><!--End account data access-->
         

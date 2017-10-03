@@ -103,3 +103,9 @@ end
 Subject.dataset_module do
     order :by_name, :subject_name
 end
+
+class String
+  def initial
+    self[0,1]
+  end
+end

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='UTF-8' />
+        <title>Sorted Books</title>
+    </head>
+    <body>
+        <!--Access account data-->
+        <% @account.all do |i| %>
+        
+        <!--MENU-->
+        <a href="/home/">Home</a>
+        <a href="/accounts/<%= i.pk %>">Account</a>
+        <a href="/dashboard/<%= i.pk %>">Dashboard</a>
+        <a href="/activities/<%= i.pk %>">Activities</a>
+        <a href="/books/<%= i.pk %>">Books</a>
+        <a href="/subjects/<%= i.pk %>">Subjects</a>
+        
+        <!--Target the 'sort' letter-->
+        <% books_array = @books.to_a %>
+        <% name = books_array[0].author %>
+        <h3>Books with Author's Last Name "<%= name.initial %>"</h3>
+        
+<!------Setup alphabetical sorting of authors------------>  
+        
+        <!--Create array for author's last-name initial-->
+        <% initial_array = [] %>
+        
+        <!--Create array containing alphabet-->
+        <% alphabet = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"] %>
+        
+        <!--Iterate through all books and push author's initial into an array-->
+        <% Book.where(account_id: i.pk).each do |b| %>
+            <% letter = b.author.initial %>
+            <% initial_array.push(letter) %>
+        <% end %>
+        
+        <!--Iterate through alphabet-->
+        <% alphabet.each do |l| %>
+            <!--If an author exists with the initial, link the value-->
+            <% if initial_array.include?(l) %>
+                <a href="/books/sort/<%= i.pk %>/<%= l %>"><%= l %></a>
+            <!--If there are no authors under the current letter, print value only-->
+            <% else %>
+                <%= l %>
+            <% end %><!--End if statement-->
+        <% end %><!--End alphabet loop-->
+
+<!------Setup to organize books by author---------------------------------->
+        
+        <!--Create empty array for authors-->    
+        <% author_array = [] %>
+        
+        <!--Iterate through all books and assign the author to a variable-->
+        <% @books.each do |b| %>
+            <% author = b.author %>
+            <!--Push each author into the array-->
+            <% author_array.push(author) %>
+        <% end %>
+        
+        <!--Remove duplicate elements in the array, then iterate through each unique value-->
+        <% author_array.uniq.each do |author| %>
+        
+        <!--Author heading-->
+        <h3><strong><%= author %></strong></h3>
+        <ol>
+            <!--Iterate through all books by current author-->
+            <% @books.where(Sequel.like(:author, "#{author}%")).each do |b| %>
+            <li>
+                <!--Linked title-->
+                <a href="/books/<%= b.account_id %>/<%= b.pk %>"><%= b.title %></a>, 
+                
+                <!--Finish_date-->
+                Finished <%= b.finish_date.month %>/<%= b.finish_date.day %>
+            </li>
+            <% end %><!--End books loop for given author-->
+        </ol>
+  
+        <% end %><!--End iteration through authors-->
+<!------------------------------------------------------------------------>
+        
+        <% end %><!--End account data access-->
+        
+    </body>
+</html>
