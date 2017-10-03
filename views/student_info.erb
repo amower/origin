@@ -2,43 +2,45 @@
 <html>
     <head>
         <meta charset='UTF-8' />
-        <title>Student Name</title>
+        <% @student.all do |s| %>
+        <title><%= s.stud_first_name %></title>
     </head>
     <body>
-        <% @student.all do |row| %>
         
         <a href="/home/">Home</a>
-        <a href="/accounts/<%= row[:account_id] %>">Account</a>
-        <a href="/dashboard/<%= row[:account_id] %>">Dashboard</a>
-        <a href="/activities/<%= row[:account_id] %>">Activities</a>
-        <a href="/books/<%= row[:account_id] %>">Books</a>
-        <a href="/subjects/<%= row[:account_id] %>">Subjects</a>
+        <a href="/accounts/<%= s.account_id %>">Account</a>
+        <a href="/dashboard/<%= s.account_id %>">Dashboard</a>
+        <a href="/activities/<%= s.account_id %>">Activities</a>
+        <a href="/books/<%= s.account_id %>">Books</a>
+        <a href="/subjects/<%= s.account_id %>">Subjects</a>
         
-        <h1><%= row[:stud_first_name] %> <%= row[:stud_last_name] %></h1>
+        <h1><%= s.stud_first_name %> <%= s.stud_last_name %></h1>
         
         <table>
             <tr>
                 <td><strong>Age:</strong></td>
-                <!--Calculate age: currently accurate within a year - not precise-->
-                <td><%= Time.now.year - row[:birth_date].year %> (ish)</td>
+                <!--Calculate age-->
+                <% age = Date.today.year - s.birth_date.year %>
+                <% age -= 1 if Date.today.month < s.birth_date.month || (Date.today.month == s.birth_date.month && Date.today.day < s.birth_date.day) %>
+                <td><%= age %></td>
             </tr>
             <tr>
                 <td><strong>Birthday:</strong></td>
-                <td><%= row[:birth_date].month %>-<%= row[:birth_date].day %>-<%= row[:birth_date].year %></td>
+                <td><%= s.birth_date.month %>-<%= s.birth_date.day %>-<%= s.birth_date.year %></td>
             </tr>
             <tr>
                 <td><strong>Join Date:</strong></td>
-                <td><%= row[:enroll_date].month %>-<%= row[:enroll_date].day %>-<%= row[:enroll_date].year %></td>
+                <td><%= s.enroll_date.month %>-<%= s.enroll_date.day %>-<%= s.enroll_date.year %></td>
             </tr>
-            <tr><% @account.all do |row| %>
+            <tr><% @account.all do |i| %>
                 <td><strong>Account Holder:</strong></td>
-                <td><%= row[:acct_first_name] %> <%= row[:acct_last_name] %></td>
-                <% end %>
+                <td><%= i.acct_first_name %> <%= i.acct_last_name %></td>
+                <% end %><!--End account data access-->
             </tr>
         </table>
     
-        <a href="/portfolio/<%= row[:account_id] %>/<%= row[:student_id] %>">Go to <%= row[:stud_first_name] %>'s Portfolio</a><br>
+        <a href="/portfolio/<%= s.account_id %>/<%= s.pk %>">Go to <%= s.stud_first_name %>'s Portfolio</a><br>
             
-        <% end %>
+        <% end %><!--End student data access-->
     </body>
 </html>

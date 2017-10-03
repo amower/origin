@@ -6,44 +6,68 @@
     </head>
     
     <body>
-        <% @subject.all do |row| %>
+        <!--Access data by subject-->
+        <% @subject.all do |j| %>
         
+        <!--MENU-->
         <a href="/home/">Home</a>
-        <a href="/accounts/<%= row[:account_id] %>">Account</a>
-        <a href="/dashboard/<%= row[:account_id] %>">Dashboard</a>
-        <a href="/activities/<%= row[:account_id] %>">Activities</a>
-        <a href="/books/<%= row[:account_id] %>">Books</a>
-        <a href="/subjects/<%= row[:account_id] %>">Subjects</a>
+        <a href="/accounts/<%= j.account_id %>">Account</a>
+        <a href="/dashboard/<%= j.account_id %>">Dashboard</a>
+        <a href="/activities/<%= j.account_id %>">Activities</a>
+        <a href="/books/<%= j.account_id %>">Books</a>
+        <a href="/subjects/<%= j.account_id %>">Subjects</a>
         
-        <% end %>
+        <h2><%= j.subject_name %> Activities</h2>
         
-        <% @subject.each do |row| %> 
-            <h1><%= row[:subject_name] %> Activities</h1>
-            
-            <ol><% @activities.each do |row| %>
+            <!--List all subject activities-->
+            <ol reversed><% @activities.each do |a| %>
                 <li>
-                    <a href="/activities/<%= row[:account_id] %>/<%= row[:activity_id] %>"><%= row[:activity_date] %>: <%= row[:title] %>, 
-                        <% @students.where(Sequel[:activities_students][:activity_id] => row[:activity_id]).each do |row| %>
-                            (<%= row[:stud_first_name] %>)
-                        <% end %>
-                        <%= row[:duration] %> minutes</a>
+                    <!--Date of activity-->
+                    <%= a.activity_date %>
+                    
+                    <!--Linked activity title-->
+                    <a href="/activities/<%= a.account_id %>/<%= a.pk %>"> <%= a.title %></a>, 
+                    
+                    <!--List of students who participated in the activity-->
+                    <% @students.where(activity_id: a.pk).each do |s| %>
+                        (<%= s.stud_first_name %>)
+                    <% end %>
+                    
+                    <!--Format activity duration verbage-->
+                    <% if(a.duration < 60) %>
+                        <%= a.duration %> minutes
+                    <% elsif(a.duration === 60) %>
+                        <%= a.duration / 60 %> hour
+                    <% else %>
+                        <%= a.duration / 60 %> hours
+                    <% end %>
                 </li>
-                <% end %>
-            </ol><br>
-            
-            <h1><%= row[:subject_name] %> Books</h1>
-            
-            <ol><% @books.each do |row| %>
+            <% end %><!--End activity loop-->
+            </ol>
+        
+        <h2><%= j.subject_name %> Books</h2>
+        
+            <!--List all subject book-->
+            <ol reversed><% @books.each do |b| %>
                 <li>
-                    <a href="/books/<%= row[:account_id] %>/<%= row[:book_id] %>"><%= row[:title] %> by <%= row[:author] %>, Finished <%= row[:finish_date] %>
-                        <% @book_students.where(Sequel[:books_students][:book_id] => row[:book_id]).each do |row| %>
-                            (<%= row[:stud_first_name] %>)
-                        <% end %></a>
+                    <!--Linked book title-->
+                    <a href="/books/<%= b.account_id %>/<%= b.pk %>"><%= b.title %></a> 
+                    
+                    <!--Linked author-->
+                    by <a href="/books/author/<%= b.account_id %>/<%= b.author %>"><%= b.author %></a>, 
+                    
+                    <!--Date book finished-->
+                    Finished <%= b.finish_date %>
+                    
+                    <!--List students who read the book-->
+                    <% @book_students.where(book_id: b.pk).each do |s| %>
+                        (<%= s.stud_first_name %>)
+                    <% end %>
                 </li>
-                <% end %>
-            </ol><br>
+            <% end %><!--End book loop-->
+            </ol>
             
-        <% end %>
+        <% end %><!--End subject data access-->
         
     </body>
 </html>

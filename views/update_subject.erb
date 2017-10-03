@@ -5,34 +5,38 @@
         <title>Update Subject</title>
     </head>
     <body>
-        <% @subject.all do |row| %>
+        <!--Access subject data-->
+        <% @subject.all do |j| %>
         
+        <!--MENU-->
         <a href="/home/">Home</a>
-        <a href="/accounts/<%= row[:account_id] %>">Account</a>
-        <a href="/dashboard/<%= row[:account_id] %>">Dashboard</a>
-        <a href="/activities/<%= row[:account_id] %>">Activities</a>
-        <a href="/books/<%= row[:account_id] %>">Books</a>
-        <a href="/subjects/<%= row[:account_id] %>">Subjects</a>
+        <a href="/accounts/<%= j.account_id %>">Account</a>
+        <a href="/dashboard/<%= j.account_id %>">Dashboard</a>
+        <a href="/activities/<%= j.account_id %>">Activities</a>
+        <a href="/books/<%= j.account_id %>">Books</a>
+        <a href="/subjects/<%= j.account_id %>">Subjects</a>
         
         <h2>Current Subjects</h2>
         
         <ol>
-            <% @subjects.each do |row| %>
-                <li><%= row[:subject_name] %></li>
+            <!--List all subjects currently on account-->
+            <% @subjects.each do |j| %>
+                <li><%= j.subject_name %></li>
             <% end %>
         </ol>
         
         <h1>Update Subject</h1>
         
-        <form method="post" action="/subjects/create/<%= row[:account_id] %>/<%= row[:subject_id] %>">
+        <!--Form prefilled with current subject data-->
+        <form method="post" action="/subjects/create/<%= j.account_id %>/<%= j.pk %>">
             <table>
                 <tr>
                     <td><label for="subject_name">Subject Name:</label></td>
-                    <td><input type="text" name="subject_name" value="<%= row[:subject_name] %>"></td>
+                    <td><input type="text" name="subject_name" value="<%= j.subject_name %>"></td>
                 </tr>
                 <tr>
                     <td><label for="description">Description (Opt):</label></td>
-                    <td><input type="text" name="description" value="<%= row[:description] %>"></td>
+                    <td><input type="text" name="description" value="<%= j.description %>"></td>
                 </tr>
                 <tr>
                     <td><input type="submit"></td>
@@ -40,7 +44,7 @@
             </table>
         </form>
         
-        <% end %>
+        <% end %><!--End subject data access-->
         
     </body>
 </html>
