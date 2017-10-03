@@ -455,6 +455,7 @@ end
 
 
 
+#View books by authors on account sorted alphabetically
 get('/books/sort/:acct_id/:letter') do
    i = params['acct_id'].to_i
    l = params['letter']
@@ -787,8 +788,3 @@ get('/portfolio/:acct_id/:stud_id/:subj_id') do
    
    erb :student_subjects
 end
-
-
-#Date.parse('Feb 3, 2010')
-# => 2010-2-3
-#.parse parses the given representation of date and time and creates a date object
