@@ -18,10 +18,11 @@ class Account < Sequel::Model #dataset for DB[:accounts]
     one_to_many :books_students
     one_to_many :books_subjects
     one_to_many :subjects
-end
-
-Account.dataset_module do
-    order :by_first_name, :acct_first_name
+    
+    #Dataset functions
+    dataset_module do
+        order :by_first_name, :acct_first_name
+    end
 end
 
 class Activity < Sequel::Model #dataset for DB[:activities]
@@ -30,11 +31,11 @@ class Activity < Sequel::Model #dataset for DB[:activities]
     one_to_many :activities_subjects
     many_to_one :account
     
-end
-
-Activity.dataset_module do
-    order :by_date, :activity_date
-    limit :five, 5
+    #Dataset functions
+    dataset_module do
+        order :by_date, :activity_date
+        limit :five, 5
+    end
 end
 
 class ActivitiesStudent < Sequel::Model #dataset for DB[:activities_students]
@@ -63,11 +64,12 @@ class Book < Sequel::Model #dataset for DB[:books]
         end
     end
     
-end
-
-Book.dataset_module do
-    order :by_date, :finish_date
-    limit :five, 5
+    #Dataset functions
+    dataset_module do
+        order :by_date, :finish_date
+        limit :five, 5
+    end
+    
 end
 
 class BooksStudent < Sequel::Model #dataset for DB[:books_students]
@@ -87,10 +89,11 @@ class Student < Sequel::Model #dataset for DB[:students]
     many_to_one :account
     one_to_many :activities_students
     one_to_many :books_students
-end
-
-Student.dataset_module do
-    order :by_birth, :birth_date
+    
+    #Dataset functions
+    dataset_module do
+        order :by_birth, :birth_date
+    end
 end
 
 class Subject < Sequel::Model #dataset for DB[:subjects]
@@ -98,10 +101,11 @@ class Subject < Sequel::Model #dataset for DB[:subjects]
     many_to_one :account
     one_to_many :activities_subjects
     one_to_many :books_subjects
-end
-
-Subject.dataset_module do
-    order :by_name, :subject_name
+    
+    #Dataset functions
+    dataset_module do
+        order :by_name, :subject_name
+    end
 end
 
 class String
