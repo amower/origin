@@ -35,6 +35,7 @@ class Activity < Sequel::Model #dataset for DB[:activities]
     dataset_module do
         order :by_date, :activity_date
         limit :five, 5
+        limit :ten, 10
     end
 end
 
@@ -60,6 +61,7 @@ class Book < Sequel::Model #dataset for DB[:books]
     dataset_module do
         order :by_date, :finish_date
         limit :five, 5
+        limit :ten, 10
     end
     
 end

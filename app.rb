@@ -146,10 +146,10 @@ get('/dashboard/:acct_id') do
    i = params['acct_id'].to_i
    
    @account = Account.where(account_id: i)
-   @activities = Activity.where(account_id: i).by_date.reverse.five
+   @activities = Activity.where(account_id: i).by_date.reverse.ten
    @activity_subjects = Subject.association_join(:activities_subjects)
    @subjects = Subject.where(account_id: i).by_name
-   @books = Book.where(account_id: i).by_date.reverse.five
+   @books = Book.where(account_id: i).by_date.reverse.ten
    @students = Student.where(account_id: i).by_birth
    
    erb :dashboard
