@@ -69,10 +69,10 @@
                 <a href="/books/<%= b.account_id %>/<%= b.pk %>"><%= b.title %></a>, 
                 
                 <!--Linked author-->
-                by <a href="/books/author/<%= b.account_id %>/<%= b.author %>"><%= b.author %></a>. 
+                by <a href="/books/author/<%= b.account_id %>/<%= b.author %>"><%= b.author %></a>, 
                 
                 <!--Finish_date-->
-                Read in <%= b.finish_date.month %>/<%= b.finish_date.year %>
+                read in <%= b.finish_date.month %>/<%= b.finish_date.year %>
             </li>
             <% end %><!--End books loop for given year-->
         </ol>

@@ -6,25 +6,27 @@
     <!--List student activities under selected subject-->
     <ol reversed><% @activities.each do |a| %>
         <li>
-            <!--Date of activity-->
-            <%= a.activity_date %>
-            
             <!--Linked activity title-->
-            <a href="/activities/<%= a.account_id %>/<%= a.pk %>"> <%= a.title %></a>, 
+            <a href="/activities/<%= a.account_id %>/<%= a.pk %>"> <%= a.title %></a>
+            
+            <!--Activity date-->
+            on <%= a.activity_date.month %>/<%= a.activity_date.day %>/<%= a.activity_date.year %>
             
             <!--List of subjects associated with the activity-->
-            <% Subject.association_join(:activities_subjects).where(:activity_id => a.pk).each do |j| %>
-                (<%= j.subject_name %>)
-            <% end %>,
+            <%# Subject.association_join(:activities_subjects).where(:activity_id => a.pk).each do |j| %>
+                <%#= j.subject_name %>
+            <%# end %>
             
             <!--Format activity duration verbage-->
-            <% if(a.duration < 60) %>
-                <%= a.duration %> minutes
-            <% elsif(a.duration === 60) %>
-                <%= a.duration / 60 %> hour
-            <% else %>
-                <%= a.duration / 60 %> hours
-            <% end %>
+            <!--
+            <%# if(a.duration < 60) %>
+                <%#= a.duration %> minutes
+            <%# elsif(a.duration === 60) %>
+                <%#= a.duration / 60 %> hour
+            <%# else %>
+                <%#= a.duration / 60 %> hours
+            <%# end %>
+            -->
         </li>
     <% end %><!--End activity loop-->
     </ol>
@@ -38,10 +40,10 @@
             <a href="/books/<%= b.account_id %>/<%= b.pk %>"><%= b.title %></a>,
             
             <!--Linked author-->
-            by <a href="/books/author/<%= b.account_id %>/<%= s.pk %>/<%= b.author %>"><%= b.author %></a>.
+            by <a href="/books/author/<%= b.account_id %>/<%= s.pk %>/<%= b.author %>"><%= b.author %></a>,
             
             <!--Date book finished-->
-            Read in <%= b.finish_date.month %>/<%= b.finish_date.year %>
+            read in <%= b.finish_date.month %>/<%= b.finish_date.year %>
         </li>
     <% end %><!--End book loop-->
     </ol>

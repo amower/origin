@@ -15,7 +15,7 @@
     
     <h3>Recent Activities:</h3>
     
-    <ol><!--List recent activities-->
+    <ol reversed><!--List recent activities-->
         <% @activities.each do |a| %>
         <li>
             <!--Linked title-->
@@ -43,10 +43,10 @@
             <a href="/books/<%= b.account_id %>/<%= b.pk %>"><%= b.title %></a>,
             
             <!--Linked author-->
-            by <a href="/books/author/<%= b.account_id %>/<%= b.author %>"><%= b.author %></a>. 
+            by <a href="/books/author/<%= b.account_id %>/<%= b.author %>"><%= b.author %></a>, 
             
             <!--Finish Date-->
-            Read in <%= b.finish_date.month %>/<%= b.finish_date.year %> 
+            read in <%= b.finish_date.month %>/<%= b.finish_date.year %> 
             
         </li><% end %><!--End book loop-->
     </ol>

@@ -35,13 +35,13 @@
             (<%= @activities.where(subject_id: j.pk).count %>)
             
             <!--List of subject-related activities-->
-            <ol><% @activities.where(subject_id: j.pk).each do |a| %>
+            <ol reversed><% @activities.where(subject_id: j.pk).each do |a| %>
                 <li>
                     <!--Activity title-->
-                    <%= a.title %>, 
+                    <a href="/activities/<%= a.account_id %>/<%= a.pk %>"><%= a.title %></a> 
                     
                     <!--Activity date-->
-                    <%= a.activity_date %>
+                    on <%= a.activity_date.month %>/<%= a.activity_date.day %>/<%= a.activity_date.year %>
                 </li>
                 <% end %><!--End activity loop-->
             </ol>

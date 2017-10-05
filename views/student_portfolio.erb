@@ -1,10 +1,10 @@
 <!--Access student data-->
 <% @student.all do |s| %> 
 
-    <h1><%= s.stud_first_name %>'s Education Portfolio</h1>
+    <h2><%= s.stud_first_name %>'s Education Portfolio</h2>
 
 <!--------------------List Subjects w/Count------------------------------->    
-    <h2>View by Subject</h2>
+    <h3>View <%= s.stud_first_name %>'s Portfolio by Subject</h3>
         
     <!--List of subjects with count of related activities for the current student -->
     <% @subjects.each do |j| %>
@@ -18,7 +18,7 @@
     <% end %><!--End subject loop-->
 
 <!---------------------List all activities-------------------------------->   
-    <h2><%= s.stud_first_name %>'s Activities</h2>
+    <h3><%= s.stud_first_name %>'s Activities</h3>
         
     <!--Link to add new activity-->
     <a href="/activities/new/<%= s.account_id %>">Add New Activity</a>
@@ -26,31 +26,33 @@
     <!--List all student activities-->
     <ol reversed><% @activities.each do |a| %>
         <li>
-            <!--Date of activity-->
-            <%= a.activity_date %>
-            
             <!--Linked activity title-->
-            <a href="/activities/<%= a.account_id %>/<%= a.pk %>"><%= a.title %></a>,
+            <a href="/activities/<%= a.account_id %>/<%= a.pk %>"><%= a.title %></a>
+            
+            <!--Date of activity-->
+            on <%= a.activity_date.month %>/<%= a.activity_date.day %>/<%= a.activity_date.year %>
             
             <!--List subjects associated with the activity-->
-            <% Subject.association_join(:activities_subjects).where(activity_id: a.pk).each do |j| %>
-                (<%= j.subject_name %>)
-            <% end %>
+            <%# Subject.association_join(:activities_subjects).where(activity_id: a.pk).each do |j| %>
+                <%#= j.subject_name %>
+            <%# end %>
             
             <!--Format activity duration verbage-->
-            <% if(a.duration < 60) %>
-                <%= a.duration %> minutes
-            <% elsif(a.duration === 60) %>
-                <%= a.duration / 60 %> hour
-            <% else %>
-                <%= a.duration / 60 %> hours
-            <% end %>
+            <!--
+            <%# if(a.duration < 60) %>
+                <%#= a.duration %> minutes
+            <%# elsif(a.duration === 60) %>
+                <%#= a.duration / 60 %> hour
+            <%# else %>
+                <%#= a.duration / 60 %> hours
+            <%# end %>
+            -->
         </li>
     <% end %><!--End activity loop-->
     </ol>
 
 <!----------------------List all books------------------------------------>   
-    <h2><%= s.stud_first_name %>'s Books</h2>
+    <h3><%= s.stud_first_name %>'s Books</h3>
         
     <!--Link to add new book-->
     <a href="/books/new/<%= s.account_id %>">Add New Book</a>
@@ -62,10 +64,10 @@
             <a href="/books/<%= b.account_id %>/<%= b.pk %>"><%= b.title %>,</a> 
             
             <!--Linked author-->
-            by <a href="/books/author/<%= b.account_id %>/<%= s.pk %>/<%= b.author %>"><%= b.author %></a>. 
+            by <a href="/books/author/<%= b.account_id %>/<%= s.pk %>/<%= b.author %>"><%= b.author %></a>, 
             
             <!--Date book finished-->
-            Read in <%= b.finish_date.month %>/<%= b.finish_date.year %>
+            read in <%= b.finish_date.month %>/<%= b.finish_date.year %>
         </li>
     <% end %><!--End book loop-->
     </ol>

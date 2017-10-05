@@ -20,19 +20,19 @@
     
         <h3><strong><%= year %></strong></h3>
         
-        <ol><!--List all activities from the current year-->
+        <ol reversed><!--List all activities from the current year-->
             <% @activities.where(Sequel.like(:activity_date, "#{year}%")).each do |a| %>
             <li>
                 <!--Linked title-->
                 <a href="/activities/<%= a.account_id %>/<%= a.pk %>"><%= a.title %></a> 
                     
                 <!--List each subject connected to the activity-->
-                <% Subject.association_join(:activities_subjects).where(:activity_id => a.pk).each do |j| %>
-                    (<%= j.subject_name %>)
-                <% end %>
+                <%# Subject.association_join(:activities_subjects).where(:activity_id => a.pk).each do |j| %>
+                    <%#= j.subject_name %>
+                <%# end %>
                 
                 <!--Formatted activity date-->
-                <%= a.activity_date.month %>-<%= a.activity_date.day %>
+                on <%= a.activity_date.month %>/<%= a.activity_date.day %>
             </li>
             <% end %><!--End activities for current year-->
         </ol>

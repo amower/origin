@@ -11,10 +11,10 @@
             <!--Link title-->
             <a href="/books/<%= b.account_id %>/<%= b.pk %>"><%= b.title %></a>, 
             <!--List author-->
-            by <%= b.author %>. 
+            by <%= b.author %>, 
             
             <!--Formatted finish date-->
-            Read in <%= b.finish_date.month %>/<%= b.finish_date.year %> 
+            read in <%= b.finish_date.month %>/<%= b.finish_date.year %> 
         </li>
         <% end %><!--End book loop-->
     </ol>
