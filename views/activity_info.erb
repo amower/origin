@@ -14,7 +14,7 @@
     <table>
         <tr>
             <td><strong>Date of Activity:</strong></td>
-            <td><%= a.activity_date %></td>
+            <td><%= a.activity_date.month %>/<%= a.activity_date.day %>/<%= a.activity_date.year %></td>
         </tr>
         <tr>
             <td><strong>Duration:</strong></td>
@@ -31,12 +31,24 @@
             <td><strong>Description:</strong></td>
             <td><%= a.description %></td>
         </tr>
-    </table><br>
+    </table>
+    
+    <br>
+    
+    <!--Link to edit activity-->
+    <a href="/activities/update/<%= a.account_id %>/<%= a.pk %>">Edit Activity</a> 
+    
+    <br>
+    
+    <!--Link to delete activity-->
+    <a href="/activities/change/<%= a.account_id %>/<%= a.pk %>">Delete Activity</a>
+    
+    <br>
     
     <!--Link to portfolio of each student who participated in activity--> 
     <h3><% @students.each do |s| %>
-        <a href="/portfolio/<%= s.account_id %>/<%= s.pk %>">View <%= s.stud_first_name %>'s Portfolio</a><br></h3>
-        <% end %><!--End to students loop-->
+        <a href="/portfolio/<%= s.account_id %>/<%= s.pk %>">View <%= s.stud_first_name %>'s Portfolio</a><br>
+        <% end %></h3><!--End to students loop-->
     
 <% end %><!--End activity data access-->
         

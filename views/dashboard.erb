@@ -19,22 +19,15 @@
         <% @activities.each do |a| %>
         <li>
             <!--Linked title-->
-            <a href="/activities/<%= a.account_id %>/<%= a.pk %>"><%= a.title %></a>, 
+            <a href="/activities/<%= a.account_id %>/<%= a.pk %>"><%= a.title %></a> 
             
             <!--Subjects associated with activity-->
-            <% @activity_subjects.where(:activity_id => a.pk).each do |j| %>
-                (<%= j.subject_name %>)
-            <% end %>
+            <%# @activity_subjects.where(:activity_id => a.pk).each do |j| %>
+                <!--(<%#= j.subject_name %>)-->
+            <%# end %>
             
             <!--Activity date-->
-            <%= a.activity_date %> 
-            
-            <!--Link to edit activity-->
-            (<a href="/activities/update/<%= a.account_id %>/<%= a.pk %>">Edit</a>) 
-            
-            <!--Link to delete activity-->
-            (<a href="/activities/change/<%= a.account_id %>/<%= a.pk %>">Delete</a>)
-            
+            on <%= a.activity_date.month %>/<%= a.activity_date.day %>/<%= a.activity_date.year %> 
         </li><% end %><!--End activity loop-->
     </ol>
     

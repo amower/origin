@@ -39,19 +39,19 @@
         </tr>
         <tr>
             <td><strong>Date Finished:</strong></td>
-            <td><%= b.finish_date %></td>
+            <td><%= b.finish_date.month %>/<%= b.finish_date.day %>/<%= b.finish_date.year %></td>
         </tr>
     </table>
     
     <br>
     
     <!--Link to edit book-->
-    (<a href="/books/update/<%= b.account_id %>/<%= b.pk %>">Edit Book</a>) 
+    <a href="/books/update/<%= b.account_id %>/<%= b.pk %>">Edit Book</a> 
         
     <br>
         
     <!--Link to delete book-->
-    (<a href="/books/change/<%= b.account_id %>/<%= b.pk %>">Delete Book</a>)
+    <a href="/books/change/<%= b.account_id %>/<%= b.pk %>">Delete Book</a>
 
 <% end %><!--End book data access-->
         
