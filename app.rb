@@ -14,23 +14,26 @@ static_subjects = ['Foreign Language', 'Health & Fitness', 'Home Economics', 'La
 
 #Homepage currently with just a list of account holders
 get('/home/') do
-   #@accounts = Account.order(:acct_first_name)
+   
    @accounts = Account.by_first_name
-   erb :home
+   
+   #Templates take a second argument, the options hash. Here I disable the layout for this file.
+   erb :home, :layout => false
 end
 
 
 
 #Form to create a new account
 get('/accounts/new') do
-   erb :new_account
+   erb :new_account, :layout => false
 end
 
 
 
 #Form to login to existing account
 get('/accounts/login') do
-   erb :login
+   #Disable layout for this file
+   erb :login, :layout => false
 end
 
 
@@ -228,6 +231,7 @@ get('/activities/update/:acct_id/:act_id') do
    i = params['acct_id'].to_i
    a = params['act_id'].to_i
    
+   @account = Account.where(account_id: i)
    @activity = Activity.where(activity_id: a)
    @students = Student.where(account_id: i)
    @subjects = Subject.where(account_id: i)
@@ -277,9 +281,11 @@ end
 
 
 #Retrieve the form to confirm deletion of an activity
-get('/activities/change/:act_id') do
+get('/activities/change/:acct_id/:act_id') do
+   i = params['acct_id'].to_i
    a = params['act_id'].to_i
    
+   @account = Account.where(account_id: i)
    @activity = Activity.where(activity_id: a)
    
    erb :delete_activity
@@ -378,6 +384,7 @@ get('/books/update/:acct_id/:book_id') do
    i = params['acct_id'].to_i
    b = params['book_id'].to_i
    
+   @account = Account.where(account_id: i)
    @book = Book.where(book_id: b)
    @students = Student.where(account_id: i)
    @subjects = Subject.where(account_id: i)
@@ -430,9 +437,11 @@ end
 
 
 #Get form to confirm deletion of said book
-get('/books/change/:book_id') do
+get('/books/change/:acct_id/:book_id') do
+   i = params['acct_id'].to_i
    b = params['book_id'].to_i
    
+   @account = Account.where(account_id: i)
    @book = Book.where(book_id: b)
    
    erb :delete_book
@@ -486,6 +495,7 @@ get('/books/author/:acct_id/:stud_id/:author') do
    s = params['stud_id'].to_i
    author = params['author']
    
+   @account = Account.where(account_id: i)
    @student = Student.where(student_id: s, account_id: i)
    @books = Book.association_join(:books_students).where(student_id: s).where(Sequel.like(:author, "#{author}%")).by_date.reverse
    
@@ -545,6 +555,7 @@ get('/subjects/update/:acct_id/:subj_id') do
    i = params['acct_id'].to_i
    j = params['subj_id'].to_i
    
+   @account = Account.where(account_id: i)
    @subject = Subject.where(subject_id: j)
    @subjects = Subject.where(account_id: i)
    
@@ -570,9 +581,11 @@ end
 
 
 #Form to delete a subject
-get('/subjects/change/:subj_id') do
+get('/subjects/change/:acct_id/:subj_id') do
+   i = params['acct_id'].to_i
    j = params['subj_id'].to_i
    
+   @account = Account.where(account_id: i)
    @subject = Subject.where(subject_id: j)
    
    erb :delete_subject
@@ -640,9 +653,11 @@ end
 
 
 #Form for updating student info - prepopulated with current info
-get('/students/update/:stud_id') do
+get('/students/update/:acct_id/:stud_id') do
+   i = params['acct_id'].to_i
    s = params['stud_id'].to_i
    
+   @account = Account.where(account_id: i)
    @student = Student.where(student_id: s)
    
    erb :update_student
@@ -764,6 +779,7 @@ get('/subjects/:acct_id/:subj_id') do
    i = params['acct_id'].to_i
    j = params['subj_id'].to_i
    
+   @account = Account.where(account_id: i)
    @subject = Subject.where(subject_id: j, account_id: i)
    @activities = Activity.association_join(:activities_subjects).where(subject_id: j).by_date.reverse
    @students = Student.association_join(:activities_students).by_birth
@@ -781,6 +797,7 @@ get('/portfolio/:acct_id/:stud_id/:subj_id') do
    s = params['stud_id'].to_i
    j = params['subj_id'].to_i
    
+   @account = Account.where(account_id: i)
    @student = Student.where(student_id: s, account_id: i)
    @subject = Subject.where(subject_id: j)
    @activities = Activity.association_join(:activities_subjects).where(subject_id: j).association_join(:activities_students).where(student_id: s).by_date.reverse
