@@ -14,18 +14,7 @@
             by <%= b.author %>. 
             
             <!--Formatted finish date-->
-            Finished on <%= b.finish_date.month %>/<%= b.finish_date.day %>. 
-            
-            <!--Rating-->
-            Rated <%= b.rating %> stars
-            
-            <!--Fiction/Nonfiction-->
-            <% if(b.fiction) %>
-                <%= "Fiction" %>
-            <% else %>
-                <%= "Nonfiction" %>
-            <% end %>
-            </a>
+            Read in <%= b.finish_date.month %>/<%= b.finish_date.year %> 
         </li>
         <% end %><!--End book loop-->
     </ol>

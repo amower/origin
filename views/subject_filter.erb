@@ -35,18 +35,18 @@
         <ol reversed><% @books.each do |b| %>
             <li>
                 <!--Linked book title-->
-                <a href="/books/<%= b.account_id %>/<%= b.pk %>"><%= b.title %></a> 
+                <a href="/books/<%= b.account_id %>/<%= b.pk %>"><%= b.title %></a>, 
                 
                 <!--Linked author-->
-                by <a href="/books/author/<%= b.account_id %>/<%= b.author %>"><%= b.author %></a>, 
+                by <a href="/books/author/<%= b.account_id %>/<%= b.author %>"><%= b.author %></a>. 
                 
                 <!--Date book finished-->
-                Finished <%= b.finish_date %>
+                Read in <%= b.finish_date.month %>/<%= b.finish_date.year %>
                 
                 <!--List students who read the book-->
-                <% @book_students.where(book_id: b.pk).each do |s| %>
-                    (<%= s.stud_first_name %>)
-                <% end %>
+                <%# @book_students.where(book_id: b.pk).each do |s| %>
+                    <!--(<%#= s.stud_first_name %>)-->
+                <%# end %>
             </li>
         <% end %><!--End book loop-->
         </ol>

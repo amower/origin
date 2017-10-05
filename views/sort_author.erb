@@ -49,7 +49,7 @@
     
         <!--Author heading-->
         <h3><strong><%= author %></strong></h3>
-        <ol>
+        <ol reversed>
             <!--Iterate through all books by current author-->
             <% @books.where(Sequel.like(:author, "#{author}%")).each do |b| %>
             <li>
@@ -57,7 +57,7 @@
                 <a href="/books/<%= b.account_id %>/<%= b.pk %>"><%= b.title %></a>, 
                 
                 <!--Finish_date-->
-                Finished <%= b.finish_date %>
+                read in <%= b.finish_date.month %>/<%= b.finish_date.year %>
             </li>
             <% end %><!--End books loop for given author-->
         </ol>

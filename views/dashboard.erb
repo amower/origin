@@ -42,24 +42,18 @@
     <a href="/activities/new/<%= i.pk %>">Add New Activity</a><br><br>
     
     <h3>Recent Books:</h3>
-    
-    <ol><!--List recent books-->
+
+    <ol reversed><!--List recent books-->
         <% @books.each do |b| %>
         <li>
             <!--Linked title-->
             <a href="/books/<%= b.account_id %>/<%= b.pk %>"><%= b.title %></a>,
             
             <!--Linked author-->
-            written by <a href="/books/author/<%= b.account_id %>/<%= b.author %>"><%= b.author %></a>, 
+            by <a href="/books/author/<%= b.account_id %>/<%= b.author %>"><%= b.author %></a>. 
             
             <!--Finish Date-->
-            Finish Date: <%= b.finish_date %> 
-            
-            <!--Link to edit book-->
-            (<a href="/books/update/<%= b.account_id %>/<%= b.pk %>">Edit</a>) 
-            
-            <!--Link to delete book-->
-            (<a href="/books/change/<%= b.account_id %>/<%= b.pk %>">Delete</a>)
+            Read in <%= b.finish_date.month %>/<%= b.finish_date.year %> 
             
         </li><% end %><!--End book loop-->
     </ol>

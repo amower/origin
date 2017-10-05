@@ -6,7 +6,7 @@
     <% author = books_array[0].author %>
     <h3>Books by <%= author %></h3>
     
-    <ol><!--List all books by selected author-->
+    <ol reversed><!--List all books by selected author-->
         <% @books.each do |b| %>
         
         <li>
@@ -16,7 +16,7 @@
             by <%= b.author %>. 
             
             <!--Finished date-->
-            Finished on <%= b.finish_date %> 
+            Read in <%= b.finish_date.month %>/<%= b.finish_date.year %> 
         </li>
         
         <% end %><!--End books by selected author loop-->
