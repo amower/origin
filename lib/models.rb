@@ -56,14 +56,6 @@ class Book < Sequel::Model #dataset for DB[:books]
     one_to_many :books_subjects
     many_to_one :account
     
-    def status
-        if @fiction
-          "Fiction"
-        else
-          "Nonfiction"
-        end
-    end
-    
     #Dataset functions
     dataset_module do
         order :by_date, :finish_date
