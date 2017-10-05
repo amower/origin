@@ -1,45 +1,27 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset='UTF-8' />
-        <title>Update Student</title>
-    </head>
-    <body>
-        <!--Access student data-->
-        <% @student.all do |s| %>
-        
-        <!--MENU-->
-        <a href="/home/">Home</a>
-        <a href="/accounts/<%= s.account_id %>">Account</a>
-        <a href="/dashboard/<%= s.account_id %>">Dashboard</a>
-        <a href="/activities/<%= s.account_id %>">Activities</a>
-        <a href="/books/<%= s.account_id %>">Books</a>
-        <a href="/subjects/<%= s.account_id %>">Subjects</a>
-        
-        <h1>Update Student</h1>
-        
-        <!--Form prefilled with current student data-->
-        <form method="post" action="/students/create/<%= s.account_id %>/<%= s.pk %>">
-            <table>
-                <tr>
-                    <td><label for="stud_first_name">First Name:</label></td>
-                    <td><input type="text" name="stud_first_name" value="<%= s.stud_first_name %>"></td>
-                </tr>
-                <tr>
-                    <td><label for="stud_last_name">Last Name:</label></td>
-                    <td><input type="text" name="stud_last_name" value="<%= s.stud_last_name %>"></td>
-                </tr>
-                <tr>
-                    <td><label for="birth_date">Birth Date:</label></td>
-                    <td><input type="date" name="birth_date" value="<%= s.birth_date %>"></td>
-                </tr>
-                <tr>
-                    <td><input type="submit"></td>
-                </tr>
-            </table>
-        </form>
-        
-        <% end %><!--End student data access-->
-        
-    </body>
-</html>
+<!--Access student data-->
+<% @student.all do |s| %>        
+    
+    <h1>Update Student</h1>
+    
+    <!--Form prefilled with current student data-->
+    <form method="post" action="/students/create/<%= s.account_id %>/<%= s.pk %>">
+        <table>
+            <tr>
+                <td><label for="stud_first_name">First Name:</label></td>
+                <td><input type="text" name="stud_first_name" value="<%= s.stud_first_name %>"></td>
+            </tr>
+            <tr>
+                <td><label for="stud_last_name">Last Name:</label></td>
+                <td><input type="text" name="stud_last_name" value="<%= s.stud_last_name %>"></td>
+            </tr>
+            <tr>
+                <td><label for="birth_date">Birth Date:</label></td>
+                <td><input type="date" name="birth_date" value="<%= s.birth_date %>"></td>
+            </tr>
+            <tr>
+                <td><input type="submit"></td>
+            </tr>
+        </table>
+    </form>
+    
+<% end %><!--End student data access-->

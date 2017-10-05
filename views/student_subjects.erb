@@ -1,72 +1,54 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset='UTF-8' />
-        <title>Student Subject</title>
-    </head>
+<!--Access student data-->
+<% @student.all do |s| %>        
+        
+    <h2><%= s.stud_first_name %>'s <% @subject.all do |j| %><%= j.subject_name %><% end %> Activities</h2>
     
-    <body>
-        <% @student.all do |s| %>
-        
-        <!--MENU-->
-        <a href="/home/">Home</a>
-        <a href="/accounts/<%= s.account_id %>">Account</a>
-        <a href="/dashboard/<%= s.account_id %>">Dashboard</a>
-        <a href="/activities/<%= s.account_id %>">Activities</a>
-        <a href="/books/<%= s.account_id %>">Books</a>
-        <a href="/subjects/<%= s.account_id %>">Subjects</a>
-        
-        <h2><%= s.stud_first_name %>'s <% @subject.all do |j| %><%= j.subject_name %><% end %> Activities</h2>
-        
-            <!--List student activities under selected subject-->
-            <ol reversed><% @activities.each do |a| %>
-                <li>
-                    <!--Date of activity-->
-                    <%= a.activity_date %>
-                    
-                    <!--Linked activity title-->
-                    <a href="/activities/<%= a.account_id %>/<%= a.pk %>"> <%= a.title %></a>, 
-                    
-                    <!--List of subjects associated with the activity-->
-                    <% Subject.association_join(:activities_subjects).where(:activity_id => a.pk).each do |j| %>
-                        (<%= j.subject_name %>)
-                    <% end %>,
-                    
-                    <!--Format activity duration verbage-->
-                    <% if(a.duration < 60) %>
-                        <%= a.duration %> minutes
-                    <% elsif(a.duration === 60) %>
-                        <%= a.duration / 60 %> hour
-                    <% else %>
-                        <%= a.duration / 60 %> hours
-                    <% end %>
-                </li>
-            <% end %><!--End activity loop-->
-            </ol>
-        
-        <h2><%= s.stud_first_name %>'s <% @subject.all do |j| %><%= j.subject_name %><% end %> Books</h2>
-        
-            <!--List all student books-->
-            <ol reversed><% @books.each do |b| %>
-                <li>
-                    <!--Linked book title-->
-                    <a href="/books/<%= b.account_id %>/<%= b.pk %>"><%= b.title %></a> 
-                    
-                    <!--Linked author-->
-                    by <a href="/books/author/<%= b.account_id %>/<%= s.pk %>/<%= b.author %>"><%= b.author %></a>,
-                    
-                    <!--List of books' subjects-->
-                    <% Subject.association_join(:books_subjects).where(:book_id => b.pk).each do |j| %>
-                        (<%= j.subject_name %>)
-                    <% end %>,
-                    
-                    <!--Date book finished-->
-                    Finished on <%= b.finish_date %>
-                </li>
-            <% end %><!--End book loop-->
-            </ol>
-        
-        <% end %><!--End student data access-->
-        
-    </body>
-</html>
+    <!--List student activities under selected subject-->
+    <ol reversed><% @activities.each do |a| %>
+        <li>
+            <!--Date of activity-->
+            <%= a.activity_date %>
+            
+            <!--Linked activity title-->
+            <a href="/activities/<%= a.account_id %>/<%= a.pk %>"> <%= a.title %></a>, 
+            
+            <!--List of subjects associated with the activity-->
+            <% Subject.association_join(:activities_subjects).where(:activity_id => a.pk).each do |j| %>
+                (<%= j.subject_name %>)
+            <% end %>,
+            
+            <!--Format activity duration verbage-->
+            <% if(a.duration < 60) %>
+                <%= a.duration %> minutes
+            <% elsif(a.duration === 60) %>
+                <%= a.duration / 60 %> hour
+            <% else %>
+                <%= a.duration / 60 %> hours
+            <% end %>
+        </li>
+    <% end %><!--End activity loop-->
+    </ol>
+    
+    <h2><%= s.stud_first_name %>'s <% @subject.all do |j| %><%= j.subject_name %><% end %> Books</h2>
+    
+    <!--List all student books under selected subject-->
+    <ol reversed><% @books.each do |b| %>
+        <li>
+            <!--Linked book title-->
+            <a href="/books/<%= b.account_id %>/<%= b.pk %>"><%= b.title %></a> 
+            
+            <!--Linked author-->
+            by <a href="/books/author/<%= b.account_id %>/<%= s.pk %>/<%= b.author %>"><%= b.author %></a>,
+            
+            <!--List of books' subjects-->
+            <% Subject.association_join(:books_subjects).where(:book_id => b.pk).each do |j| %>
+                (<%= j.subject_name %>)
+            <% end %>,
+            
+            <!--Date book finished-->
+            Finished on <%= b.finish_date %>
+        </li>
+    <% end %><!--End book loop-->
+    </ol>
+    
+<% end %><!--End student data access-->

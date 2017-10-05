@@ -1,50 +1,32 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset='UTF-8' />
-        <title>Update Subject</title>
-    </head>
-    <body>
-        <!--Access subject data-->
-        <% @subject.all do |j| %>
-        
-        <!--MENU-->
-        <a href="/home/">Home</a>
-        <a href="/accounts/<%= j.account_id %>">Account</a>
-        <a href="/dashboard/<%= j.account_id %>">Dashboard</a>
-        <a href="/activities/<%= j.account_id %>">Activities</a>
-        <a href="/books/<%= j.account_id %>">Books</a>
-        <a href="/subjects/<%= j.account_id %>">Subjects</a>
-        
-        <h2>Current Subjects</h2>
-        
-        <ol>
-            <!--List all subjects currently on account-->
-            <% @subjects.each do |j| %>
-                <li><%= j.subject_name %></li>
-            <% end %>
-        </ol>
-        
-        <h1>Update Subject</h1>
-        
-        <!--Form prefilled with current subject data-->
-        <form method="post" action="/subjects/create/<%= j.account_id %>/<%= j.pk %>">
-            <table>
-                <tr>
-                    <td><label for="subject_name">Subject Name:</label></td>
-                    <td><input type="text" name="subject_name" value="<%= j.subject_name %>"></td>
-                </tr>
-                <tr>
-                    <td><label for="description">Description (Opt):</label></td>
-                    <td><input type="text" name="description" value="<%= j.description %>"></td>
-                </tr>
-                <tr>
-                    <td><input type="submit"></td>
-                </tr>
-            </table>
-        </form>
-        
-        <% end %><!--End subject data access-->
-        
-    </body>
-</html>
+<!--Access subject data-->
+<% @subject.all do |j| %>        
+    
+    <h2>Current Subjects</h2>
+    
+    <ol>
+        <!--List all subjects currently on account-->
+        <% @subjects.each do |j| %>
+            <li><%= j.subject_name %></li>
+        <% end %>
+    </ol>
+    
+    <h1>Update Subject</h1>
+    
+    <!--Form prefilled with current subject data-->
+    <form method="post" action="/subjects/create/<%= j.account_id %>/<%= j.pk %>">
+        <table>
+            <tr>
+                <td><label for="subject_name">Subject Name:</label></td>
+                <td><input type="text" name="subject_name" value="<%= j.subject_name %>"></td>
+            </tr>
+            <tr>
+                <td><label for="description">Description (Opt):</label></td>
+                <td><input type="text" name="description" value="<%= j.description %>"></td>
+            </tr>
+            <tr>
+                <td><input type="submit"></td>
+            </tr>
+        </table>
+    </form>
+    
+<% end %><!--End subject data access-->

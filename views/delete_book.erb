@@ -1,32 +1,22 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset='UTF-8' />
-        <title>Delete Book</title>
-    </head>
-    <body>
-        <% @book.all do |b| %>
-        
-        <a href="/home/">Home</a>
-        <a href="/accounts/<%= b.account_id %>">Account</a>
-        <a href="/dashboard/<%= b.account_id %>">Dashboard</a>
-        <a href="/activities/<%= b.account_id %>">Activities</a>
-        <a href="/books/<%= b.account_id %>">Books</a>
-        <a href="/subjects/<%= b.account_id %>">Subjects</a>
-        
-        <h1>Delete Book</h1>
-        
-        <h3>Are you sure you want to delete <%= b.title %>?</h3>
-        
-        <form method="post" action="/books/delete/<%= b.account_id %>/<%= b.pk %>">
-            <table>   
-                <tr>
-                    <td><label for="submit">Delete Book</label></td>
-                    <td><input type="submit"></td>
-                </tr>
-            </table>
-        </form>
-        
-        <% end %>
-    </body>
-</html>
+<!--Access book data-->
+
+<% @book.all do |b| %>
+       
+    <h1>Delete Book</h1>
+    
+    <!--Warning message-->
+    <p>Deleting '<%= b.title %>', by <%= b.author %> will delete the book from the portfolio of each participating student.</p>
+    
+    <h3>Are you sure you want to delete '<%= b.title %>', by <%= b.author %>?</h3>
+    
+    <!--Button to delete book-->
+    <form method="post" action="/books/delete/<%= b.account_id %>/<%= b.pk %>">
+        <table>   
+            <tr>
+                <td><label for="submit">Delete Book</label></td>
+                <td><input type="submit"></td>
+            </tr>
+        </table>
+    </form>
+    
+<% end %><!--End book data access-->

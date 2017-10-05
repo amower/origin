@@ -1,62 +1,48 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset='UTF-8' />
-        <!--Include here for unique page title-->
-        <!--Access book data-->
-        <% @book.each do |b| %>
-        <title><%= b.title %></title>
-    </head>
-    <body>
-        <!--MENU-->
-        <a href="/home/">Home</a>
-        <a href="/accounts/<%= b.account_id %>">Account</a>
-        <a href="/dashboard/<%= b.account_id %>">Dashboard</a>
-        <a href="/activities/<%= b.account_id %>">Activities</a>
-        <a href="/books/<%= b.account_id %>">Books</a>
-        <a href="/subjects/<%= b.account_id %>">Subjects</a>
+<!--Access book data-->
+
+<% @book.each do |b| %>
         
-        <!--Book Title-->
-        <h2><%= b.title %></h2>
+    <!--Book Title-->
+    <h2><%= b.title %></h2>
+    
+    <!--Display Book Info-->
+    <table>
+        <tr>
+            <td><strong>Author:</strong></td>
+            <td><%= b.author %></td>
+        </tr>
+        <tr>
+            <td><strong>Rating:</strong></td>
+            <td><%= b.rating %> STARS</td>
+        </tr>
+        <tr>
+            <td><strong>Genre:</strong></td>
+            <td><% if(b.fiction) %>
+                    <%= "Fiction" %>
+                <% else %>
+                    <%= "Nonfiction" %>
+                <% end %></td>
+        </tr>
+        <tr>
+            <td><strong>Student(s):</strong></td>
+            <!--List students who read the book-->
+            <% @students.each do |s| %>
+            <td><%= s.stud_first_name %></td>
+            <% end %><!--End students loop-->
+        </tr>
+        <tr>
+            <td><strong>Subject(s):</strong></td>
+            <!--List subjects for the book-->
+            <% @subjects.each do |j| %>
+            <td><%= j.subject_name %></td>
+            <% end %><!--End subjects loop-->
+        </tr>
+        <tr>
+            <td><strong>Date Finished:</strong></td>
+            <td><%= b.finish_date %></td>
+        </tr>
+    </table>
+
+<% end %><!--End book data access-->
         
-        <!--Display Book Info-->
-        <table>
-            <tr>
-                <td><strong>Author:</strong></td>
-                <td><%= b.author %></td>
-            </tr>
-            <tr>
-                <td><strong>Rating:</strong></td>
-                <td><%= b.rating %> STARS</td>
-            </tr>
-            <tr>
-                <td><strong>Genre:</strong></td>
-                <td><% if(b.fiction) %>
-                        <%= "Fiction" %>
-                    <% else %>
-                        <%= "Nonfiction" %>
-                    <% end %></td>
-            </tr>
-            <tr>
-                <td><strong>Student(s):</strong></td>
-                <!--List students who read the book-->
-                <% @students.each do |s| %>
-                <td><%= s.stud_first_name %></td>
-                <% end %><!--End students loop-->
-            </tr>
-            <tr>
-                <td><strong>Subject(s):</strong></td>
-                <!--List subjects for the book-->
-                <% @subjects.each do |j| %>
-                <td><%= j.subject_name %></td>
-                <% end %><!--End subjects loop-->
-            </tr>
-            <tr>
-                <td><strong>Date Finished:</strong></td>
-                <td><%= b.finish_date %></td>
-            </tr>
-        </table>
-        <% end %><!--End book data access-->
-        
-    </body>
-</html>
+   

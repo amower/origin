@@ -2,21 +2,26 @@
 <html>
     <head>
         <meta charset='UTF-8' />
-        <title>Home Page</title>
+        <title>Home: Education Portfolio for Lifelong Learners</title>
     </head>
     
     <body>
         <h1>WELCOME!</h1>
         <h1>Start Creating Your Home-Education Portfolio Today</h1>
         <h2>Select Your Account</h2>
+        
+        <!--Currently, listed links to all accounts-->
         <ul><% @accounts.each do |i| %>
             <li>
                 <a href="/accounts/<%= i.pk %>"><%= i.acct_first_name %> <%= i.acct_last_name %></a>
             </li>
-            <% end %>
+            <% end %><!--End accounts loop-->
         </ul>
         
+        <!--Button to login-->
         <button type="button"><a href="/accounts/login">Login</a></button><br>
+        
+        <!--Button to create new account-->
         <button type="button"><a href="/accounts/new">Create New Account</a></button>
         
     </body>

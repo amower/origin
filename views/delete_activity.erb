@@ -1,32 +1,23 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset='UTF-8' />
-        <title>Delete Activity</title>
-    </head>
-    <body>
-        <% @activity.all do |a| %>
+<!--Access activity data-->
+
+<% @activity.all do |a| %>
         
-        <a href="/home/">Home</a>
-        <a href="/accounts/<%= a.account_id %>">Account</a>
-        <a href="/dashboard/<%= a.account_id %>">Dashboard</a>
-        <a href="/activities/<%= a.account_id %>">Activities</a>
-        <a href="/books/<%= a.account_id %>">Books</a>
-        <a href="/subjects/<%= a.account_id %>">Subjects</a>
-        
-        <h1>Delete Activity</h1>
-        
-        <h3>Are you sure you want to delete <%= a.title %>?</h3>
-        
-        <form method="post" action="/activities/delete/<%= a.account_id %>/<%= a.pk %>">
-            <table>   
-                <tr>
-                    <td><label for="submit">Delete Activity</label></td>
-                    <td><input type="submit"></td>
-                </tr>
-            </table>
-        </form>
-        
-        <% end %>
-    </body>
-</html>
+    <h1>Delete Activity</h1>
+    
+    <!--Warning message-->
+    <p>Deleting '<%= a.title %>' will delete the activity from the portfolio of each participating student.</p>
+    
+    <h3>Are you sure you want to delete '<%= a.title %>'?</h3>
+    
+    <!--Button to delete activity-->
+    <form method="post" action="/activities/delete/<%= a.account_id %>/<%= a.pk %>">
+        <table>   
+            <tr>
+                <td><label for="submit">Delete Activity</label></td>
+                <td><input type="submit"></td>
+            </tr>
+        </table>
+    </form>
+    
+<% end %><!--End activity data access-->
+ 

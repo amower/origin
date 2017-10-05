@@ -1,64 +1,46 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset='UTF-8' />
-        <title>Update Activity</title>
-    </head>
-    <body>
-        <!--Access activity data-->
-        <% @activity.all do |a| %>
-        
-        <!--MENU-->
-        <a href="/home/">Home</a>
-        <a href="/accounts/<%= a.account_id %>">Account</a>
-        <a href="/dashboard/<%= a.account_id %>">Dashboard</a>
-        <a href="/activities/<%= a.account_id %>">Activities</a>
-        <a href="/books/<%= a.account_id %>">Books</a>
-        <a href="/subjects/<%= a.account_id %>">Subjects</a>
-        
-        <h1>Update Activity</h1>
-        
-        <!--Form prefilled with current activity data but checkboxes unchecked-->
-        <form method="post" action="/activities/create/<%= a.account_id %>/<%= a.pk %>">
-            <table>
-                <tr>
-                    <td><label for="activity_date">Date:</label></td>
-                    <td><input type="date" name="activity_date" value="<%= a.activity_date %>"></td>
-                </tr>
-                <tr>
-                    <td><label for="title">Title:</label></td>
-                    <td><input type="text" name="title" value="<%= a.title %>"></td>
-                </tr>
-                <tr>
-                    <td><label for="student_id[]">Student(s):</label></td>
-                    <!--List all students on account-->
-                    <% @students.each do |s| %>
-                    <td><input type="checkbox" name="student_id[]" value="<%= s.pk %>"><%= s.stud_first_name %></td>
-                    <% end %><!--End student loop-->
-                </tr>
-                <tr>
-                    <td><label for="duration">Duration:</label></td>
-                    <td><input type="number" name="duration" value="<%= a.duration %>">minutes</td>
-                </tr>
-                <tr>
-                    <!--See update_book for wrap-around code-->
-                    <!--List all subjects on account-->
-                    <td><label for="subject_id[]">Subject(s):</label></td>
-                    <% @subjects.each do |j| %>
-                    <td><input type="checkbox" name="subject_id[]" value="<%= j.pk %>"><%= j.subject_name %></td>
-                    <% end %><!--End subject loop-->
-                </tr>
-                <tr>
-                    <td><label for="description">Description:</label></td>
-                    <td><input type="text" name="description" value="<%= a.description %>"></td>
-                </tr>
-                <tr>
-                    <td><input type="submit"></td>
-                </tr>
-            </table>
-        </form>
-        
-        <% end %><!--End activity data access-->
-        
-    </body>
-</html>
+<!--Access activity data-->
+<% @activity.all do |a| %>        
+
+    <h1>Update Activity</h1>
+    
+    <!--Form prefilled with current activity data but checkboxes unchecked-->
+    <form method="post" action="/activities/create/<%= a.account_id %>/<%= a.pk %>">
+        <table>
+            <tr>
+                <td><label for="activity_date">Date:</label></td>
+                <td><input type="date" name="activity_date" value="<%= a.activity_date %>"></td>
+            </tr>
+            <tr>
+                <td><label for="title">Title:</label></td>
+                <td><input type="text" name="title" value="<%= a.title %>"></td>
+            </tr>
+            <tr>
+                <td><label for="student_id[]">Student(s):</label></td>
+                <!--List all students on account-->
+                <% @students.each do |s| %>
+                <td><input type="checkbox" name="student_id[]" value="<%= s.pk %>"><%= s.stud_first_name %></td>
+                <% end %><!--End student loop-->
+            </tr>
+            <tr>
+                <td><label for="duration">Duration:</label></td>
+                <td><input type="number" name="duration" value="<%= a.duration %>">minutes</td>
+            </tr>
+            <tr>
+                <!--See update_book for wrap-around code-->
+                <!--List all subjects on account-->
+                <td><label for="subject_id[]">Subject(s):</label></td>
+                <% @subjects.each do |j| %>
+                <td><input type="checkbox" name="subject_id[]" value="<%= j.pk %>"><%= j.subject_name %></td>
+                <% end %><!--End subject loop-->
+            </tr>
+            <tr>
+                <td><label for="description">Description:</label></td>
+                <td><input type="text" name="description" value="<%= a.description %>"></td>
+            </tr>
+            <tr>
+                <td><input type="submit"></td>
+            </tr>
+        </table>
+    </form>
+    
+<% end %><!--End activity data access-->

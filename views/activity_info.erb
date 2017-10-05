@@ -1,50 +1,42 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset='UTF-8' />
-        <% @activity.each do |a| %>
-        <title><%= a.title %></title>
-    </head>
-    <body>
-        <a href="/home/">Home</a>
-        <a href="/accounts/<%= a.account_id %>">Account</a>
-        <a href="/dashboard/<%= a.account_id %>">Dashboard</a>
-        <a href="/activities/<%= a.account_id %>">Activities</a>
-        <a href="/books/<%= a.account_id %>">Books</a>
-        <a href="/subjects/<%= a.account_id %>">Subjects</a>
-        
-        <h1><%= a.title %></h1>
-        
-        <h2>Student(s): <% @students.each do |s| %>
-            <%= s.stud_first_name %>
+<!--Access activity data-->
+
+<% @activity.each do |a| %>
+     
+    <!--Activity title-->    
+    <h1><%= a.title %></h1>
+    
+    <!--List students who participated in the activity-->
+    <h2>Student(s): <% @students.each do |s| %>
+        <%= s.stud_first_name %>
         <% end %></h2><!--End to students loop-->
-        
-        <table>
-            <tr>
-                <td><strong>Date of Activity:</strong></td>
-                <td><%= a.activity_date %></td>
-            </tr>
-            <tr>
-                <td><strong>Duration:</strong></td>
-                <td><%= a.duration %> Minutes</td>
-            </tr>
-            <tr>
-                <td><strong>Subject(s):</strong></td>
-                <% @subjects.each do |j| %>
-                <td><%= j.subject_name %></td>
-                <% end %><!--End to subjects loop-->
-            </tr>
-            <tr>
-                <td><strong>Description:</strong></td>
-                <td><%= a.description %></td>
-            </tr>
-        </table><br>
-        
-        <% @students.each do |s| %>
-            <a href="/portfolio/<%= s.account_id %>/<%= s.pk %>">View <%= s.stud_first_name %>'s Portfolio</a><br>
+    
+    <!--Table to display activity info-->
+    <table>
+        <tr>
+            <td><strong>Date of Activity:</strong></td>
+            <td><%= a.activity_date %></td>
+        </tr>
+        <tr>
+            <td><strong>Duration:</strong></td>
+            <td><%= a.duration %> Minutes</td>
+        </tr>
+        <tr>
+            <!--List each subject tied to activity-->
+            <td><strong>Subject(s):</strong></td>
+            <% @subjects.each do |j| %>
+            <td><%= j.subject_name %></td>
+            <% end %><!--End to subjects loop-->
+        </tr>
+        <tr>
+            <td><strong>Description:</strong></td>
+            <td><%= a.description %></td>
+        </tr>
+    </table><br>
+    
+    <!--Link to portfolio of each student who participated in activity--> 
+    <h3><% @students.each do |s| %>
+        <a href="/portfolio/<%= s.account_id %>/<%= s.pk %>">View <%= s.stud_first_name %>'s Portfolio</a><br></h3>
         <% end %><!--End to students loop-->
+    
+<% end %><!--End activity data access-->
         
-        <% end %><!--End to activity data access-->
-        
-    </body>
-</html>
