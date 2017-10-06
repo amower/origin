@@ -197,7 +197,7 @@ post('/activities/create/:acct_id') do
       :account_id => i,
       :activity_date => params[:activity_date], 
       :title => params[:title],
-      :duration => params[:duration],
+      :duration => params[:hrs].to_i * 60 + params[:mins].to_i,
       :description => params[:description],
       :activity_slug => params[:title].downcase.strip.gsub(' ', '-').gsub('&', 'and').gsub(/[^\w-]/, ''))
     
