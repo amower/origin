@@ -508,14 +508,15 @@ end
 
 
 
-#Page that displays list of subjects with all related activities
+#Page that displays list of subjects and links to subject pages
 get('/subjects/:acct_id') do
    i = params['acct_id'].to_i
    
    #Define instance variables for filtering
    @account = Account.where(account_id: i)
    @subjects = Subject.where(account_id: i).by_name
-   @activities = Activity.association_join(:activities_subjects).by_date.reverse
+   @activities = Activity.association_join(:activities_subjects)
+   @books = Book.association_join(:books_subjects)
    
    erb :show_subjects
 end

@@ -1,7 +1,7 @@
 <!--Access account data-->
 <% @account.all do |i| %>
         
-    <h2>My Portfolio Subjects:</h2>
+    <h2>My Subjects:</h2>
     
     <!--List of subjects on account with Edit/Delete links-->
     <ol><% @subjects.each do |j| %>
@@ -22,32 +22,23 @@
     <a href="/subjects/new/<%= i.pk %>">Add New Subject</a><br>
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->  
-    <h1>All Activities Organized by Subject</h1>
+    <h2>View Portfolio by Subject</h2>
     
     <!--List of all activities on account organized by subject-->
-    <ul>
+    <ol>
         <% @subjects.each do |j| %>
         <li>
             <!--Link to individual subject page-->
-            <a href="/subjects/<%= j.account_id %>/<%= j.pk %>"><%= j.subject_name %></a> 
+            <a href="/subjects/<%= j.account_id %>/<%= j.pk %>"><%= j.subject_name %></a>: 
             
             <!--Count # activities under that subject-->
-            (<%= @activities.where(subject_id: j.pk).count %>)
+            Activities (<%= @activities.where(subject_id: j.pk).count %>), 
+            Books (<%= @books.where(subject_id: j.pk).count %>)
             
-            <!--List of subject-related activities-->
-            <ol reversed><% @activities.where(subject_id: j.pk).each do |a| %>
-                <li>
-                    <!--Activity title-->
-                    <a href="/activities/<%= a.account_id %>/<%= a.pk %>"><%= a.title %></a> 
-                    
-                    <!--Activity date-->
-                    on <%= a.activity_date.month %>/<%= a.activity_date.day %>/<%= a.activity_date.year %>
-                </li>
-                <% end %><!--End activity loop-->
-            </ol>
+            
         </li>
         <% end %><!--End subject loop-->
-    </ul>
+    </ol>
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
 <% end %><!--End account data access-->
