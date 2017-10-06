@@ -1,0 +1,24 @@
+<!--Access account data-->
+<% @account.all do |i| %>
+        
+    <h2>Manage Subjects:</h2>
+    
+    <!--List of subjects on account with Edit/Delete links-->
+    <ol><% @subjects.each do |j| %>
+        <li>
+            <!--Subject name-->
+            <%= j.subject_name %> 
+            
+            <!--Link to edit subject name-->
+            (<a href="/subjects/update/<%= j.account_id %>/<%= j.pk %>">Edit</a>) 
+            
+            <!--Link to delete subject-->
+            (<a href="/subjects/change/<%= j.account_id %>/<%= j.pk %>">Delete</a>)
+        </li>
+        <% end %><!--End subject loop-->
+    </ol>
+    
+    <!--Link to add new subject to account-->
+    <a href="/subjects/new/<%= i.pk %>">Add New Subject</a>
+    
+<% end %><!--End account data access-->

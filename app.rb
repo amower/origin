@@ -508,7 +508,7 @@ end
 
 
 
-#Page that displays list of subjects and links to subject pages
+#Page that displays list of subjects and links to individual subject pages
 get('/subjects/:acct_id') do
    i = params['acct_id'].to_i
    
@@ -519,6 +519,18 @@ get('/subjects/:acct_id') do
    @books = Book.association_join(:books_subjects)
    
    erb :show_subjects
+end
+
+
+
+#Page for managing subjects on the account
+get('/subjects/manage/:acct_id') do
+   i = params['acct_id'].to_i
+   
+   @account = Account.where(account_id: i)
+   @subjects = Subject.where(account_id: i).by_name
+   
+   erb :manage_subjects
 end
 
 
@@ -620,7 +632,7 @@ get('/students/:acct_id') do
    @account = Account.where(account_id: i)
    @students = Student.where(account_id: i).by_birth
    
-   erb :show_students
+   erb :manage_students
 end
 
 

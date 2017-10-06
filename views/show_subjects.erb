@@ -1,44 +1,20 @@
 <!--Access account data-->
 <% @account.all do |i| %>
         
-    <h2>My Subjects:</h2>
-    
-    <!--List of subjects on account with Edit/Delete links-->
-    <ol><% @subjects.each do |j| %>
-        <li>
-            <!--Subject name-->
-            <%= j.subject_name %> 
-            
-            <!--Link to edit subject name-->
-            (<a href="/subjects/update/<%= j.account_id %>/<%= j.pk %>">Edit</a>) 
-            
-            <!--Link to delete subject-->
-            (<a href="/subjects/change/<%= j.account_id %>/<%= j.pk %>">Delete</a>)
-        </li>
-        <% end %><!--End subject loop-->
-    </ol>
-    
-    <!--Link to add new subject to account-->
-    <a href="/subjects/new/<%= i.pk %>">Add New Subject</a><br>
-
-<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->  
     <h2>View Portfolio by Subject</h2>
     
-    <!--List of all activities on account organized by subject-->
+    <!--Linked list of all subjects on account-->
     <ol>
         <% @subjects.each do |j| %>
         <li>
             <!--Link to individual subject page-->
             <a href="/subjects/<%= j.account_id %>/<%= j.pk %>"><%= j.subject_name %></a>: 
             
-            <!--Count # activities under that subject-->
+            <!--Count # activities & books under that subject-->
             Activities (<%= @activities.where(subject_id: j.pk).count %>), 
             Books (<%= @books.where(subject_id: j.pk).count %>)
-            
-            
         </li>
         <% end %><!--End subject loop-->
     </ol>
-<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
 <% end %><!--End account data access-->
