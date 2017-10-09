@@ -235,6 +235,8 @@ get('/activities/update/:acct_id/:act_id') do
    @activity = Activity.where(activity_id: a)
    @students = Student.where(account_id: i)
    @subjects = Subject.where(account_id: i)
+   @activities_students = ActivitiesStudent.where(activity_id: a)
+   @activities_subjects = ActivitiesSubject.where(activity_id: a)
    
    erb :update_activity
 end
@@ -242,7 +244,7 @@ end
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#Update input in the db
+#Update activity info in the db
 post('/activities/create/:acct_id/:act_id') do
    i = params['acct_id'].to_i
    a = params['act_id'].to_i
@@ -251,7 +253,7 @@ post('/activities/create/:acct_id/:act_id') do
    Activity.where(activity_id: a).update(
       :activity_date => params[:activity_date], 
       :title => params[:title],
-      :duration => params[:duration],
+      :duration => params[:hrs].to_i * 60 + params[:mins].to_i,
       :description => params[:description],
       :activity_slug => params[:title].downcase.strip.gsub(' ', '-').gsub('&', 'and').gsub(/[^\w-]/, ''))
     

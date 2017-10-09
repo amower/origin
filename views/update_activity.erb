@@ -14,25 +14,86 @@
                 <td><label for="title">Title:</label></td>
                 <td><input type="text" name="title" value="<%= a.title %>"></td>
             </tr>
+            
+<!-- - - - - - - - - - - - - - - S T U D E N T S - - - - - - - - - - - - - --->
             <tr>
                 <td><label for="student_id[]">Student(s):</label></td>
+                <!--Capture the id for each student previously selected for the activity-->
+                <% id_array = [] %>
+                <% @activities_students.each do |s| %>
+                    <% id = s.student_id %>
+                    <% id_array.push(id) %>
+                <% end %>
+                
                 <!--List all students on account-->
                 <% @students.each do |s| %>
-                <td><input type="checkbox" name="student_id[]" value="<%= s.pk %>"><%= s.stud_first_name %></td>
+                    <!--If the student was previously selected for the activity, default to their name being 'checked'-->
+                    <% if(id_array.include?(s.pk)) %> 
+                        <td><input type="checkbox" name="student_id[]" value="<%= s.pk %>" checked="checked"><%= s.stud_first_name %></td>
+                    <!--If the student was not previously selected, default to their name being 'unchecked'-->
+                    <% else %>
+                        <td><input type="checkbox" name="student_id[]" value="<%= s.pk %>"><%= s.stud_first_name %></td>
+                    <% end %>
                 <% end %><!--End student loop-->
             </tr>
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - --->           
             <tr>
                 <td><label for="duration">Duration:</label></td>
-                <td><input type="number" name="duration" value="<%= a.duration %>">minutes</td>
+                <td><input type="number" name="hrs" value="<%= a.duration / 60 %>">Hr(s)</td>
+                <td><input type="number" name="mins" value="<%= a.duration % 60 %>">Mins</td>
             </tr>
+            
+<!-- - - - - - - - - - - - - - - S U B J E C T S - - - - - - - - - - - - - --->
+            <!--'Subjects' label plus first three subject options (design is temporary - to make subjects 3/row starting offset from the label so they fit on the page during development)-->
             <tr>
-                <!--See update_book for wrap-around code-->
-                <!--List all subjects on account-->
                 <td><label for="subject_id[]">Subject(s):</label></td>
-                <% @subjects.each do |j| %>
-                <td><input type="checkbox" name="subject_id[]" value="<%= j.pk %>"><%= j.subject_name %></td>
-                <% end %><!--End subject loop-->
+                
+                <!--Capture the id for each subject previously selected for the activity-->
+                <% id_array = [] %>
+                <% @activities_subjects.each do |j| %>
+                    <% id = j.subject_id %>
+                    <% id_array.push(id) %>
+                <% end %>
+                
+                <!--Create array for easy subject organization-->
+                <% subj_array = @subjects.to_a %>
+                
+                <!--Isolate and output first 3 items in array-->
+                <% subj_array[0..2].each do |j| %>
+                    <!--If the subject was previously selected for the activity, default to the name being 'checked'-->
+                    <% if(id_array.include?(j.pk)) %> 
+                        <td><input type="checkbox" name="subject_id[]" value="<%= j.pk %>" checked="checked"><%= j.subject_name %></td>
+                    <!--If the subject was not previously selected, default to the name being 'unchecked'-->
+                    <% else %>
+                        <td><input type="checkbox" name="subject_id[]" value="<%= j.pk %>"><%= j.subject_name %></td>
+                    <% end %><!--End if include? statement-->
+                <% end %><!--End [0..2] subject array-->
             </tr>
+            
+            <!--Setup while loop for remaining subjects-->
+            <% i = 3 %>
+            <% subj_length = subj_array.length %>
+            <% while i < subj_length do %>
+            <tr>
+                <!--Empty column for spacing under 'Subjects' label-->
+                <td></td>
+                
+                <!--Loop through and output 3 subjects/row-->
+                <% subj_array[i..(i + 2)].each do |j| %>
+                    <!--If the subject was previously selected for the activity, default to the name being 'checked'-->
+                    <% if(id_array.include?(j.pk)) %> 
+                        <td><input type="checkbox" name="subject_id[]" value="<%= j.pk %>" checked="checked"><%= j.subject_name %></td>
+                    <!--If the subject was not previously selected, default to the name being 'unchecked'-->
+                    <% else %>
+                        <td><input type="checkbox" name="subject_id[]" value="<%= j.pk %>"><%= j.subject_name %></td>
+                    <% end %><!--End if include? statement-->
+                <% end %><!--End [i..(i + 2)] subject array-->
+                
+                <% i += 3 %>
+            </tr>
+            <% end %><!--End 'while' loop for listing of subjects-->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - --->
+            
             <tr>
                 <td><label for="description">Description:</label></td>
                 <td><input type="text" name="description" value="<%= a.description %>"></td>
