@@ -220,7 +220,7 @@ post('/activities/create/:acct_id') do
          :account_id => i)
    end
    
-   redirect "/activities/#{i}"
+   redirect "/activities/#{i}/#{last_insert_id}"
 end
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -304,7 +304,7 @@ post('/activities/delete/:acct_id/:act_id') do
    ActivitiesSubject.where(activity_id: a).delete
    Activity.where(activity_id: a).delete
    
-   redirect "/dashboard/#{i}"
+   redirect "/activities/#{i}"
 end
 
 
@@ -373,7 +373,7 @@ post('/books/create/:acct_id') do
          :account_id => i)
    end
    
-   redirect "/dashboard/#{i}"
+   redirect "/books/#{i}/#{last_insert_id}"
 end
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -397,7 +397,7 @@ end
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#Submit updated input into the db
+#Submit updated book data into the db
 post('/books/create/:acct_id/:book_id') do
    i = params['acct_id'].to_i
    b = params['book_id'].to_i
@@ -431,7 +431,7 @@ post('/books/create/:acct_id/:book_id') do
          :account_id => i)
    end
    
-   redirect "/dashboard/#{i}"
+   redirect "/books/#{i}/#{b}"
 end
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -459,7 +459,7 @@ post('/books/delete/:acct_id/:book_id') do
    BooksSubject.where(book_id: b).delete
    Book.where(book_id: b).delete
    
-   redirect "/dashboard/#{i}"
+   redirect "/books/#{i}"
 end
 
 
@@ -559,7 +559,7 @@ post('/subjects/create/:acct_id') do
       :description => params['description'],
       :subject_slug => params['subject_name'].downcase.strip.gsub(' ', '-').gsub('&', 'and').gsub(/[^\w-]/, ''))
    
-   redirect "/accounts/#{i}"
+   redirect "/subjects/manage/#{i}"
 end
 
 
@@ -589,7 +589,7 @@ post('/subjects/create/:acct_id/:subj_id') do
       :description => params[:description],
       :subject_slug => params[:subject_name].downcase.strip.gsub(' ', '-').gsub('&', 'and').gsub(/[^\w-]/, ''))
    
-   redirect "/accounts/#{i}"
+   redirect "/subjects/manage/#{i}"
 end
 
 
@@ -616,7 +616,7 @@ post('/subjects/delete/:acct_id/:subj_id') do
    BooksSubject.where(subject_id: j).delete
    Subject.where(subject_id: j).delete
    
-   redirect "/accounts/#{i}"
+   redirect "/subjects/manage/#{i}"
 end
 
 
@@ -649,7 +649,7 @@ end
 
 
 
-#Data inserted into the 'students' table in the database
+#Data inserted for new student
 post('/students/create/:acct_id') do
    i = params['acct_id'].to_i
    
@@ -679,7 +679,7 @@ end
 
 
 
-#All data input is updated for the current row
+#Update student info
 post('/students/create/:acct_id/:stud_id') do
    i = params['acct_id'].to_i
    s = params['stud_id'].to_i
@@ -717,7 +717,7 @@ post('/students/delete/:acct_id/:stud_id') do
    BooksStudent.where(student_id: s).delete
    Student.where(student_id: s).delete
    
-   redirect "/accounts/#{i}"
+   redirect "/students/#{i}"
 end
 
 
