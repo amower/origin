@@ -4,7 +4,9 @@
     <h1>Activities</h1>
     
     <!--Link to add new activity-->
-    <a href="/activities/new/<%= i.pk %>">Add New Activity</a><br>
+    <div>
+        <a href="/activities/new/<%= i.pk %>">Add New Activity</a>
+    </div>
     
 <!------Setup to organize activities by year---------------------------------->
     <!--Create empty array for years-->    
@@ -18,7 +20,7 @@
     <!--Remove duplicate elements in the array, then iterate through each unique value-->
     <% year_array.uniq.each do |year| %>
     
-        <h3><strong><%= year %></strong></h3>
+        <h3><%= year %></h3>
         
         <ol reversed><!--List all activities from the current year-->
             <% @activities.where(Sequel.like(:activity_date, "#{year}%")).each do |a| %>
@@ -40,3 +42,11 @@
     <% end %><!--End iteration through years-->
 
 <% end %><!--End account data access-->
+
+<div class="activities group">
+    <h2>Year</h2>
+    <div class="activity">
+        <span class="title"><a href="">Activity Title</a></span>
+        <span class="date">Date</span>        
+    </div>
+</div>
