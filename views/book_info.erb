@@ -3,52 +3,58 @@
 <% @book.each do |b| %>
         
     <!--Book Title-->
-    <h2><%= b.title %></h2>
+    <h1 class"title"><%= b.title %></h1>
+    <p class="subtitle">(Subtitle)</p>
     
-    <!--Display Book Info-->
-    <table>
-        <tr>
-            <td><strong>Author:</strong></td>
-            <td><%= b.author %></td>
-        </tr>
-        <tr>
-            <td><strong>Rating:</strong></td>
-            <td><%= b.rating %> STARS</td>
-        </tr>
-        <tr>
-            <td><strong>Category:</strong></td>
-            <td><%= b.category %></td>
-        </tr>
-        <tr>
-            <td><strong>Student(s):</strong></td>
-            <!--List students who read the book-->
-            <% @students.each do |s| %>
-            <td><%= s.stud_first_name %></td>
-            <% end %><!--End students loop-->
-        </tr>
-        <tr>
-            <td><strong>Subject(s):</strong></td>
-            <!--List subjects for the book-->
-            <% @subjects.each do |j| %>
-            <td><%= j.subject_name %></td>
-            <% end %><!--End subjects loop-->
-        </tr>
-        <tr>
-            <td><strong>Date Finished:</strong></td>
-            <td><%= b.finish_date.month %>/<%= b.finish_date.day %>/<%= b.finish_date.year %></td>
-        </tr>
-    </table>
+    <!--Display book info-->
+    <div class="author">
+        <span class="label">Author:</span>
+        <span class="prefix">(Prefix)</span>
+        <span class="first"><%= b.author %></span>
+        <span class="middle">(Middle)</span>
+        <span class="last">(Last)</span>
+        <span class="suffix">(Suffix)</span>
+    </div>
     
-    <br>
+    <div class="rating">
+        <span class="label">Rating:</span>
+        <span class="rating"><%= b.rating %> Stars</span>
+    </div>
     
-    <!--Link to edit book-->
-    <a href="/books/update/<%= b.account_id %>/<%= b.pk %>">Edit Book</a> 
-        
-    <br>
-        
-    <!--Link to delete book-->
-    <a href="/books/change/<%= b.account_id %>/<%= b.pk %>">Delete Book</a>
+    <div class="category">
+        <span class="label">Category:</span>
+        <span class="category"><%= b.category %></span>
+    </div>
+    
+    <div class="students">
+        <span class="label">Student(s):</span>
+        <!--List students who read the book-->
+        <% @students.each do |s| %>
+        <span class="student"><%= s.stud_first_name %></span>
+        <% end %><!--End students loop-->
+    </div>
+    
+    <div class="subjects">
+        <span class="label">Subject(s):</span>
+        <!--List subjects selected for the book-->
+        <% @subjects.each do |j| %>
+        <span class="subject"><%= j.subject_name %></span>
+        <% end %><!--End subjects loop-->
+    </div>
+    
+    <div class="date">
+        <span class="label">Date Finished:</span>
+        <span class="month"><%= b.finish_date.month %></span>
+        <span class="day"><%= b.finish_date.day %></span>
+        <span class="year"><%= b.finish_date.year %></span>
+    </div>
 
+    <div class="actions">
+        <!--Link to edit book-->
+        <a class="button edit" href="/books/update/<%= b.account_id %>/<%= b.pk %>">Edit Book</a>
+        <!--Link to delete book-->
+        <a class="button delete" href="/books/change/<%= b.account_id %>/<%= b.pk %>">Delete Book</a>
+    </div>
 <% end %><!--End book data access-->
         
    
