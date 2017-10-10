@@ -349,11 +349,9 @@ post('/books/create/:acct_id') do
       :account_id => i,
       :title => params[:title], 
       :author => params[:author],
-      :fiction => params[:fiction],
-      :nonfiction => params[:nonfiction],
+      :category => params[:category],
       :rating => params[:rating], 
       :finish_date => params[:finish_date],
-      #finish_date = Time.parse(params[:finish_date])
       :book_slug => params[:title].downcase.strip.gsub(' ', '-').gsub('&', 'and').gsub(/[^\w-]/, ''))
    
    #Assign variable to the newly-created, auto-incremented book_id   
@@ -408,8 +406,7 @@ post('/books/create/:acct_id/:book_id') do
       :title => params[:title],
       :author => params[:author],
       :rating => params[:rating],
-      :fiction => params[:fiction],
-      :nonfiction => params[:nonfiction],
+      :category => params[:category],
       :book_slug => params[:title].downcase.strip.gsub(' ', '-').gsub('&', 'and').gsub(/[^\w-]/, ''))
    
    #Clear meta students & subjects rows related to current book entirely so they can be deleted or added to based on new selections 

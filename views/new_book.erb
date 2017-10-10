@@ -18,8 +18,10 @@
             </tr>
             
             <tr>
-                <td><label for="fiction">Fiction:</label><input type="checkbox" name="fiction" value="1"></td>
-                <td><label for="nonfiction">Nonfiction:</label><input type="checkbox" name="nonfiction" value="1"></td>
+                <td><label for="category">Category:</label></td>
+                <!--Radio buttons allow only one choice to be selected-->
+                <td><input type="radio" id="category1" name="category" value="0">Nonfiction</td>
+                <td><input type="radio" id="category2" name="category" value="1">Fiction</td>
             </tr>
             
             <tr>
@@ -67,6 +69,9 @@
             
             <tr>
                 <td><input type="submit"></td>
+            </tr>
+            <tr>
+                <td><input type="reset"></td>
             </tr>
         </table>
     </form>

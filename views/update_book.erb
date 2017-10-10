@@ -15,8 +15,19 @@
                 <td><input type="text" name="author" value="<%= b.author %>"></td>
             </tr>
             <tr>
-                <td><label for="fiction">Fiction:</label><input type="checkbox" name="fiction" value="1"></td>
-                <td><label for="nonfiction">Nonfiction:</label><input type="checkbox" name="nonfiction" value="1"></td>
+                <td><label for="category">Category:</label></td>
+                <!--Radio buttons allow only one choice to be selected-->
+                
+                <!--if prior category value = 0/false, preselect 'nonfiction'-->
+                <% if(!b.category) %>
+                <td><input type="radio" id="category1" name="category" value="0" checked="checked">Nonfiction</td>
+                <td><input type="radio" id="category2" name="category" value="1">Fiction</td>
+                
+                <!--if prior category value = 1/true, preselect 'fiction'-->
+                <% else %>
+                <td><input type="radio" id="category1" name="category" value="0" >Nonfiction</td>
+                <td><input type="radio" id="category2" name="category" value="1" checked="checked">Fiction</td>
+                <% end %><!--End if-not-true statement-->
             </tr>
             <tr>
                 <td><label for="rating">Rating(1-5):</label></td>

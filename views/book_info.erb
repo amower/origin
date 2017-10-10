@@ -16,8 +16,9 @@
             <td><%= b.rating %> STARS</td>
         </tr>
         <tr>
-            <td><strong>Genre:</strong></td>
-            <td><% if(b.fiction) %>
+            <td><strong>Category:</strong></td>
+            <!--In db, value 0/false is nonfiction, value 1/true is fiction-->
+            <td><% if(b.category) %>
                     <%= "Fiction" %>
                 <% else %>
                     <%= "Nonfiction" %>
