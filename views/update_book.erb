@@ -10,41 +10,59 @@
                 <td><label for="title">Title:</label></td>
                 <td><input type="text" name="title" value="<%= b.title %>"></td>
             </tr>
+            
             <tr>
                 <td><label for="author">Author(Last, First):</label></td>
                 <td><input type="text" name="author" value="<%= b.author %>"></td>
             </tr>
+            
             <tr>
                 <td><label for="category">Category:</label></td>
                 <!--Radio buttons allow only one choice to be selected-->
-                
-                <!--if prior category value = 0/false, preselect 'nonfiction'-->
-                <% if(!b.category) %>
-                <td><input type="radio" id="category1" name="category" value="0" checked="checked">Nonfiction</td>
-                <td><input type="radio" id="category2" name="category" value="1">Fiction</td>
-                
-                <!--if prior category value = 1/true, preselect 'fiction'-->
+                <!--if prior category value = 'nonfiction', preselect 'nonfiction'-->
+                <% if(b.category === "Nonfiction") %>
+                <td><input type="radio" id="category1" name="category" value="Nonfiction" checked="checked">Nonfiction</td>
+                <td><input type="radio" id="category2" name="category" value="Fiction">Fiction</td>
+                <!--if prior category value = 'fiction', preselect 'fiction'-->
                 <% else %>
-                <td><input type="radio" id="category1" name="category" value="0" >Nonfiction</td>
-                <td><input type="radio" id="category2" name="category" value="1" checked="checked">Fiction</td>
+                <td><input type="radio" id="category1" name="category" value="Nonfiction" >Nonfiction</td>
+                <td><input type="radio" id="category2" name="category" value="Fiction" checked="checked">Fiction</td>
                 <% end %><!--End if-not-true statement-->
             </tr>
+            
             <tr>
                 <td><label for="rating">Rating(1-5):</label></td>
                 <td><input type="number" name="rating" value="<%= b.rating %>"></td>
             </tr>
+            
             <tr>
                 <td><label for="finish_date">Date Finished:</label></td>
                 <td><input type="date" name="finish_date" value="<%= b.finish_date %>"></td>
             </tr>
-            
-            <!--Checkbox for each student on the acount-->
-            <tr>
+
+<!-- - - - - - - - - - - - - - - S T U D E N T S - - - - - - - - - - - - - ---> 
+            <tr><!--Checkbox for each student on the acount-->
                 <td><label for="student_id[]">Student(s):</label></td>
+                <!--Capture the id for each student previously selected for the book-->
+                <% id_array = [] %>
+                <% @books_students.each do |s| %>
+                    <% id = s.student_id %>
+                    <% id_array.push(id) %>
+                <% end %>
+                
+                <!--List all students on account-->
                 <% @students.each do |s| %>
-                <td><input type="checkbox" name="student_id[]" value="<%= s.pk %>"><%= s.stud_first_name %></td>
+                    <!--If the student was previously selected for the book, default to their name being 'checked'-->
+                    <% if(id_array.include?(s.pk)) %> 
+                        <td><input type="checkbox" name="student_id[]" value="<%= s.pk %>" checked="checked"><%= s.stud_first_name %></td>
+                    <!--If the student was not previously selected, default to their name being 'unchecked'-->
+                    <% else %>
+                        <td><input type="checkbox" name="student_id[]" value="<%= s.pk %>"><%= s.stud_first_name %></td>
+                    <% end %>
                 <% end %><!--End student loop-->
             </tr>
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - --->
+
 
 <!-- - - - - - - - - - - -S U B J E C T S - - - - - - - - - - - - - - - - --->  
             <!--The splitting of subjects into two code segments is purely cosmetic and temporary. The current organization allows for the label and the first three subjects to be in a row, and then for the following rows of 3 subjects to fall directly underneath the top subject row - skipping the column that holds the label. The while loop can encompass all of the subjects if subjects are to be listed in a layered format uninhibited by irrecular #s of columns for display. One long row of subjects was a nuisance during development. 
@@ -54,24 +72,48 @@
             <!--List first three subjects on account (alphabetically)-->
             <tr>
                 <td><label for="subject_id[]">Subject(s):</label></td>
-                <!--Create array for subjects-->
-                <% subarray = @subjects.to_a %>
+                
+                <!--Capture the id for each subject previously selected for the book-->
+                <% id_array = [] %>
+                <% @books_subjects.each do |j| %>
+                    <% id = j.subject_id %>
+                    <% id_array.push(id) %>
+                <% end %>
+                
+                <!--Create array for subject organization-->
+                <% subj_array = @subjects.to_a %>
+                
                 <!--First three items in array...-->
-                <% subarray[0..2].each do |j| %>
-                <td><input type="checkbox" name="subject_id[]" value="<%= j.pk %>"><%= j.subject_name %></td>
+                <% subj_array[0..2].each do |j| %>
+                    <!--If the subject was previously selected for the book, default to the name being 'checked'-->
+                    <% if(id_array.include?(j.pk)) %> 
+                        <td><input type="checkbox" name="subject_id[]" value="<%= j.pk %>" checked="checked"><%= j.subject_name %></td>
+                    <!--If the subject was not previously selected, default to the name being 'unchecked'-->
+                    <% else %>
+                        <td><input type="checkbox" name="subject_id[]" value="<%= j.pk %>"><%= j.subject_name %></td>
+                    <% end %><!--End if include? statement-->
                 <% end %><!--End first three subjects loop-->
             </tr>
             
             <!--All remaining subject options organized three/row, skipping over the column holding the 'subjects' label-->
             <% i = 3 %>
-            <% sublength = subarray.length %>
-            <% while i < sublength do %>
+            <% subj_length = subj_array.length %>
+            <% while i < subj_length do %>
             <tr>
+                <!--Empty column for spacing under 'subjects' label-->
                 <td></td>
+                
                 <!--Array items 3-5, 6-8, 9-11...-->
-                <% subarray[i..(i + 2)].each do |j| %>
-                <td><input type="checkbox" name="subject_id[]" value="<%= j.pk %>"><%= j.subject_name %></td>
-                <% end %><!--End loop of 3 items-->
+                <% subj_array[i..(i + 2)].each do |j| %>
+                    <!--If the subject was previously selected for the book, default to the name being 'checked'-->
+                    <% if(id_array.include?(j.pk)) %> 
+                        <td><input type="checkbox" name="subject_id[]" value="<%= j.pk %>" checked="checked"><%= j.subject_name %></td>
+                    <!--If the subject was not previously selected, default to the name being 'unchecked'-->
+                    <% else %>
+                        <td><input type="checkbox" name="subject_id[]" value="<%= j.pk %>"><%= j.subject_name %></td>
+                    <% end %><!--End if include? statement-->
+                <% end %><!--End subj_array loop-->
+                
                 <% i += 3 %><!--Change value of i and loop again-->
             </tr>
             <% end %><!--End 'while' loop for listing of subjects-->

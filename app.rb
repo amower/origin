@@ -388,6 +388,8 @@ get('/books/update/:acct_id/:book_id') do
    @book = Book.where(book_id: b)
    @students = Student.where(account_id: i)
    @subjects = Subject.where(account_id: i)
+   @books_students = BooksStudent.where(book_id: b)
+   @books_subjects = BooksSubject.where(book_id: b)
    
    erb :update_book
 end

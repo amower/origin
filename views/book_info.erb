@@ -17,12 +17,7 @@
         </tr>
         <tr>
             <td><strong>Category:</strong></td>
-            <!--In db, value 0/false is nonfiction, value 1/true is fiction-->
-            <td><% if(b.category) %>
-                    <%= "Fiction" %>
-                <% else %>
-                    <%= "Nonfiction" %>
-                <% end %></td>
+            <td><%= b.category %></td>
         </tr>
         <tr>
             <td><strong>Student(s):</strong></td>
