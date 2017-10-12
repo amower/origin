@@ -220,7 +220,7 @@ post('/activities/create/:acct_id') do
          :account_id => i)
    end
    
-   redirect "/activities/#{i}/#{last_insert_id}"
+   redirect "/activities/#{i}"
 end
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -347,8 +347,13 @@ post('/books/create/:acct_id') do
    #Query for db insertion
    Book.insert(
       :account_id => i,
-      :title => params[:title], 
-      :author => params[:author],
+      :title => params[:title],
+      :subtitle => params[:subtitle],
+      :prefix => params[:prefix],
+      :first_name => params[:first_name],
+      :middle_name => params[:middle_name],
+      :last_name => params[:last_name],
+      :suffix => params[:suffix],
       :category => params[:category],
       :rating => params[:rating], 
       :finish_date => params[:finish_date],
@@ -373,7 +378,7 @@ post('/books/create/:acct_id') do
          :account_id => i)
    end
    
-   redirect "/books/#{i}/#{last_insert_id}"
+   redirect "/books/#{i}"
 end
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -406,7 +411,12 @@ post('/books/create/:acct_id/:book_id') do
    Book.where(book_id: b).update(
       :finish_date => params[:finish_date], 
       :title => params[:title],
-      :author => params[:author],
+      :subtitle => params[:subtitle],
+      :prefix => params[:prefix],
+      :first_name => params[:first_name],
+      :middle_name => params[:middle_name],
+      :last_name => params[:last_name],
+      :suffix => params[:suffix],
       :rating => params[:rating],
       :category => params[:category],
       :book_slug => params[:title].downcase.strip.gsub(' ', '-').gsub('&', 'and').gsub(/[^\w-]/, ''))
@@ -470,7 +480,7 @@ get('/books/sort/:acct_id/:letter') do
    l = params['letter']
    
    @account = Account.where(account_id: i)
-   @books = Book.where(account_id: i).where(Sequel.like(:author, "#{l}%")).by_date.reverse
+   @books = Book.where(account_id: i).where(Sequel.like(:last_name, "#{l}%")).by_date.reverse
    
    erb :sort_author
 end
@@ -478,12 +488,12 @@ end
 
 
 #View all books by selected author in selected account
-get('/books/author/:acct_id/:author') do
+get('/books/author/:acct_id/:last_name') do
    i = params['acct_id'].to_i
-   author = params['author']
+   last_name = params['last_name']
    
    @account = Account.where(account_id: i)
-   @books = Book.where(account_id: i).where(Sequel.like(:author, "#{author}%")).by_date.reverse
+   @books = Book.where(account_id: i).where(Sequel.like(:last_name, "#{last_name}%")).by_date.reverse
    
    erb :show_author
 end
@@ -491,14 +501,14 @@ end
 
 
 #View all books by selected author, read by selected student, in selected account
-get('/books/author/:acct_id/:stud_id/:author') do
+get('/books/author/:acct_id/:stud_id/:last_name') do
    i = params['acct_id'].to_i
    s = params['stud_id'].to_i
-   author = params['author']
+   last_name = params['last_name']
    
    @account = Account.where(account_id: i)
    @student = Student.where(student_id: s, account_id: i)
-   @books = Book.association_join(:books_students).where(student_id: s).where(Sequel.like(:author, "#{author}%")).by_date.reverse
+   @books = Book.association_join(:books_students).where(student_id: s).where(Sequel.like(:last_name, "#{last_name}%")).by_date.reverse
    
    erb :student_author
 end

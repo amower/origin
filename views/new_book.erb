@@ -9,12 +9,17 @@
         <table>
             <tr>
                 <td><label for="title">Title:</label></td>
-                <td><input type="text" name="title"></td>
+                <td><input type="text" name="title">Title</td>
+                <td><input type="text" name="subtitle">Subtitle</td>
             </tr>
             
             <tr>
-                <td><label for="author">Author(Last, First):</label></td>
-                <td><input type="text" name="author"></td>
+                <td><label for="author">Author:</label></td>
+                <td><input type="text" name="prefix">Prefix</td>
+                <td><input type="text" name="first_name">First Name</td>
+                <td><input type="text" name="middle_name">Middle Name</td>
+                <td><input type="text" name="last_name">Last Name</td>
+                <td><input type="text" name="Suffix">Suffix</td>
             </tr>
             
             <tr>
@@ -38,7 +43,7 @@
             <tr>
                 <td><label for="student_id[]">Student(s):</label></td>
                 <% @students.each do |s| %>
-                <td><input type="checkbox" name="student_id[]" value="<%= s.pk %>"> <%= s.stud_first_name %></td>
+                <td><input type="checkbox" name="student_id[]" value="<%= s.pk %>"><%= s.stud_first_name %></td>
                 <% end %>
             </tr>
  

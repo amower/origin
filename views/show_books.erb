@@ -26,7 +26,7 @@
             <!--Iterate through all books and push author's initial into an array-->
             <% @books.each do |b| %>
                 <!--'initial' method created in String class-->
-                <% letter = b.author.initial %>
+                <% letter = b.last_name.initial %>
                 <% initial_array.push(letter) %>
             <% end %>
             
@@ -66,13 +66,13 @@
             <% @books.where(Sequel.like(:finish_date, "#{year}%")).each do |b| %>
             <li>
                 <!--Linked title-->
-                <a href="/books/<%= b.account_id %>/<%= b.pk %>"><%= b.title %></a>, 
+                <a href="/books/<%= b.account_id %>/<%= b.pk %>"><%= b.title %><%= b.subtitle %></a> 
                 
                 <!--Linked author-->
-                by <a href="/books/author/<%= b.account_id %>/<%= b.author %>"><%= b.author %></a>, 
+                <a href="/books/author/<%= b.account_id %>/<%= b.last_name %>"><%= b.prefix %><%= b.first_name %><%= b.middle_name %><%= b.last_name %><%= b.suffix %></a> 
                 
                 <!--Finish_date-->
-                read in <%= b.finish_date.month %>/<%= b.finish_date.year %>
+                <%= b.finish_date.month %>/<%= b.finish_date.year %>
             </li>
             <% end %><!--End books loop for given year-->
         </ol>

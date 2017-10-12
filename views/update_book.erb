@@ -8,12 +8,17 @@
         <table>
             <tr>
                 <td><label for="title">Title:</label></td>
-                <td><input type="text" name="title" value="<%= b.title %>"></td>
+                <td><input type="text" name="title" value="<%= b.title %>">Title</td>
+                <td><input type="text" name="subtitle" value="<%= b.subtitle %>">Subtitle</td>
             </tr>
             
             <tr>
-                <td><label for="author">Author(Last, First):</label></td>
-                <td><input type="text" name="author" value="<%= b.author %>"></td>
+                <td><label for="author">Author:</label></td>
+                <td><input type="text" name="prefix" value="<%= b.prefix %>">Prefix</td>
+                <td><input type="text" name="first_name" value="<%= b.first_name %>">First Name</td>
+                <td><input type="text" name="middle_name" value="<%= b.middle_name %>">Middle Name</td>
+                <td><input type="text" name="last_name" value="<%= b.last_name %>">Last Name</td>
+                <td><input type="text" name="suffix" value="<%= b.suffix %>">Suffix</td>
             </tr>
             
             <tr>

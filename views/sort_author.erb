@@ -3,8 +3,8 @@
 
     <!--Target the 'sort' letter-->
     <% books_array = @books.to_a %>
-    <% name = books_array[0].author %>
-    <h3>Books with Author's Last Name "<%= name.initial %>"</h3>
+    <% last_name = books_array[0].last_name %>
+    <h3>Books with Author's Last Name "<%= last_name.initial %>"</h3>
     
 <!------Setup alphabetical sorting of authors----------------------------->  
     
@@ -17,7 +17,7 @@
     <!--Iterate through all books on account and push author's initial into an array-->
     <% Book.where(account_id: i.pk).each do |b| %>
         <!--'initial' method setup in String class-->
-        <% letter = b.author.initial %>
+        <% letter = b.last_name.initial %>
         <% initial_array.push(letter) %>
     <% end %>
     
@@ -39,7 +39,7 @@
     
     <!--Iterate through all books and assign the author to a variable-->
     <% @books.each do |b| %>
-        <% author = b.author %>
+        <% author = b.last_name %>
         <!--Push each author into the array-->
         <% author_array.push(author) %>
     <% end %>
@@ -51,13 +51,13 @@
         <h3><strong><%= author %></strong></h3>
         <ol reversed>
             <!--Iterate through all books by current author-->
-            <% @books.where(Sequel.like(:author, "#{author}%")).each do |b| %>
+            <% @books.where(Sequel.like(:last_name, "#{author}%")).each do |b| %>
             <li>
                 <!--Linked title-->
-                <a href="/books/<%= b.account_id %>/<%= b.pk %>"><%= b.title %></a>, 
+                <a href="/books/<%= b.account_id %>/<%= b.pk %>"><%= b.title %><%= b.subtitle %></a> 
                 
                 <!--Finish_date-->
-                read in <%= b.finish_date.month %>/<%= b.finish_date.year %>
+                <%= b.finish_date.month %>/<%= b.finish_date.year %>
             </li>
             <% end %><!--End books loop for given author-->
         </ol>

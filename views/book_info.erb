@@ -4,16 +4,16 @@
         
     <!--Book Title-->
     <h1 class"title"><%= b.title %></h1>
-    <p class="subtitle">(Subtitle)</p>
+    <p class="subtitle"><%= b.subtitle %></p>
     
     <!--Display book info-->
     <div class="author">
         <span class="label">Author:</span>
-        <span class="prefix">(Prefix)</span>
-        <span class="first"><%= b.author %></span>
-        <span class="middle">(Middle)</span>
-        <span class="last">(Last)</span>
-        <span class="suffix">(Suffix)</span>
+        <span class="prefix"><%= b.prefix %></span>
+        <span class="first"><%= b.first_name %></span>
+        <span class="middle"><%= b.middle_name %></span>
+        <span class="last"><%= b.last_name %></span>
+        <span class="suffix"><%= b.suffix %></span>
     </div>
     
     <div class="rating">

@@ -40,13 +40,13 @@
         <% @books.each do |b| %>
         <li>
             <!--Linked title-->
-            <a href="/books/<%= b.account_id %>/<%= b.pk %>"><%= b.title %></a>,
+            <a href="/books/<%= b.account_id %>/<%= b.pk %>"><%= b.title %><%= b.subtitle %></a>
             
             <!--Linked author-->
-            by <a href="/books/author/<%= b.account_id %>/<%= b.author %>"><%= b.author %></a>, 
+            <a href="/books/author/<%= b.account_id %>/<%= b.last_name %>"><%= b.prefix %><%= b.first_name %><%= b.middle_name %><%= b.last_name %><%= b.suffix %></a> 
             
             <!--Finish Date-->
-            read in <%= b.finish_date.month %>/<%= b.finish_date.year %> 
+            <%= b.finish_date.month %>/<%= b.finish_date.year %> 
             
         </li><% end %><!--End book loop-->
     </ol>

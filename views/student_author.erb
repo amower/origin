@@ -2,19 +2,19 @@
 <% @student.all do |s| %>
         
     <!--Page Title-->
-    <h2><%= s.stud_first_name %>'s Books by <% @books.all do |b| %><%= b.author %><% end %></h2>
+    <h2><%= s.stud_first_name %>'s Books by <% @books.all do |b| %><%= b.last_name %><% end %></h2>
     
     <!--List books by certain author, read by certain student-->
     <ol>
         <% @books.each do |b| %>
         <li>
             <!--Link title-->
-            <a href="/books/<%= b.account_id %>/<%= b.pk %>"><%= b.title %></a>, 
+            <a href="/books/<%= b.account_id %>/<%= b.pk %>"><%= b.title %><%= b.subtitle %></a> 
             <!--List author-->
-            by <%= b.author %>, 
+            <%= b.prefix %><%= b.first_name %><%= b.middle_name %><%= b.last_name %><%= b.suffix %>
             
             <!--Formatted finish date-->
-            read in <%= b.finish_date.month %>/<%= b.finish_date.year %> 
+            <%= b.finish_date.month %>/<%= b.finish_date.year %> 
         </li>
         <% end %><!--End book loop-->
     </ol>

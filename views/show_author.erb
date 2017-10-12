@@ -3,7 +3,7 @@
     
     <!--Target the 'sort' author-->
     <% books_array = @books.to_a %>
-    <% author = books_array[0].author %>
+    <% author = books_array[0].last_name %>
     <h3>Books by <%= author %></h3>
     
     <ol reversed><!--List all books by selected author-->
@@ -11,12 +11,12 @@
         
         <li>
             <!--Linked title-->
-            <a href="/books/<%= b.account_id %>/<%= b.pk %>"><%= b.title %></a>, 
+            <a href="/books/<%= b.account_id %>/<%= b.pk %>"><%= b.title %><%= b.subtitle %></a> 
             <!--Author-->
-            by <%= b.author %>, 
+            <%= b.prefix %><%= b.first_name %><%= b.middle_name %><%= b.last_name %><%= b.suffix %> 
             
             <!--Finished date-->
-            read in <%= b.finish_date.month %>/<%= b.finish_date.year %> 
+            <%= b.finish_date.month %>/<%= b.finish_date.year %> 
         </li>
         
         <% end %><!--End books by selected author loop-->
