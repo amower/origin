@@ -3,59 +3,71 @@
 <% @activity.each do |a| %>
      
     <!--Activity title-->    
-    <h2><%= a.title %></h2>
+    <h1 class="title"><%= a.title %></h1>
+    
+    <!--Date of activity-->
+    <div class="date">
+        <span class="label">Activity Date:</span>
+        <span class="month"><%= a.activity_date.month %></span>
+        <span class="day"><%= a.activity_date.day %></span>
+        <span class="year"><%= a.activity_date.year %></span>
+    </div>
+    
+    <!--Activity description-->
+    <div class="description">
+        <span class="label">Description:</span>
+        <span class="description"><%= a.description %></span>
+    </div>
+    
+    <!--Duration of activity-->
+    <div class="duration">
+        <span class="label">Duration:</span>
+        <span class="duration">
+            <!--Format activity duration verbage-->
+            <% if(a.duration < 60) %>
+                <%= a.duration %> Minutes
+            <% elsif(a.duration === 60) %>
+                <%= a.duration / 60 %> Hour
+            <% elsif(a.duration > 60 && a.duration / 60 === 1) %>
+                <%= a.duration / 60 %> Hour <%= a.duration % 60 %> Minutes
+            <% elsif(a.duration > 60 && a.duration % 60 === 0) %>
+                <%= a.duration / 60 %> Hours
+            <% else %>
+                <%= a.duration / 60 %> Hours <%= a.duration % 60 %> Minutes
+            <% end %></span>
+    </div>
     
     <!--List students who participated in the activity-->
-    <h2>Student(s): <% @students.each do |s| %>
-        <%= s.stud_first_name %>
-        <% end %></h2><!--End to students loop-->
+    <div class="students">
+        <span class="label">Student(s):</span>
+        <% @students.each do |s| %>
+        <span class="student"><%= s.stud_first_name %></span>
+        <% end %><!--End students loop-->
+    </div>
     
-    <!--Table to display activity info-->
-    <table>
-        <tr>
-            <td><strong>Date of Activity:</strong></td>
-            <td><%= a.activity_date.month %>/<%= a.activity_date.day %>/<%= a.activity_date.year %></td>
-        </tr>
-        <tr>
-            <td><strong>Duration:</strong></td>
-            <td><!--Format activity duration verbage-->
-                <% if(a.duration < 60) %>
-                    <%= a.duration %> Minutes
-                <% elsif(a.duration === 60) %>
-                    <%= a.duration / 60 %> Hour
-                <% elsif(a.duration > 60 && a.duration / 60 === 1) %>
-                    <%= a.duration / 60 %> Hour <%= a.duration % 60 %> Minutes
-                <% elsif(a.duration > 60 && a.duration % 60 === 0) %>
-                    <%= a.duration / 60 %> Hours
-                <% else %>
-                    <%= a.duration / 60 %> Hours <%= a.duration % 60 %> Minutes
-                <% end %></td>
-        </tr>
-        <tr>
-            <!--List each subject tied to activity-->
-            <td><strong>Subject(s):</strong></td>
-            <% @subjects.each do |j| %>
-            <td><%= j.subject_name %></td>
-            <% end %><!--End to subjects loop-->
-        </tr>
-        <tr>
-            <td><strong>Description:</strong></td>
-            <td><%= a.description %></td>
-        </tr>
-    </table>
+    <!--List subjects associated with the activity-->
+    <div class="subjects">
+        <span class="label">Subject(s):</span>
+        <% @subjects.each do |j| %>
+        <span class="subject"><%= j.subject_name %></span>
+        <% end %><!--End subjects loop-->
+    </div>
     
-    <br>
+    <!--Links to edit/delete current activity-->
+    <div class="actions">
+        <!--Link to edit activity-->
+        <a class="button edit" href="/activities/update/<%= a.account_id %>/<%= a.pk %>">Edit Activity</a>
+        <!--Link to delete activity-->
+        <a class="button delete" href="/activities/change/<%= a.account_id %>/<%= a.pk %>">Delete Activity</a>
+    </div>
     
-    <!--Link to edit activity-->
-    <a href="/activities/update/<%= a.account_id %>/<%= a.pk %>">Edit Activity</a><br>
-    
-    <!--Link to delete activity-->
-    <a href="/activities/change/<%= a.account_id %>/<%= a.pk %>">Delete Activity</a><br>
-    
-    <!--Link to portfolio of each student who participated in activity--> 
-    <h3><% @students.each do |s| %>
-        <a href="/portfolio/<%= s.account_id %>/<%= s.pk %>">View <%= s.stud_first_name %>'s Portfolio</a><br>
-        <% end %></h3><!--End to students loop-->
+    <!--Link to portfolio of each student who participated in activity-->
+    <div class="stud_portfolios">
+        <span class="label">View Student's Portfolio:</span>
+        <% @students.each do |s| %>
+        <a class="button student" href="/portfolio/<%= s.account_id %>/<%= s.pk %>"><%= s.stud_first_name %></a>
+        <% end %><!--End to students loop-->
+    </div>
     
 <% end %><!--End activity data access-->
         
