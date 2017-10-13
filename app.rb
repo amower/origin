@@ -227,9 +227,9 @@ end
 
 
 #Form to update a particular activity prepopulated with current info
-get('/activities/update/:acct_id/:act_id') do
+get('/activities/update/:acct_id/:actv_id') do
    i = params['acct_id'].to_i
-   a = params['act_id'].to_i
+   a = params['actv_id'].to_i
    
    @account = Account.where(account_id: i)
    @activity = Activity.where(activity_id: a)
@@ -245,9 +245,9 @@ end
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 #Update activity info in the db
-post('/activities/create/:acct_id/:act_id') do
+post('/activities/create/:acct_id/:actv_id') do
    i = params['acct_id'].to_i
-   a = params['act_id'].to_i
+   a = params['actv_id'].to_i
    
    #Insert said data into the database
    Activity.where(activity_id: a).update(
@@ -283,9 +283,9 @@ end
 
 
 #Retrieve the form to confirm deletion of an activity
-get('/activities/change/:acct_id/:act_id') do
+get('/activities/change/:acct_id/:actv_id') do
    i = params['acct_id'].to_i
-   a = params['act_id'].to_i
+   a = params['actv_id'].to_i
    
    @account = Account.where(account_id: i)
    @activity = Activity.where(activity_id: a)
@@ -296,9 +296,9 @@ end
 
 
 #Delete selected activity
-post('/activities/delete/:acct_id/:act_id') do
+post('/activities/delete/:acct_id/:actv_id') do
    i = params['acct_id'].to_i
-   a = params['act_id'].to_i
+   a = params['actv_id'].to_i
    
    ActivitiesStudent.where(activity_id: a).delete
    ActivitiesSubject.where(activity_id: a).delete
@@ -488,9 +488,9 @@ end
 
 
 #View all books by selected author in selected account
-get('/books/author/:acct_id/:last_name') do
+get('/books/author/:acct_id/:name') do
    i = params['acct_id'].to_i
-   last_name = params['last_name']
+   last_name = params['name']
    
    @account = Account.where(account_id: i)
    @books = Book.where(account_id: i).where(Sequel.like(:last_name, "#{last_name}%")).by_date.reverse
@@ -501,10 +501,10 @@ end
 
 
 #View all books by selected author, read by selected student, in selected account
-get('/books/author/:acct_id/:stud_id/:last_name') do
+get('/books/author/:acct_id/:stud_id/:name') do
    i = params['acct_id'].to_i
    s = params['stud_id'].to_i
-   last_name = params['last_name']
+   last_name = params['name']
    
    @account = Account.where(account_id: i)
    @student = Student.where(student_id: s, account_id: i)
@@ -754,9 +754,9 @@ end
 
 
 #Page to view individual activity info
-get('/activities/:acct_id/:act_id') do
+get('/activities/:acct_id/:actv_id') do
    i = params['acct_id'].to_i
-   a = params['act_id'].to_i
+   a = params['actv_id'].to_i
    
    #Define instance variables for filtering
    @account = Account.where(account_id: i)
@@ -770,9 +770,9 @@ end
 
 
 #Page to view individual book info
-get('/books/:acct_id/:bk_id') do
+get('/books/:acct_id/:book_id') do
    i = params['acct_id'].to_i
-   b = params['bk_id'].to_i
+   b = params['book_id'].to_i
    
    #Define instance variables for filtering
    @account = Account.where(account_id: i)
