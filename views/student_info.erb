@@ -14,11 +14,11 @@
         </tr>
         <tr>
             <td><strong>Birthday:</strong></td>
-            <td><%= s.birth_date.month %>-<%= s.birth_date.day %>-<%= s.birth_date.year %></td>
+            <td><%= s.birth_date.month %><%= s.birth_date.day %><%= s.birth_date.year %></td>
         </tr>
         <tr>
             <td><strong>Join Date:</strong></td>
-            <td><%= s.enroll_date.month %>-<%= s.enroll_date.day %>-<%= s.enroll_date.year %></td>
+            <td><%= s.enroll_date.month %> <%= s.enroll_date.day %> <%= s.enroll_date.year %></td>
         </tr>
         <tr><!--Access account data-->
             <% @account.all do |i| %>
@@ -29,6 +29,6 @@
     </table>
 
     <!--Link to student's portfolio-->
-    <a href="/portfolio/<%= s.account_id %>/<%= s.pk %>">Go to <%= s.stud_first_name %>'s Portfolio</a><br>
+    <a href="/portfolio/<%= s.account_id %>/<%= s.student_id %>">Go to <%= s.stud_first_name %>'s Portfolio</a><br>
         
 <% end %><!--End student data access-->

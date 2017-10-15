@@ -9,12 +9,12 @@
         <% @books.each do |b| %>
         <li>
             <!--Link title-->
-            <a href="/books/<%= b.account_id %>/<%= b.pk %>"><%= b.title %><%= b.subtitle %></a> 
+            <a href="/books/<%= b.account_id %>/<%= b.book_id %>"><%= b.title %><%= b.subtitle %></a> 
             <!--List author-->
             <%= b.prefix %><%= b.first_name %><%= b.middle_name %><%= b.last_name %><%= b.suffix %>
             
             <!--Formatted finish date-->
-            <%= b.finish_date.month %>/<%= b.finish_date.year %> 
+            <%= b.finish_date.month %><%= b.finish_date.day %><%= b.finish_date.year %> 
         </li>
         <% end %><!--End book loop-->
     </ol>

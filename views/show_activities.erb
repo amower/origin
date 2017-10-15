@@ -5,7 +5,7 @@
     
     <!--Link to add new activity-->
     <div>
-        <a href="/activities/new/<%= i.pk %>">Add New Activity</a>
+        <a href="/activities/new/<%= i.account_id %>">Add New Activity</a>
     </div>
     
 <!------Setup to organize activities by year---------------------------------->
@@ -26,7 +26,7 @@
             <% @activities.where(Sequel.like(:activity_date, "#{year}%")).each do |a| %>
             <li>
                 <!--Linked title-->
-                <a href="/activities/<%= a.account_id %>/<%= a.pk %>"><%= a.title %></a> 
+                <a href="/activities/<%= a.account_id %>/<%= a.activity_id %>"><%= a.title %></a> 
                     
                 <!--List each subject connected to the activity-->
                 <%# Subject.association_join(:activities_subjects).where(:activity_id => a.pk).each do |j| %>
@@ -34,7 +34,7 @@
                 <%# end %>
                 
                 <!--Formatted activity date-->
-                on <%= a.activity_date.month %>/<%= a.activity_date.day %>
+                <%= a.activity_date.month %><%= a.activity_date.day %>
             </li>
             <% end %><!--End activities for current year-->
         </ol>

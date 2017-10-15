@@ -9,38 +9,42 @@
     <!--Date book finished-->
     <div class="date">
         <span class="label">Date Finished:</span>
-        <span class="month"><%= b.finish_date.month %></span>
-        <span class="day"><%= b.finish_date.day %></span>
-        <span class="year"><%= b.finish_date.year %></span>
+        <div class="data">
+            <span class="month"><%= b.finish_date.month %></span>
+            <span class="day"><%= b.finish_date.day %></span>
+            <span class="year"><%= b.finish_date.year %></span>
+        </div>
     </div>
     
     <!--Display book author-->
     <div class="author">
         <span class="label">Author:</span>
-        <span class="prefix"><%= b.prefix %></span>
-        <span class="first"><%= b.first_name %></span>
-        <span class="middle"><%= b.middle_name %></span>
-        <span class="last"><%= b.last_name %></span>
-        <span class="suffix"><%= b.suffix %></span>
+        <div class="data">
+            <span class="prefix"><%= b.prefix %></span>
+            <span class="first"><%= b.first_name %></span>
+            <span class="middle"><%= b.middle_name %></span>
+            <span class="last"><%= b.last_name %></span>
+            <span class="suffix"><%= b.suffix %></span>
+        </div>
     </div>
     
     <!--Display fiction vs nonfiction-->
     <div class="category">
         <span class="label">Category:</span>
-        <span class="category"><%= b.category %></span>
+        <span class="data"><%= b.category %></span>
     </div>
     
     <!--Display book rating-->
     <div class="rating">
         <span class="label">Rating:</span>
-        <span class="rating"><%= b.rating %> Stars</span>
+        <span class="data"><%= b.rating %></span>
     </div>
     
     <!--Display students who read the book-->
     <div class="students">
         <span class="label">Student(s):</span>
         <% @students.each do |s| %>
-        <span class="student"><%= s.stud_first_name %></span>
+        <span class="data"><%= s.stud_first_name %></span>
         <% end %><!--End students loop-->
     </div>
     
@@ -48,23 +52,23 @@
     <div class="subjects">
         <span class="label">Subject(s):</span>
         <% @subjects.each do |j| %>
-        <span class="subject"><%= j.subject_name %></span>
+        <span class="data"><%= j.subject_name %></span>
         <% end %><!--End subjects loop-->
     </div>
 
     <!--Links to edit/delete current book-->
     <div class="actions">
         <!--Link to edit book-->
-        <a class="button edit" href="/books/update/<%= b.account_id %>/<%= b.pk %>">Edit Book</a>
+        <a class="button edit" href="/books/update/<%= b.account_id %>/<%= b.book_id %>">Edit Book</a>
         <!--Link to delete book-->
-        <a class="button delete" href="/books/change/<%= b.account_id %>/<%= b.pk %>">Delete Book</a>
+        <a class="button delete" href="/books/change/<%= b.account_id %>/<%= b.book_id %>">Delete Book</a>
     </div>
     
     <!--Link to portfolio of each student who read the book-->
     <div class="stud_portfolios">
         <span class="label">View Student's Portfolio:</span>
         <% @students.each do |s| %>
-        <a class="button student" href="/portfolio/<%= s.account_id %>/<%= s.pk %>"><%= s.stud_first_name %></a>
+        <a class="button student" href="/portfolio/<%= s.account_id %>/<%= s.student_id %>"><%= s.stud_first_name %></a>
         <% end %><!--End to students loop-->
     </div>
     

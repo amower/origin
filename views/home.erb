@@ -13,7 +13,7 @@
         <!--Currently, listed links to all accounts-->
         <ul><% @accounts.each do |i| %>
             <li>
-                <a href="/dashboard/<%= i.pk %>"><%= i.acct_first_name %> <%= i.acct_last_name %></a>
+                <a href="/dashboard/<%= i.account_id %>"><%= i.acct_first_name %> <%= i.acct_last_name %></a>
             </li>
             <% end %><!--End accounts loop-->
         </ul>

@@ -10,10 +10,10 @@
     <% @subjects.each do |j| %>
     
         <!--Linked subject name-->
-        <a href="/portfolio/<%= j.account_id %>/<% @student.all do |s| %><%= s.pk %><% end %>/<%= j.pk %>"><%= j.subject_name %> 
+        <a href="/portfolio/<%= j.account_id %>/<% @student.all do |s| %><%= s.student_id %><% end %>/<%= j.subject_id %>"><%= j.subject_name %> 
         
         <!--Activity count for subject-->
-        (<%= @activities.association_join(:activities_subjects).where(subject_id: j.pk).count %>)</a><br>
+        (<%= @activities.association_join(:activities_subjects).where(subject_id: j.subject_id).count %>)</a><br>
         
     <% end %><!--End subject loop-->
 
@@ -27,10 +27,10 @@
     <ol reversed><% @activities.each do |a| %>
         <li>
             <!--Linked activity title-->
-            <a href="/activities/<%= a.account_id %>/<%= a.pk %>"><%= a.title %></a>
+            <a href="/activities/<%= a.account_id %>/<%= a.activity_id %>"><%= a.title %></a>
             
             <!--Date of activity-->
-            on <%= a.activity_date.month %>/<%= a.activity_date.day %>/<%= a.activity_date.year %>
+            <%= a.activity_date.month %><%= a.activity_date.day %><%= a.activity_date.year %>
             
             <!--List subjects associated with the activity-->
             <%# Subject.association_join(:activities_subjects).where(activity_id: a.pk).each do |j| %>
@@ -61,13 +61,13 @@
     <ol reversed><% @books.each do |b| %>
         <li>
             <!--Linked book title-->
-            <a href="/books/<%= b.account_id %>/<%= b.pk %>"><%= b.title %><%= b.subtitle %></a> 
+            <a href="/books/<%= b.account_id %>/<%= b.book_id %>"><%= b.title %><%= b.subtitle %></a> 
             
             <!--Linked author-->
-            <a href="/books/author/<%= b.account_id %>/<%= s.pk %>/<%= b.last_name %>"><%= b.prefix %><%= b.first_name %><%= b.middle_name %><%= b.last_name %><%= b.suffix %></a> 
+            <a href="/books/author/<%= b.account_id %>/<%= s.student_id %>/<%= b.last_name %>"><%= b.prefix %><%= b.first_name %><%= b.middle_name %><%= b.last_name %><%= b.suffix %></a> 
             
             <!--Date book finished-->
-            <%= b.finish_date.month %>/<%= b.finish_date.year %>
+            <%= b.finish_date.month %><%= b.finish_date.day %><%= b.finish_date.year %>
         </li>
     <% end %><!--End book loop-->
     </ol>

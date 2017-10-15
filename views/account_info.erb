@@ -3,39 +3,52 @@
 <% @account.all do |i| %>
 
     <!--You can read record values as object attributes if attribute names are valid columns in the dataset (i.e. row.account_id). If attribute names are not valid columns, you can access values with [] (i.e. row[:account_id]).-->
-    <h1><%= i.acct_first_name %> <%= i.acct_last_name %> Account Info</h1>
+   
+    <!--Page title-->
+    <h1 class="title"><%= i.acct_first_name %> <%= i.acct_last_name %> Account Info</h1>
     
-    <!--Table displays Profile Info-->
-    <table>
-        <tr>
-            <td><strong>Email:</strong></td>
-            <td><%= i.email %></td>
-        </tr>
-        <tr>
-            <td><strong>Zipcode:</strong></td>
-            <td><%= i.zipcode %></td>
-        </tr>
-        <tr>
-            <td><strong>Join Date:</strong></td>
-            <td><%= i.join_date.month %>-<%= i.join_date.day %>-<%= i.join_date.year %></td>
-        </tr>
-        <tr>
-            <td><strong>Password:</strong></td>
-            <td><%= i.password %></td>
-        </tr>
-    </table>
+    <!--Account email-->
+    <div class="email">
+        <span class="label">Email:</span>
+        <span class="data"><%= i.email %></span>
+    </div>
     
-    <!--Edit/Delete Account Info-->
-    <a href="/accounts/update/<%= i.pk %>">Edit Account</a><br>
-    <a href="/accounts/change/<%= i.pk %>">Delete Account</a>
+    <!--Account zipcode-->
+    <div class="zipcode">
+        <span class="label">Zipcode:</span>
+        <span class="data"><%= i.zipcode %></span>
+    </div>
     
-    <!--Link to manage students on account-->
-    <h3><a href="/students/<%= i.pk %>">Manage Students</a></h3>
+    <!--Account join date-->
+    <div class="date">
+        <span class="label">Join Date:</span>
+        <div class="data">
+            <span class="month"><%= i.join_date.month %></span>
+            <span class="day"><%= i.join_date.day %></span>
+            <span class="year"><%= i.join_date.year %></span>
+        </div>
+    </div>
     
-    <!--Link to manage subjects on account-->
-    <h3><a href="/subjects/manage/<%= i.pk %>">Manage Subjects</a></h3>
+    <!--Account password-->
+    <div class="password">
+        <span class="label">Password:</span>
+        <span class="data"><%= i.password %></span>
+    </div>
     
-    <!--Link to Dashboard-->
-    <h3><a href="/dashboard/<%= i.pk %>">My Dashboard</a></h3>
+    <!--Links to edit/delete account-->
+    <div class="actions">
+        <!--Link to edit Account Info-->
+        <a class="button edit" href="/accounts/update/<%= i.account_id %>">Edit Account</a>
+        <!--Link to delete Account-->
+        <a class="button delete" href="/accounts/change/<%= i.account_id %>">Delete Account</a>
+    </div>
+    
+    <!--Links to manage account students/subjects-->
+    <div class="manage">
+        <!--Link to manage students on account-->
+        <a class="button acct_students" href="/students/<%= i.account_id %>">Manage Students</a>
+        <!--Link to manage subjects on account-->
+        <a class="button acct_subjects" href="/subjects/manage/<%= i.account_id %>">Manage Subjects</a>
+    </div>
 
 <% end %><!--End account data access-->

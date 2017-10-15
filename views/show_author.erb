@@ -11,19 +11,19 @@
         
         <li>
             <!--Linked title-->
-            <a href="/books/<%= b.account_id %>/<%= b.pk %>"><%= b.title %><%= b.subtitle %></a> 
+            <a href="/books/<%= b.account_id %>/<%= b.book_id %>"><%= b.title %><%= b.subtitle %></a> 
             <!--Author-->
             <%= b.prefix %><%= b.first_name %><%= b.middle_name %><%= b.last_name %><%= b.suffix %> 
             
             <!--Finished date-->
-            <%= b.finish_date.month %>/<%= b.finish_date.year %> 
+            <%= b.finish_date.month %><%= b.finish_date.day %><%= b.finish_date.year %> 
         </li>
         
         <% end %><!--End books by selected author loop-->
     </ol>
     
     <!--Link to add new book-->
-    <a href="/books/new/<%= i.pk %>">Add New Book</a><br>
+    <a href="/books/new/<%= i.account_id %>">Add New Book</a><br>
     
 <% end %><!--End account data access-->
    

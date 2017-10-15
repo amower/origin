@@ -5,7 +5,7 @@
     <h1>Add Book</h1>
    
     <!--Form to add new book-->
-    <form method="post" action="/books/create/<%= i.pk %>">
+    <form method="post" action="/books/create/<%= i.account_id %>">
         <table>
             <tr>
                 <td><label for="title">Title:</label></td>
@@ -43,7 +43,7 @@
             <tr>
                 <td><label for="student_id[]">Student(s):</label></td>
                 <% @students.each do |s| %>
-                <td><input type="checkbox" name="student_id[]" value="<%= s.pk %>"><%= s.stud_first_name %></td>
+                <td><input type="checkbox" name="student_id[]" value="<%= s.student_id %>"><%= s.stud_first_name %></td>
                 <% end %>
             </tr>
  
@@ -53,7 +53,7 @@
                 <td><label for="subject_id[]">Subject(s):</label></td>
                 <% subarray = @subjects.to_a %>
                 <% subarray[0..2].each do |j| %>
-                <td><input type="checkbox" name="subject_id[]" value="<%= j.pk %>"><%= j.subject_name %></td>
+                <td><input type="checkbox" name="subject_id[]" value="<%= j.subject_id %>"><%= j.subject_name %></td>
                 <% end %>
             </tr>
             
@@ -65,7 +65,7 @@
                 <!--Empty column for 2nd+ rows for spacing under label - temporary-->
                 <td></td>
                 <% subarray[i..(i + 2)].each do |j| %>
-                <td><input type="checkbox" name="subject_id[]" value="<%= j.pk %>"><%= j.subject_name %></td>
+                <td><input type="checkbox" name="subject_id[]" value="<%= j.subject_id %>"><%= j.subject_name %></td>
                 <% end %>
                 <% i += 3 %>
             </tr>

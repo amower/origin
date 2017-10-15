@@ -5,7 +5,7 @@
     <h1>Add New Activity</h1>
     
     <!--Form to add new activity-->
-    <form method="post" action="/activities/create/<%= i.pk %>">
+    <form method="post" action="/activities/create/<%= i.account_id %>">
         <table>
             <tr>
                 <td><label for="activity_date">Date:</label></td>
@@ -21,7 +21,7 @@
                 <td><label for="student_id[]">Student(s):</label></td>
                 <!--List each student on account with checkbox-->
                 <% @students.each do |s| %>
-                <td><input type="checkbox" name="student_id[]" value="<%= s.pk %>"><%= s.stud_first_name %></td>
+                <td><input type="checkbox" name="student_id[]" value="<%= s.student_id %>"><%= s.stud_first_name %></td>
                 <% end %><!--End student loop-->
             </tr>
             
@@ -39,7 +39,7 @@
                 <% subj_array = @subjects.to_a %>
                 <!--Isolate and output first 3 items in array-->
                 <% subj_array[0..2].each do |j| %>
-                <td><input type="checkbox" name="subject_id[]" value="<%= j.pk %>"><%= j.subject_name %></td>
+                <td><input type="checkbox" name="subject_id[]" value="<%= j.subject_id %>"><%= j.subject_name %></td>
                 <% end %>
             </tr>
             
@@ -52,7 +52,7 @@
                 <td></td>
                 <!--Loop through and output 3 subjects/row-->
                 <% subj_array[i..(i + 2)].each do |j| %>
-                <td><input type="checkbox" name="subject_id[]" value="<%= j.pk %>"><%= j.subject_name %></td>
+                <td><input type="checkbox" name="subject_id[]" value="<%= j.subject_id %>"><%= j.subject_name %></td>
                 <% end %>
                 <% i += 3 %>
             </tr>

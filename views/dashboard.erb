@@ -4,12 +4,12 @@
 
     <h3>Welcome Back, <%= i.acct_first_name %>!</h3>
     
-    <h1>My Dashboard</h1>
+    <h1 class="title">My Dashboard</h1>
     
     <h3>Student Portfolios:
         <!--List each student on account & link to individual portfolios-->
         <% @students.each do |s| %>
-            <a href="/portfolio/<%= s.account_id %>/<%= s.pk %>"><%= s.stud_first_name %></a>
+            <a href="/portfolio/<%= s.account_id %>/<%= s.student_id %>"><%= s.stud_first_name %></a>
         <% end %><!--End student loop-->
     </h3> 
     
@@ -19,7 +19,7 @@
         <% @activities.each do |a| %>
         <li>
             <!--Linked title-->
-            <a href="/activities/<%= a.account_id %>/<%= a.pk %>"><%= a.title %></a> 
+            <a href="/activities/<%= a.account_id %>/<%= a.activity_id %>"><%= a.title %></a> 
             
             <!--Subjects associated with activity-->
             <%# @activity_subjects.where(:activity_id => a.pk).each do |j| %>
@@ -27,12 +27,12 @@
             <%# end %>
             
             <!--Activity date-->
-            on <%= a.activity_date.month %>/<%= a.activity_date.day %>/<%= a.activity_date.year %> 
+            <%= a.activity_date.month %><%= a.activity_date.day %><%= a.activity_date.year %> 
         </li><% end %><!--End activity loop-->
     </ol>
     
     <!--Link to add new activity-->
-    <a href="/activities/new/<%= i.pk %>">Add New Activity</a><br><br>
+    <a href="/activities/new/<%= i.account_id %>">Add New Activity</a><br><br>
     
     <h3>Recent Books:</h3>
 
@@ -40,18 +40,18 @@
         <% @books.each do |b| %>
         <li>
             <!--Linked title-->
-            <a href="/books/<%= b.account_id %>/<%= b.pk %>"><%= b.title %><%= b.subtitle %></a>
+            <a href="/books/<%= b.account_id %>/<%= b.book_id %>"><%= b.title %><%= b.subtitle %></a>
             
             <!--Linked author-->
             <a href="/books/author/<%= b.account_id %>/<%= b.last_name %>"><%= b.prefix %><%= b.first_name %><%= b.middle_name %><%= b.last_name %><%= b.suffix %></a> 
             
             <!--Finish Date-->
-            <%= b.finish_date.month %>/<%= b.finish_date.year %> 
+            <%= b.finish_date.month %><%= b.finish_date.day %><%= b.finish_date.year %> 
             
         </li><% end %><!--End book loop-->
     </ol>
     
     <!--Link to add new book-->
-    <a href="/books/new/<%= i.pk %>">Add New Book</a><br><br>
+    <a href="/books/new/<%= i.account_id %>">Add New Book</a><br><br>
 
 <% end %><!--End account data access-->

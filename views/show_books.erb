@@ -4,7 +4,7 @@
     <h1>Book List</h1>
     
      <!--Link to add a new book-->
-    <a href="/books/new/<%= i.pk %>">Add New Book</a><br>
+    <a href="/books/new/<%= i.account_id %>">Add New Book</a><br>
     
 <!------Setup alphabetical sorting of authors---------------------------> 
     
@@ -34,7 +34,7 @@
             <% alphabet.each do |l| %>
                 <!--If an author exists with the initial, link the value-->
                 <% if initial_array.include?(l) %>
-                    <a href="/books/sort/<%= i.pk %>/<%= l %>"><%= l %></a>
+                    <a href="/books/sort/<%= i.account_id %>/<%= l %>"><%= l %></a>
                 <!--If there are no authors under the current letter, print value only-->
                 <% else %>
                     <%= l %>
@@ -66,13 +66,13 @@
             <% @books.where(Sequel.like(:finish_date, "#{year}%")).each do |b| %>
             <li>
                 <!--Linked title-->
-                <a href="/books/<%= b.account_id %>/<%= b.pk %>"><%= b.title %><%= b.subtitle %></a> 
+                <a href="/books/<%= b.account_id %>/<%= b.book_id %>"><%= b.title %><%= b.subtitle %></a> 
                 
                 <!--Linked author-->
                 <a href="/books/author/<%= b.account_id %>/<%= b.last_name %>"><%= b.prefix %><%= b.first_name %><%= b.middle_name %><%= b.last_name %><%= b.suffix %></a> 
                 
                 <!--Finish_date-->
-                <%= b.finish_date.month %>/<%= b.finish_date.year %>
+                <%= b.finish_date.month %><%= b.finish_date.day %><%= b.finish_date.year %>
             </li>
             <% end %><!--End books loop for given year-->
         </ol>

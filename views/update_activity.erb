@@ -4,7 +4,7 @@
     <h1>Update Activity</h1>
     
     <!--Form prefilled with current activity data but checkboxes unchecked-->
-    <form method="post" action="/activities/create/<%= a.account_id %>/<%= a.pk %>">
+    <form method="post" action="/activities/create/<%= a.account_id %>/<%= a.activity_id %>">
         <table>
             <tr>
                 <td><label for="activity_date">Date:</label></td>
@@ -28,11 +28,11 @@
                 <!--List all students on account-->
                 <% @students.each do |s| %>
                     <!--If the student was previously selected for the activity, default to their name being 'checked'-->
-                    <% if(id_array.include?(s.pk)) %> 
-                        <td><input type="checkbox" name="student_id[]" value="<%= s.pk %>" checked="checked"><%= s.stud_first_name %></td>
+                    <% if(id_array.include?(s.student_id)) %> 
+                        <td><input type="checkbox" name="student_id[]" value="<%= s.student_id %>" checked="checked"><%= s.stud_first_name %></td>
                     <!--If the student was not previously selected, default to their name being 'unchecked'-->
                     <% else %>
-                        <td><input type="checkbox" name="student_id[]" value="<%= s.pk %>"><%= s.stud_first_name %></td>
+                        <td><input type="checkbox" name="student_id[]" value="<%= s.student_id %>"><%= s.stud_first_name %></td>
                     <% end %>
                 <% end %><!--End student loop-->
             </tr>
@@ -61,11 +61,11 @@
                 <!--Isolate and output first 3 items in array-->
                 <% subj_array[0..2].each do |j| %>
                     <!--If the subject was previously selected for the activity, default to the name being 'checked'-->
-                    <% if(id_array.include?(j.pk)) %> 
-                        <td><input type="checkbox" name="subject_id[]" value="<%= j.pk %>" checked="checked"><%= j.subject_name %></td>
+                    <% if(id_array.include?(j.subject_id)) %> 
+                        <td><input type="checkbox" name="subject_id[]" value="<%= j.subject_id %>" checked="checked"><%= j.subject_name %></td>
                     <!--If the subject was not previously selected, default to the name being 'unchecked'-->
                     <% else %>
-                        <td><input type="checkbox" name="subject_id[]" value="<%= j.pk %>"><%= j.subject_name %></td>
+                        <td><input type="checkbox" name="subject_id[]" value="<%= j.subject_id %>"><%= j.subject_name %></td>
                     <% end %><!--End if include? statement-->
                 <% end %><!--End [0..2] subject array-->
             </tr>
@@ -81,11 +81,11 @@
                 <!--Loop through and output 3 subjects/row-->
                 <% subj_array[i..(i + 2)].each do |j| %>
                     <!--If the subject was previously selected for the activity, default to the name being 'checked'-->
-                    <% if(id_array.include?(j.pk)) %> 
-                        <td><input type="checkbox" name="subject_id[]" value="<%= j.pk %>" checked="checked"><%= j.subject_name %></td>
+                    <% if(id_array.include?(j.subject_id)) %> 
+                        <td><input type="checkbox" name="subject_id[]" value="<%= j.subject_id %>" checked="checked"><%= j.subject_name %></td>
                     <!--If the subject was not previously selected, default to the name being 'unchecked'-->
                     <% else %>
-                        <td><input type="checkbox" name="subject_id[]" value="<%= j.pk %>"><%= j.subject_name %></td>
+                        <td><input type="checkbox" name="subject_id[]" value="<%= j.subject_id %>"><%= j.subject_name %></td>
                     <% end %><!--End if include? statement-->
                 <% end %><!--End [i..(i + 2)] subject array-->
                 

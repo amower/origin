@@ -7,17 +7,17 @@
         <% @students.each do |s| %>
         <li>
             <!--Link to student info-->
-            <a href="/students/<%= s.account_id %>/<%= s.pk %>"><%= s.stud_first_name %></a> 
+            <a href="/students/<%= s.account_id %>/<%= s.student_id %>"><%= s.stud_first_name %></a> 
             
             <!--Link to edit student info-->
-            (<a href="/students/update/<%= s.account_id %>/<%= s.pk %>">Edit</a>) 
+            (<a href="/students/update/<%= s.account_id %>/<%= s.student_id %>">Edit</a>) 
             
             <!--Link to delete student-->
-            (<a href="/students/change/<%= s.account_id %>/<%= s.pk %>">Delete</a>)
+            (<a href="/students/change/<%= s.account_id %>/<%= s.student_id %>">Delete</a>)
         </li><% end %><!--End students loop-->
     </ol>
     
     <!--Link to add new student to account-->
-    <a href="/students/new/<%= i.pk %>">Add New Student</a><br>
+    <a href="/students/new/<%= i.account_id %>">Add New Student</a><br>
     
 <% end %><!--End account data access-->
