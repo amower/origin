@@ -1,20 +1,27 @@
 <!--Access account data-->
 <% @account.all do |i| %>
         
-    <h2>View Portfolio by Subject</h2>
+    <h1 class="title">View Portfolio by Subject</h2>
     
     <!--Linked list of all subjects on account-->
-    <ol>
-        <% @subjects.each do |j| %>
+    <ul><% @subjects.each do |j| %>
         <li>
             <!--Link to individual subject page-->
-            <a href="/subjects/<%= j.account_id %>/<%= j.subject_id %>"><%= j.subject_name %></a>: 
+            <a class="subject" href="/subjects/<%= j.account_id %>/<%= j.subject_id %>"><%= j.subject_name %></a> 
             
-            <!--Count # activities & books under that subject-->
-            Activities (<%= @activities.where(subject_id: j.subject_id).count %>), 
-            Books (<%= @books.where(subject_id: j.subject_id).count %>)
+            <!--Count # of activities logged in that subject-->
+            <div class="num_activities">
+                <span class="label">Activities:</span>
+                <span class="data"><%= @activities.where(subject_id: j.subject_id).count %></span>
+            </div><!--End 'num_activities' div-->    
+            
+            <!--Count # books logged under that subject--> 
+            <div class="num_books">
+                <span class="label">Books:</span>
+                <span class="data"><%= @books.where(subject_id: j.subject_id).count %></span>
+            </div><!--End 'num_books' div-->   
         </li>
         <% end %><!--End subject loop-->
-    </ol>
+    </ul>
 
 <% end %><!--End account data access-->

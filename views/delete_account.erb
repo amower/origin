@@ -2,12 +2,12 @@
 
 <% @account.all do |i| %>    
     
-    <h1>Delete Account</h1>
+    <h1 class="title">Delete Account</h1>
     
     <!--Warning message-->
     <p><strong><%= i.acct_first_name %></strong>, deleting your account will delete all students, activities, books, subjects and personal information associated with your account.</p>
     
-    <h3>Are you sure you want to delete everything and close your account?</h3>
+    <p>Are you sure you want to delete everything and close your account?</p>
     
     <!--Button to delete account-->
     <form method="post" action="/accounts/delete/<%= i.account_id %>">

@@ -2,25 +2,33 @@
 <% @student.all do |s| %>
         
     <!--Page Title-->
-    <h2><%= s.stud_first_name %>'s Books by <% @books.all do |b| %><%= b.last_name %><% end %></h2>
+    <h1 class="title"><%= s.stud_first_name %>'s Books by <% @books.all do |b| %><%= b.last_name %><% end %></h1>
     
     <!--List books by certain author, read by certain student-->
     <ol>
         <% @books.each do |b| %>
         <li>
-            <!--Link title-->
-            <a href="/books/<%= b.account_id %>/<%= b.book_id %>"><%= b.title %><%= b.subtitle %></a> 
-            <!--List author-->
-            <%= b.prefix %><%= b.first_name %><%= b.middle_name %><%= b.last_name %><%= b.suffix %>
+            <!--Linked title-->
+            <a href="/books/<%= b.account_id %>/<%= b.book_id %>">
+                <span class="title"><%= b.title %></span>
+                <span class="subtitle"><em><%= b.subtitle %></em></span>
+            </a> 
             
-            <!--Formatted finish date-->
-            <%= b.finish_date.month %><%= b.finish_date.day %><%= b.finish_date.year %> 
+            <!--List author-->
+            <span class="author"><%= b.prefix %> <%= b.first_name %> <%= b.middle_name %> <%= b.last_name %> <%= b.suffix %></span>
+            
+            <!--Finish Date-->
+            <div class="date">
+                <span class="month"><%= b.finish_date.month %></span>
+                <span class="day"><%= b.finish_date.day %></span>
+                <span class="year"><%= b.finish_date.year %></span>
+            </div><!--End date div-->
         </li>
         <% end %><!--End book loop-->
     </ol>
     
     <!--Link to add new book-->
-    <a href="/books/new/<%= s.account_id %>">Add New Book</a><br>
+    <a class="button" href="/books/new/<%= s.account_id %>">Add New Book</a><br>
         
 <% end %><!--End student data access-->
         

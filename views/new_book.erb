@@ -2,7 +2,7 @@
         
 <% @account.all do |i| %>
 
-    <h1>Add Book</h1>
+    <h1 class="title">Add Book</h1>
    
     <!--Form to add new book-->
     <form method="post" action="/books/create/<%= i.account_id %>">

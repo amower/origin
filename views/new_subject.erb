@@ -1,15 +1,7 @@
 <!--Access account data-->
 <% @account.all do |i| %>
 
-    <h2>Current Subjects</h2>
-    
-    <ol><!--List all current subjects on account-->
-        <% @subjects.each do |j| %>
-            <li><%= j.subject_name %></li>
-        <% end %><!--End subjects loop-->
-    </ol>
-    
-    <h1>Add Subject</h1>
+    <h1 class="title">Add Subject</h1>
     
     <!--Form to add a new subject to the account-->
     <form method="post" action="/subjects/create/<%= i.account_id %>">
@@ -26,5 +18,13 @@
             </tr>
         </table>
     </form>
+    
+    <h2 class="subjects">Current Subjects</h2>
+    
+    <ol><!--List all current subjects on account-->
+        <% @subjects.each do |j| %>
+            <li><%= j.subject_name %></li>
+        <% end %><!--End subjects loop-->
+    </ol>
     
 <% end %><!--End account data access-->

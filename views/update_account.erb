@@ -1,7 +1,7 @@
 <!--Access account data-->
 <% @account.all do |i| %>        
 
-    <h1>Update Account</h1>
+    <h1 class="title">Update Account</h1>
     
     <!--Form prefilled with current account data-->
     <form method="post" action="/accounts/create/<%= i.account_id %>">

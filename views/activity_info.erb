@@ -67,7 +67,7 @@
     <div class="stud_portfolios">
         <span class="label">View Student's Portfolio:</span>
         <% @students.each do |s| %>
-        <a class="button student" href="/portfolio/<%= s.account_id %>/<%= s.student_id %>"><%= s.stud_first_name %></a>
+        <a class="button" href="/portfolio/<%= s.account_id %>/<%= s.student_id %>"><%= s.stud_first_name %></a>
         <% end %><!--End to students loop-->
     </div>
     

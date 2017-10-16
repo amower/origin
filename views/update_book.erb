@@ -1,7 +1,7 @@
 <!--Access book data-->
 <% @book.all do |b| %>        
     
-    <h1>Update Book</h1>
+    <h1 class="title">Update Book</h1>
     
     <!--Form prefilled with current book info but checkboxes unchecked-->
     <form method="post" action="/books/create/<%= b.account_id %>/<%= b.book_id %>">

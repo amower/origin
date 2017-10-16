@@ -1,7 +1,7 @@
 <!--Access student data-->
 <% @student.all do |s| %>        
     
-    <h1>Update Student</h1>
+    <h1 class="title">Update Student</h1>
     
     <!--Form prefilled with current student data-->
     <form method="post" action="/students/create/<%= s.account_id %>/<%= s.student_id %>">

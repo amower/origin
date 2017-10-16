@@ -1,16 +1,7 @@
 <!--Access subject data-->
 <% @subject.all do |j| %>        
     
-    <h2>Current Subjects</h2>
-    
-    <ol>
-        <!--List all subjects currently on account-->
-        <% @subjects.each do |j| %>
-            <li><%= j.subject_name %></li>
-        <% end %>
-    </ol>
-    
-    <h1>Update Subject</h1>
+    <h1 class="title">Update Subject</h1>
     
     <!--Form prefilled with current subject data-->
     <form method="post" action="/subjects/create/<%= j.account_id %>/<%= j.subject_id %>">
@@ -28,5 +19,14 @@
             </tr>
         </table>
     </form>
+    
+    <h2 class="subjects">Current Subjects</h2>
+    
+    <ol>
+        <!--List all subjects currently on account-->
+        <% @subjects.each do |j| %>
+            <li><%= j.subject_name %></li>
+        <% end %>
+    </ol>
     
 <% end %><!--End subject data access-->

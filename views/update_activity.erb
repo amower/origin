@@ -1,7 +1,7 @@
 <!--Access activity data-->
 <% @activity.all do |a| %>        
 
-    <h1>Update Activity</h1>
+    <h1 class="title">Update Activity</h1>
     
     <!--Form prefilled with current activity data but checkboxes unchecked-->
     <form method="post" action="/activities/create/<%= a.account_id %>/<%= a.activity_id %>">

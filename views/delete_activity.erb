@@ -2,12 +2,12 @@
 
 <% @activity.all do |a| %>
         
-    <h1>Delete Activity</h1>
+    <h1 class="title">Delete Activity</h1>
     
     <!--Warning message-->
     <p>Deleting '<%= a.title %>' will delete the activity from the portfolio of each participating student.</p>
     
-    <h3>Are you sure you want to delete '<%= a.title %>'?</h3>
+    <p>Are you sure you want to delete '<%= a.title %>'?</p>
     
     <!--Button to delete activity-->
     <form method="post" action="/activities/delete/<%= a.account_id %>/<%= a.activity_id %>">

@@ -2,12 +2,12 @@
 
 <% @book.all do |b| %>
        
-    <h1>Delete Book</h1>
+    <h1 class="title">Delete Book</h1>
     
     <!--Warning message-->
     <p>Deleting '<%= b.title %>', by <%= b.prefix %> <%= b.first_name %> <%= b.middle_name %> <%= b.last_name %> <%= b.suffix %> will delete the book from the portfolio of each participating student.</p>
     
-    <h3>Are you sure you want to delete '<%= b.title %>', by <%= b.prefix %> <%= b.first_name %> <%= b.middle_name %> <%= b.last_name %> <%= b.suffix %>?</h3>
+    <p>Are you sure you want to delete '<%= b.title %>', by <%= b.prefix %> <%= b.first_name %> <%= b.middle_name %> <%= b.last_name %> <%= b.suffix %>?</p>
     
     <!--Button to delete book-->
     <form method="post" action="/books/delete/<%= b.account_id %>/<%= b.book_id %>">

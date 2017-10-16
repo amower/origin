@@ -1,34 +1,39 @@
 <!--Access student data-->
 <% @student.all do |s| %>
 
-    <h1><%= s.stud_first_name %> <%= s.stud_last_name %></h1>
+    <h1 class="title"><%= s.stud_first_name %> <%= s.stud_last_name %></h1>
     
     <!--Table to display student info-->
-    <table>
-        <tr>
-            <td><strong>Age:</strong></td>
+    
+    <div class="age">
+        <span class="label">Age:</span>
+        <span class="data">
             <!--Calculate age-->
             <% age = Date.today.year - s.birth_date.year %>
             <% age -= 1 if Date.today.month < s.birth_date.month || (Date.today.month == s.birth_date.month && Date.today.day < s.birth_date.day) %>
-            <td><%= age %></td>
-        </tr>
-        <tr>
-            <td><strong>Birthday:</strong></td>
-            <td><%= s.birth_date.month %><%= s.birth_date.day %><%= s.birth_date.year %></td>
-        </tr>
-        <tr>
-            <td><strong>Join Date:</strong></td>
-            <td><%= s.enroll_date.month %> <%= s.enroll_date.day %> <%= s.enroll_date.year %></td>
-        </tr>
-        <tr><!--Access account data-->
-            <% @account.all do |i| %>
-            <td><strong>Account Holder:</strong></td>
-            <td><%= i.acct_first_name %> <%= i.acct_last_name %></td>
-            <% end %><!--End account data access-->
-        </tr>
-    </table>
+            <%= age %>
+        </span>
+    </div>
+    
+    <div class="birth_date">
+        <span class="label">Birthday:</span>
+        <div class="date">
+            <span class="month"><%= s.birth_date.month %></span>
+            <span class="day"><%= s.birth_date.day %></span> 
+            <span class="year"><%= s.birth_date.year %></span>
+        </div>
+    </div>
+    
+    <div class="enroll_date">
+        <span class="label">Enrolled:</span>
+        <div class="date">
+            <span class="month"><%= s.enroll_date.month %></span>
+            <span class="day"><%= s.enroll_date.day %></span> 
+            <span class="year"><%= s.enroll_date.year %></span>
+        </div>
+    </div>       
 
     <!--Link to student's portfolio-->
-    <a href="/portfolio/<%= s.account_id %>/<%= s.student_id %>">Go to <%= s.stud_first_name %>'s Portfolio</a><br>
+    <a class="button" href="/portfolio/<%= s.account_id %>/<%= s.student_id %>">Go to <%= s.stud_first_name %>'s Portfolio</a>
         
 <% end %><!--End student data access-->

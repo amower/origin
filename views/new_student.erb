@@ -2,7 +2,7 @@
 
 <% @account.all do |i| %>
 
-    <h1>Add Student</h1>
+    <h1 class="title">Add Student</h1>
     
     <!--Form to add new student-->
     <form method="post" action="/students/create/<%= i.account_id %>">

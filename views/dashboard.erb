@@ -2,56 +2,75 @@
 
 <% @account.all do |i| %>
 
-    <h3>Welcome Back, <%= i.acct_first_name %>!</h3>
+    <p class="greeting">Welcome Back, <%= i.acct_first_name %>!</p>
     
     <h1 class="title">My Dashboard</h1>
     
-    <h3>Student Portfolios:
-        <!--List each student on account & link to individual portfolios-->
+    <!--Link to portfolio of each student-->
+    <div class="stud_portfolios">
+        <span class="label">Student Portfolios:</span>
         <% @students.each do |s| %>
-            <a href="/portfolio/<%= s.account_id %>/<%= s.student_id %>"><%= s.stud_first_name %></a>
+        <a class="button" href="/portfolio/<%= s.account_id %>/<%= s.student_id %>"><%= s.stud_first_name %></a>
         <% end %><!--End student loop-->
-    </h3> 
+    </div><!--End stud_portfolio div-->
     
-    <h3>Recent Activities:</h3>
+    <!--List recent activities on the account-->
+    <div class="activities group">
+        <h2 class="title">Recent Activities:</h2>
     
-    <ol reversed><!--List recent activities-->
-        <% @activities.each do |a| %>
-        <li>
-            <!--Linked title-->
-            <a href="/activities/<%= a.account_id %>/<%= a.activity_id %>"><%= a.title %></a> 
-            
-            <!--Subjects associated with activity-->
-            <%# @activity_subjects.where(:activity_id => a.pk).each do |j| %>
-                <!--(<%#= j.subject_name %>)-->
-            <%# end %>
-            
-            <!--Activity date-->
-            <%= a.activity_date.month %><%= a.activity_date.day %><%= a.activity_date.year %> 
-        </li><% end %><!--End activity loop-->
-    </ol>
+        <ol reversed>
+            <% @activities.each do |a| %>
+            <li>
+                <!--Linked title-->
+                <a class="title" href="/activities/<%= a.account_id %>/<%= a.activity_id %>"><%= a.title %></a> 
+                
+                <!--Subjects associated with activity-->
+                <%# @activity_subjects.where(:activity_id => a.activity_id).each do |j| %>
+                    <!--(<%#= j.subject_name %>)-->
+                <%# end %>
+                
+                <!--Activity date-->
+                <div class="date">
+                    <span class="month"><%= a.activity_date.month %></span>
+                    <span class="day"><%= a.activity_date.day %></span>
+                    <span class="year"><%= a.activity_date.year %></span>
+                </div><!--End 'date' div-->
+            </li>
+            <% end %><!--End activity loop-->
+        </ol><!--End list of activities-->
+    </div><!--End 'activities group' div-->
     
     <!--Link to add new activity-->
-    <a href="/activities/new/<%= i.account_id %>">Add New Activity</a><br><br>
+    <a class="button" href="/activities/new/<%= i.account_id %>">Add New Activity</a>
     
-    <h3>Recent Books:</h3>
+    <!--List recent books on the account-->
+    <div class="books group">
+        <h2 class="title">Recent Books:</h2>
+        
+        <ol reversed>
+            <% @books.each do |b| %>
+            <li>
+                <!--Linked title-->
+                <a href="/books/<%= b.account_id %>/<%= b.book_id %>">
+                    <span class="title"><%= b.title %></span>
+                    <span class="subtitle"><em><%= b.subtitle %></em></span>
+                </a>
+                
+                <!--Linked author-->
+                <a class="author" href="/books/author/<%= b.account_id %>/<%= b.last_name %>"><%= b.prefix %> <%= b.first_name %> <%= b.middle_name %> <%= b.last_name %> <%= b.suffix %></a>
+                
+                <!--Finish Date-->
+                <div class="date">
+                    <span class="month"><%= b.finish_date.month %></span>
+                    <span class="day"><%= b.finish_date.day %></span>
+                    <span class="year"><%= b.finish_date.year %></span>
+                </div><!--End date div-->
+            </li>
+            <% end %><!--End book loop-->
+        </ol><!--End list of books-->
+    </div><!--End 'books group' div-->
 
-    <ol reversed><!--List recent books-->
-        <% @books.each do |b| %>
-        <li>
-            <!--Linked title-->
-            <a href="/books/<%= b.account_id %>/<%= b.book_id %>"><%= b.title %><%= b.subtitle %></a>
-            
-            <!--Linked author-->
-            <a href="/books/author/<%= b.account_id %>/<%= b.last_name %>"><%= b.prefix %><%= b.first_name %><%= b.middle_name %><%= b.last_name %><%= b.suffix %></a> 
-            
-            <!--Finish Date-->
-            <%= b.finish_date.month %><%= b.finish_date.day %><%= b.finish_date.year %> 
-            
-        </li><% end %><!--End book loop-->
-    </ol>
-    
     <!--Link to add new book-->
-    <a href="/books/new/<%= i.account_id %>">Add New Book</a><br><br>
+    <a class="button" href="/books/new/<%= i.account_id %>">Add New Book</a>
 
 <% end %><!--End account data access-->

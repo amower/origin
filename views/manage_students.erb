@@ -1,23 +1,23 @@
 <!--Access account data-->
 <% @account.all do |i| %>
         
-    <h1>Manage Students</h1>
+    <h1 class="title">Manage Students</h1>
     
     <ol><!--List each student on account-->
         <% @students.each do |s| %>
         <li>
             <!--Link to student info-->
-            <a href="/students/<%= s.account_id %>/<%= s.student_id %>"><%= s.stud_first_name %></a> 
+            <a class="student" href="/students/<%= s.account_id %>/<%= s.student_id %>"><%= s.stud_first_name %></a> 
             
             <!--Link to edit student info-->
-            (<a href="/students/update/<%= s.account_id %>/<%= s.student_id %>">Edit</a>) 
+            <a class="button edit" href="/students/update/<%= s.account_id %>/<%= s.student_id %>">Edit</a> 
             
             <!--Link to delete student-->
-            (<a href="/students/change/<%= s.account_id %>/<%= s.student_id %>">Delete</a>)
+            <a class="button delete" href="/students/change/<%= s.account_id %>/<%= s.student_id %>">Delete</a>
         </li><% end %><!--End students loop-->
     </ol>
     
     <!--Link to add new student to account-->
-    <a href="/students/new/<%= i.account_id %>">Add New Student</a><br>
+    <a class="button" href="/students/new/<%= i.account_id %>">Add New Student</a>
     
 <% end %><!--End account data access-->

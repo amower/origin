@@ -1,12 +1,10 @@
 <!--Access account data-->
 <% @account.all do |i| %>        
         
-    <h1>Activities</h1>
+    <h1 class="title">Activities</h1>
     
     <!--Link to add new activity-->
-    <div>
-        <a href="/activities/new/<%= i.account_id %>">Add New Activity</a>
-    </div>
+    <a class="button" href="/activities/new/<%= i.account_id %>">Add New Activity</a>
     
 <!------Setup to organize activities by year---------------------------------->
     <!--Create empty array for years-->    
@@ -20,13 +18,13 @@
     <!--Remove duplicate elements in the array, then iterate through each unique value-->
     <% year_array.uniq.each do |year| %>
     
-        <h3><%= year %></h3>
+        <h2 class="year"><%= year %></h2>
         
         <ol reversed><!--List all activities from the current year-->
             <% @activities.where(Sequel.like(:activity_date, "#{year}%")).each do |a| %>
             <li>
                 <!--Linked title-->
-                <a href="/activities/<%= a.account_id %>/<%= a.activity_id %>"><%= a.title %></a> 
+                <a class="title" href="/activities/<%= a.account_id %>/<%= a.activity_id %>"><%= a.title %></a> 
                     
                 <!--List each subject connected to the activity-->
                 <%# Subject.association_join(:activities_subjects).where(:activity_id => a.pk).each do |j| %>
@@ -34,7 +32,10 @@
                 <%# end %>
                 
                 <!--Formatted activity date-->
-                <%= a.activity_date.month %><%= a.activity_date.day %>
+                <div class="date">
+                    <span class="month"><%= a.activity_date.month %></span>
+                    <span class="day"><%= a.activity_date.day %></span>
+                </div>
             </li>
             <% end %><!--End activities for current year-->
         </ol>
@@ -42,11 +43,3 @@
     <% end %><!--End iteration through years-->
 
 <% end %><!--End account data access-->
-
-<div class="activities group">
-    <h2>Year</h2>
-    <div class="activity">
-        <span class="title"><a href="">Activity Title</a></span>
-        <span class="date">Date</span>        
-    </div>
-</div>

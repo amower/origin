@@ -2,12 +2,12 @@
 
 <% @student.all do |s| %>
 
-    <h1>Delete Student</h1>
+    <h1 class="title">Delete Student</h1>
     
     <!--Warning message-->
     <p>Deleting <strong><%= s.stud_first_name %></strong> from your account will delete <strong><%= s.stud_first_name %></strong> from all activities and books.</p>
     
-    <h3>Are you sure you want to delete <%= s.stud_first_name %> from your account?</h3>
+    <p>Are you sure you want to delete <%= s.stud_first_name %> from your account?</p>
     
     <!--Button to delete student from account-->
     <form method="post" action="/students/delete/<%= s.account_id %>/<%= s.student_id %>">
