@@ -7,38 +7,30 @@
     <body>
         <h1 class="title">Add Account</h1>
         
-        <!--Form to create a new account-->
-        <form method="post" action="/accounts/create">
-            <table>
-                <tr>
-                    <td><label for="acct_first_name">First Name:</label></td>
-                    <td><input type="text" name="acct_first_name"></td>
-                </tr>
-                <tr>
-                    <td><label for="acct_last_name">Last Name:</label></td>
-                    <td><input type="text" name="acct_last_name"></td>
-                </tr>
-                <tr>
-                    <td><label for="zipcode">Zipcode:</label></td>
-                    <td><input type="text" name="zipcode"></td>
-                </tr>
-                <tr>
-                    <td><label for="email">Email:</label></td>
-                    <td><input type="text" name="email"></td>
-                </tr>
-                <tr>
-                    <td><label for="password">Password:</label></td>
-                    <td><input type="password" name="password" maxlength="10"></td>
-                </tr>
-                <tr>
-                    <td><label for="join_date">Date:</label></td>
-                    <td><input type="date" name="join_date"></td>
-                </tr>
-                <tr>
-                    <td><input type="submit"></td>
-                </tr>
-            </table>
-        </form>
+        <div>
+            <!--Form to create a new account-->
+            <form method="post" action="/accounts/create">
+                <label for="acct_first_name">First Name:</label>
+                <input type="text" name="acct_first_name">
+                    
+                <label for="acct_last_name">Last Name:</label>
+                <input type="text" name="acct_last_name">
+                
+                <label for="zipcode">Zipcode:</label>
+                <input type="text" name="zipcode">
+                
+                <label for="email">Email:</label>
+                <input type="text" name="email">
+                
+                <label for="password">Password:</label>
+                <input type="password" name="password" maxlength="10">
+                
+                <label for="join_date">Date:</label>
+                <input type="date" name="join_date">
+                
+                <input type="submit" value="Create Account">
+            </form>
+        </div>
         
         <a class="button" href="/home/">Return Home</a>
         

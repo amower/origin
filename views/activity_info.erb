@@ -15,10 +15,12 @@
         </div>
     </div>
     
-    <!--Activity description-->
-    <div class="description">
-        <span class="label">Description:</span>
-        <span class="data"><%= a.description %></span>
+    <!--List students who participated in the activity-->
+    <div class="students">
+        <span class="label">Student(s):</span>
+        <% @students.each do |s| %>
+        <span class="data"><%= s.stud_first_name %></span>
+        <% end %><!--End students loop-->
     </div>
     
     <!--Duration of activity-->
@@ -39,20 +41,18 @@
             <% end %></span>
     </div>
     
-    <!--List students who participated in the activity-->
-    <div class="students">
-        <span class="label">Student(s):</span>
-        <% @students.each do |s| %>
-        <span class="data"><%= s.stud_first_name %></span>
-        <% end %><!--End students loop-->
-    </div>
-    
     <!--List subjects associated with the activity-->
     <div class="subjects">
         <span class="label">Subject(s):</span>
         <% @subjects.each do |j| %>
         <span class="data"><%= j.subject_name %></span>
         <% end %><!--End subjects loop-->
+    </div>
+    
+    <!--Activity description-->
+    <div class="description">
+        <span class="label">Description:</span>
+        <span class="data"><%= a.description %></span>
     </div>
     
     <!--Links to edit/delete current activity-->

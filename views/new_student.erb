@@ -4,25 +4,20 @@
 
     <h1 class="title">Add Student</h1>
     
-    <!--Form to add new student-->
-    <form method="post" action="/students/create/<%= i.account_id %>">
-        <table>
-            <tr>
-                <td><label for="stud_first_name">First Name:</label></td>
-                <td><input type="text" name="stud_first_name"></td>
-            </tr>
-            <tr>
-                <td><label for="stud_last_name">Last Name:</label></td>
-                <td><input type="text" name="stud_last_name"></td>
-            </tr>
-            <tr>
-                <td><label for="birth_date">Birth Date:</label></td>
-                <td><input type="date" name="birth_date"></td>
-            </tr>
-            <tr>
-                <td><input type="submit"></td>
-            </tr>
-        </table>
-    </form>
+    <div>
+        <!--Form to add new student-->
+        <form method="post" action="/students/create/<%= i.account_id %>">
+            <label for="stud_first_name">First Name:</label>
+            <input type="text" name="stud_first_name">
+            
+            <label for="stud_last_name">Last Name:</label>
+            <input type="text" name="stud_last_name">
+            
+            <label for="birth_date">Birth Date:</label>
+            <input type="date" name="birth_date">
+            
+            <input type="submit" value="Add Student">
+        </form>
+    </div>
     
 <% end %><!--End account data access-->

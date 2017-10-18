@@ -1,4 +1,7 @@
 require 'sequel'
+#require 'forme'
+#require 'forme/erb'
+#include Forme::ERB::Helper
 
 DB = Sequel.connect('mysql://portfolio_god:password@localhost/hs_portfolio')
 
@@ -7,6 +10,7 @@ DB = Sequel.connect('mysql://portfolio_god:password@localhost/hs_portfolio')
 
 #Note: When a model class is created, it parses the schema in the table from the database, and automatically sets up accessor methods for all of the columns in the table. Sequel model classes assume that the table name is an underscored plural of the class name.
 
+#Sequel::Model.plugin :forme
 
 class Account < Sequel::Model #dataset for DB[:accounts]
     #Associations
@@ -100,6 +104,7 @@ class Subject < Sequel::Model #dataset for DB[:subjects]
     dataset_module do
         order :by_name, :subject_name
     end
+    
 end
 
 class String

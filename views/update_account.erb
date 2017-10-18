@@ -3,33 +3,26 @@
 
     <h1 class="title">Update Account</h1>
     
-    <!--Form prefilled with current account data-->
-    <form method="post" action="/accounts/create/<%= i.account_id %>">
-        <table>
-            <tr>
-                <td><label for="acct_first_name">First Name:</label></td>
-                <td><input type="text" name="acct_first_name" value="<%= i.acct_first_name %>"></td>
-            </tr>
-            <tr>
-                <td><label for="acct_last_name">Last Name:</label></td>
-                <td><input type="text" name="acct_last_name" value="<%= i.acct_last_name %>"></td>
-            </tr>
-            <tr>
-                <td><label for="zipcode">Zipcode:</label></td>
-                <td><input type="text" name="zipcode" value="<%= i.zipcode %>"></td>
-            </tr>
-            <tr>
-                <td><label for="email">Email:</label></td>
-                <td><input type="text" name="email" value="<%= i.email %>"></td>
-            </tr>
-            <tr>
-                <td><label for="password">Password:</label></td>
-                <td><input type="password" name="password" value="<%= i.password %>" maxlength="10"></td>
-            </tr>
-            <tr>
-                <td><input type="submit"></td>
-            </tr>
-        </table>
-    </form>
+    <div>
+        <!--Form prefilled with current account data-->
+        <form method="post" action="/accounts/create/<%= i.account_id %>">
+            <label for="acct_first_name">First Name:</label>
+            <input type="text" name="acct_first_name" value="<%= i.acct_first_name %>">
+            
+            <label for="acct_last_name">Last Name:</label>
+            <input type="text" name="acct_last_name" value="<%= i.acct_last_name %>">
+            
+            <label for="zipcode">Zipcode:</label>
+            <input type="text" name="zipcode" value="<%= i.zipcode %>">
+            
+            <label for="email">Email:</label>
+            <input type="text" name="email" value="<%= i.email %>">
+            
+            <label for="password">Password:</label>
+            <input type="password" name="password" value="<%= i.password %>" maxlength="10">
+            
+            <input type="submit" value="Update Account">
+        </form>
+    </div>
     
 <% end %><!--End account data access-->

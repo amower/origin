@@ -3,21 +3,22 @@
 
     <h1 class="title">Update Activity</h1>
     
-    <!--Form prefilled with current activity data but checkboxes unchecked-->
-    <form method="post" action="/activities/create/<%= a.account_id %>/<%= a.activity_id %>">
-        <table>
-            <tr>
-                <td><label for="activity_date">Date:</label></td>
-                <td><input type="date" name="activity_date" value="<%= a.activity_date %>"></td>
-            </tr>
-            <tr>
-                <td><label for="title">Title:</label></td>
-                <td><input type="text" name="title" value="<%= a.title %>"></td>
-            </tr>
+    <div>
+        <!--Form prefilled with current activity data but checkboxes unchecked-->
+        <form method="post" action="/activities/create/<%= a.account_id %>/<%= a.activity_id %>">
+            <div class="date">
+                <label for="activity_date">Date:</label>
+                <input type="date" name="activity_date" value="<%= a.activity_date %>">
+            </div>
+            
+            <div class="activity_title">
+                <label for="title">Title:</label>
+                <input type="text" name="title" value="<%= a.title %>">
+            </div>
             
 <!-- - - - - - - - - - - - - - - S T U D E N T S - - - - - - - - - - - - - --->
-            <tr>
-                <td><label for="student_id[]">Student(s):</label></td>
+            <div class="students">
+                <label for="student_id[]">Student(s):</label>
                 <!--Capture the id for each student previously selected for the activity-->
                 <% id_array = [] %>
                 <% @activities_students.each do |s| %>
@@ -29,79 +30,65 @@
                 <% @students.each do |s| %>
                     <!--If the student was previously selected for the activity, default to their name being 'checked'-->
                     <% if(id_array.include?(s.student_id)) %> 
-                        <td><input type="checkbox" name="student_id[]" value="<%= s.student_id %>" checked="checked"><%= s.stud_first_name %></td>
+                        <input type="checkbox" name="student_id[]" value="<%= s.student_id %>" checked="checked"><%= s.stud_first_name %>
                     <!--If the student was not previously selected, default to their name being 'unchecked'-->
                     <% else %>
-                        <td><input type="checkbox" name="student_id[]" value="<%= s.student_id %>"><%= s.stud_first_name %></td>
+                        <input type="checkbox" name="student_id[]" value="<%= s.student_id %>"><%= s.stud_first_name %>
                     <% end %>
                 <% end %><!--End student loop-->
-            </tr>
+            </div>
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - --->           
-            <tr>
-                <td><label for="duration">Duration:</label></td>
-                <td><input type="number" name="hrs" value="<%= a.duration / 60 %>">Hr(s)</td>
-                <td><input type="number" name="mins" value="<%= a.duration % 60 %>">Mins</td>
-            </tr>
+            <div class="duration">
+                <label for="duration">Duration:</label>
+                <input type="number" name="hrs" value="<%= a.duration / 60 %>">Hr(s)
+                <input type="number" name="mins" value="<%= a.duration % 60 %>">Mins
+            </div>
             
 <!-- - - - - - - - - - - - - - - S U B J E C T S - - - - - - - - - - - - - --->
-            <!--'Subjects' label plus first three subject options (design is temporary - to make subjects 3/row starting offset from the label so they fit on the page during development)-->
-            <tr>
-                <td><label for="subject_id[]">Subject(s):</label></td>
+            <div class="subject_label">
+                <label for="subject_id[]">Subject(s):</label>
+            </div>
                 
-                <!--Capture the id for each subject previously selected for the activity-->
-                <% id_array = [] %>
-                <% @activities_subjects.each do |j| %>
-                    <% id = j.subject_id %>
-                    <% id_array.push(id) %>
-                <% end %>
+            <!--Capture the id for each subject previously selected for the activity-->
+            <% id_array = [] %>
+            <% @activities_subjects.each do |j| %>
+                <% id = j.subject_id %>
+                <% id_array.push(id) %>
+            <% end %>
                 
-                <!--Create array for easy subject organization-->
-                <% subj_array = @subjects.to_a %>
+            <!--Create array for easy subject organization-->
+            <% subj_array = @subjects.to_a %>
                 
-                <!--Isolate and output first 3 items in array-->
-                <% subj_array[0..2].each do |j| %>
-                    <!--If the subject was previously selected for the activity, default to the name being 'checked'-->
-                    <% if(id_array.include?(j.subject_id)) %> 
-                        <td><input type="checkbox" name="subject_id[]" value="<%= j.subject_id %>" checked="checked"><%= j.subject_name %></td>
-                    <!--If the subject was not previously selected, default to the name being 'unchecked'-->
-                    <% else %>
-                        <td><input type="checkbox" name="subject_id[]" value="<%= j.subject_id %>"><%= j.subject_name %></td>
-                    <% end %><!--End if include? statement-->
-                <% end %><!--End [0..2] subject array-->
-            </tr>
-            
-            <!--Setup while loop for remaining subjects-->
-            <% i = 3 %>
+            <!--Setup while loop for displaying 3/row-->
+            <% i = 0 %>
             <% subj_length = subj_array.length %>
             <% while i < subj_length do %>
-            <tr>
-                <!--Empty column for spacing under 'Subjects' label-->
-                <td></td>
-                
-                <!--Loop through and output 3 subjects/row-->
-                <% subj_array[i..(i + 2)].each do |j| %>
-                    <!--If the subject was previously selected for the activity, default to the name being 'checked'-->
-                    <% if(id_array.include?(j.subject_id)) %> 
-                        <td><input type="checkbox" name="subject_id[]" value="<%= j.subject_id %>" checked="checked"><%= j.subject_name %></td>
-                    <!--If the subject was not previously selected, default to the name being 'unchecked'-->
-                    <% else %>
-                        <td><input type="checkbox" name="subject_id[]" value="<%= j.subject_id %>"><%= j.subject_name %></td>
-                    <% end %><!--End if include? statement-->
-                <% end %><!--End [i..(i + 2)] subject array-->
-                
+                <div class="subjects">
+                    <!--Loop through and output 3 subjects/row-->
+                    <% subj_array[i..(i + 2)].each do |j| %>
+                        <!--If the subject was previously selected for the activity, default to the name being 'checked'-->
+                        <% if(id_array.include?(j.subject_id)) %> 
+                            <input type="checkbox" name="subject_id[]" value="<%= j.subject_id %>" checked="checked"><%= j.subject_name %>
+                        <!--If the subject was not previously selected, default to the name being 'unchecked'-->
+                        <% else %>
+                            <input type="checkbox" name="subject_id[]" value="<%= j.subject_id %>"><%= j.subject_name %>
+                        <% end %><!--End if include? statement-->
+                    <% end %><!--End [i..(i + 2)] subject array-->
+                </div><!--End 3-subject div-->
                 <% i += 3 %><!--Change value of i and loop again-->
-            </tr>
             <% end %><!--End 'while' loop for listing of subjects-->
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - --->
             
-            <tr>
-                <td><label for="description">Description:</label></td>
-                <td><input type="text" name="description" value="<%= a.description %>"></td>
-            </tr>
-            <tr>
-                <td><input type="submit"></td>
-            </tr>
-        </table>
-    </form>
+            <div class="description">
+                <label for="description">Description:</label>
+                <input type="text" name="description" value="<%= a.description %>">
+            </div>
+            
+            <div class="actions">
+                <input type="submit" value="Update">
+                <a class="button" href="/activities/<%= a.account_id %>/<%= a.activity_id %>">Cancel</a>
+            </div>
+        </form>
+    </div>
     
 <% end %><!--End activity data access-->

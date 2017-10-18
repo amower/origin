@@ -11,12 +11,10 @@
     
     <!--Button to delete book-->
     <form method="post" action="/books/delete/<%= b.account_id %>/<%= b.book_id %>">
-        <table>   
-            <tr>
-                <td><label for="submit">Delete Book</label></td>
-                <td><input type="submit"></td>
-            </tr>
-        </table>
+        <div class="actions">
+            <input type="submit" value="Delete">
+            <a class="button" href="/books/<%= b.account_id %>/<%= b.book_id %>">Cancel</a> 
+        </div>
     </form>
     
 <% end %><!--End book data access-->

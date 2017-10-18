@@ -1,85 +1,78 @@
 <!--Access account data-->
-        
 <% @account.all do |i| %>
 
     <h1 class="title">Add Book</h1>
    
-    <!--Form to add new book-->
-    <form method="post" action="/books/create/<%= i.account_id %>">
-        <table>
-            <tr>
-                <td><label for="title">Title:</label></td>
-                <td><input type="text" name="title">Title</td>
-                <td><input type="text" name="subtitle">Subtitle</td>
-            </tr>
+    <div>
+        <!--Form to add new book-->
+        <form method="post" action="/books/create/<%= i.account_id %>">
+            <div class="book_title">
+                <label for="title">Title:</label>
+                <input type="text" name="title" placeholder="title...">
+                <input type="text" name="subtitle" placeholder="subtitle...">
+            </div>
             
-            <tr>
-                <td><label for="author">Author:</label></td>
-                <td><input type="text" name="prefix">Prefix</td>
-                <td><input type="text" name="first_name">First Name</td>
-                <td><input type="text" name="middle_name">Middle Name</td>
-                <td><input type="text" name="last_name">Last Name</td>
-                <td><input type="text" name="Suffix">Suffix</td>
-            </tr>
+            <div class="author">
+                <label for="author">Author:</label>
+                <input type="text" name="prefix" placeholder="prefix">
+                <input type="text" name="first_name" placeholder="first name">
+                <input type="text" name="middle_name" placeholder="middle name">
+                <input type="text" name="last_name" placeholder="last name">
+                <input type="text" name="Suffix" placeholder="suffix">
+            </div>
             
-            <tr>
-                <td><label for="category">Category:</label></td>
+            <div class="category">
+                <label for="category">Category:</label>
                 <!--Radio buttons allow only one choice to be selected-->
-                <td><input type="radio" id="category1" name="category" value="Nonfiction">Nonfiction</td>
-                <td><input type="radio" id="category2" name="category" value="Fiction">Fiction</td>
-            </tr>
+                <input type="radio" id="category1" name="category" value="Nonfiction">Nonfiction
+                <input type="radio" id="category2" name="category" value="Fiction">Fiction
+            </div>
             
-            <tr>
-                <td><label for="rating">Rating(1-5):</label></td>
-                <td><input type="number" name="rating"></td>
-            </tr>
+            <div class="rating">
+                <label for="rating">Rating(1-5):</label>
+                <input type="number" name="rating">
+            </div>
             
-            <tr>
-                <td><label for="finish_date">Date Finished:</label></td>
-                <td><input type="date" name="finish_date"></td>
-            </tr>
+            <div class="date">
+                <label for="finish_date">Date Finished:</label>
+                <input type="date" name="finish_date">
+            </div>
             
             <!--Checkbox for each student on the acount-->
-            <tr>
-                <td><label for="student_id[]">Student(s):</label></td>
+            <div class="students">
+                <label for="student_id[]">Student(s):</label>
                 <% @students.each do |s| %>
-                <td><input type="checkbox" name="student_id[]" value="<%= s.student_id %>"><%= s.stud_first_name %></td>
+                <input type="checkbox" name="student_id[]" value="<%= s.student_id %>"><%= s.stud_first_name %>
                 <% end %>
-            </tr>
- 
+            </div>
+    
 <!-- - - - - - - - - - - - - - - S U B J E C T S - - - - - - - - - - - - - --->
             <!--'Subjects'  label plus first three subject options-->
-            <tr>
-                <td><label for="subject_id[]">Subject(s):</label></td>
-                <% subarray = @subjects.to_a %>
-                <% subarray[0..2].each do |j| %>
-                <td><input type="checkbox" name="subject_id[]" value="<%= j.subject_id %>"><%= j.subject_name %></td>
-                <% end %>
-            </tr>
+            <div class="subjects_label">
+                <label for="subject_id[]">Subject(s):</label>
+            </div>
             
-            <!--All remaining subject options organized three/row-->
-            <% i = 3 %>
-            <% sublength = subarray.length %>
-            <% while i < sublength do %>
-            <tr>
-                <!--Empty column for 2nd+ rows for spacing under label - temporary-->
-                <td></td>
-                <% subarray[i..(i + 2)].each do |j| %>
-                <td><input type="checkbox" name="subject_id[]" value="<%= j.subject_id %>"><%= j.subject_name %></td>
-                <% end %>
+            <!--Subjects put into an array-->
+            <% subj_array = @subjects.to_a %>
+            <!--Subjects organized three/row-->
+            <% i = 0 %>
+            <% subj_length = subj_array.length %>
+            <% while i < subj_length do %>
+                <div class="subjects">
+                    <% subj_array[i..(i + 2)].each do |j| %>
+                    <input type="checkbox" name="subject_id[]" value="<%= j.subject_id %>"><%= j.subject_name %>
+                    <% end %>
+                </div>
                 <% i += 3 %>
-            </tr>
             <% end %><!--End 'while' loop for listing of subjects-->
-<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ---> 
             
-            <tr>
-                <td><input type="submit"></td>
-            </tr>
-            <tr>
-                <td><input type="reset"></td>
-            </tr>
-        </table>
-    </form>
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ---> 
+            <div class="actions">
+                <input type="submit" value="Submit">
+                <input type="reset" value="Clear">
+            </div>
+        </form>
+    </div>
 
 <% end %><!--End account data access-->
    

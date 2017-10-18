@@ -4,70 +4,64 @@
         
     <h1 class="title">Add New Activity</h1>
     
-    <!--Form to add new activity-->
-    <form method="post" action="/activities/create/<%= i.account_id %>">
-        <table>
-            <tr>
-                <td><label for="activity_date">Date:</label></td>
-                <td><input type="date" name="activity_date"></td>
-            </tr>
+    <div>
+        <!--Form to add new activity-->
+        <form method="post" action="/activities/create/<%= i.account_id %>">
+            <div class="date">
+                <label for="activity_date">Date:</label>
+                <input type="date" name="activity_date">
+            </div>
             
-            <tr>
-                <td><label for="title">Title:</label></td>
-                <td><input type="text" name="title"></td>
-            </tr>
+            <div class="activity_title">
+                <label for="title">Title:</label>
+                <input type="text" name="title">
+            </div>
             
-            <tr>
-                <td><label for="student_id[]">Student(s):</label></td>
+            <div class="students">
+                <label for="student_id[]">Student(s):</label>
                 <!--List each student on account with checkbox-->
                 <% @students.each do |s| %>
-                <td><input type="checkbox" name="student_id[]" value="<%= s.student_id %>"><%= s.stud_first_name %></td>
+                <input type="checkbox" name="student_id[]" value="<%= s.student_id %>"><%= s.stud_first_name %>
                 <% end %><!--End student loop-->
-            </tr>
+            </div>
             
-            <tr>
-                <td><label for="duration">Duration:</label></td>
-                <td><input type="number" name="hrs">Hrs</td>
-                <td><input type="number" name="mins">Mins</td>
-            </tr>
+            <div class="duration">
+                <label for="duration">Duration:</label>
+                <input type="number" name="hrs" placeholder="Hrs">
+                <input type="number" name="mins" placeholder="Mins">
+            </div>
 
 <!-- - - - - - - - - - - - - - - S U B J E C T S - - - - - - - - - - - - - --->
             <!--'Subjects' label plus first three subject options (design is temporary - to make subjects 3/row starting offset from the label so they fit on the page during development)-->
-            <tr>
-                <td><label for="subject_id[]">Subject(s):</label></td>
-                <!--Create array for easy selection-->
-                <% subj_array = @subjects.to_a %>
-                <!--Isolate and output first 3 items in array-->
-                <% subj_array[0..2].each do |j| %>
-                <td><input type="checkbox" name="subject_id[]" value="<%= j.subject_id %>"><%= j.subject_name %></td>
-                <% end %>
-            </tr>
-            
-            <!--Setup while loop for remaining subjects-->
-            <% i = 3 %>
+            <div class="subject_label">
+                <label for="subject_id[]">Subject(s):</label>
+            </div>
+                
+            <!--Create array for subjects-->
+            <% subj_array = @subjects.to_a %>
+            <!--Setup while loop to list 3/row-->
+            <% i = 0 %>
             <% subj_length = subj_array.length %>
             <% while i < subj_length do %>
-            <tr>
-                <!--Empty column for spacing under 'Subjects' label-->
-                <td></td>
-                <!--Loop through and output 3 subjects/row-->
-                <% subj_array[i..(i + 2)].each do |j| %>
-                <td><input type="checkbox" name="subject_id[]" value="<%= j.subject_id %>"><%= j.subject_name %></td>
-                <% end %>
+                <div class="subjects">
+                    <!--Loop through and output 3 subjects/row-->
+                    <% subj_array[i..(i + 2)].each do |j| %>
+                    <input type="checkbox" name="subject_id[]" value="<%= j.subject_id %>"><%= j.subject_name %>
+                    <% end %>
+                </div>
                 <% i += 3 %>
-            </tr>
             <% end %><!--End 'while' loop for listing of subjects-->
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - --->
             
-            <tr>
-                <td><label for="description">Description:</label></td>
-                <td><input type="text" name="description"></td>
-            </tr>
+            <div class="description">
+                <label for="description">Description:</label>
+                <input type="text" name="description">
+            </div>
             
-            <tr>
-                <td><input type="submit"></td>
-            </tr>
-        </table>
-    </form>
-    
+            <div class="actions">
+                <input type="submit" value="Submit">
+                <input type="reset" value="Clear">
+            </div>
+        </form>
+    </div>
 <% end %><!--End account data access-->

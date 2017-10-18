@@ -3,22 +3,18 @@
     
     <h1 class="title">Update Subject</h1>
     
-    <!--Form prefilled with current subject data-->
-    <form method="post" action="/subjects/create/<%= j.account_id %>/<%= j.subject_id %>">
-        <table>
-            <tr>
-                <td><label for="subject_name">Subject Name:</label></td>
-                <td><input type="text" name="subject_name" value="<%= j.subject_name %>"></td>
-            </tr>
-            <tr>
-                <td><label for="description">Description (Opt):</label></td>
-                <td><input type="text" name="description" value="<%= j.description %>"></td>
-            </tr>
-            <tr>
-                <td><input type="submit"></td>
-            </tr>
-        </table>
-    </form>
+    <div>
+        <!--Update form prefilled with current subject data-->
+        <form method="post" action="/subjects/create/<%= j.account_id %>/<%= j.subject_id %>">
+            <label for="subject_name">Subject Name:</label>
+            <input type="text" name="subject_name" value="<%= j.subject_name %>" placeholder="<%= j.subject_name %>">
+        
+            <label for="description">Description (Opt):</label>
+            <input type="text" name="description" value="<%= j.description %>" placeholder="description...">
+        
+            <input type="submit" value="Update">
+        </form>
+    </div>
     
     <h2 class="subjects">Current Subjects</h2>
     

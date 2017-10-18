@@ -3,25 +3,20 @@
     
     <h1 class="title">Update Student</h1>
     
-    <!--Form prefilled with current student data-->
-    <form method="post" action="/students/create/<%= s.account_id %>/<%= s.student_id %>">
-        <table>
-            <tr>
-                <td><label for="stud_first_name">First Name:</label></td>
-                <td><input type="text" name="stud_first_name" value="<%= s.stud_first_name %>"></td>
-            </tr>
-            <tr>
-                <td><label for="stud_last_name">Last Name:</label></td>
-                <td><input type="text" name="stud_last_name" value="<%= s.stud_last_name %>"></td>
-            </tr>
-            <tr>
-                <td><label for="birth_date">Birth Date:</label></td>
-                <td><input type="date" name="birth_date" value="<%= s.birth_date %>"></td>
-            </tr>
-            <tr>
-                <td><input type="submit"></td>
-            </tr>
-        </table>
-    </form>
+    <div>
+        <!--Form prefilled with current student data-->
+        <form method="post" action="/students/create/<%= s.account_id %>/<%= s.student_id %>">
+            <label for="stud_first_name">First Name:</label>
+            <input type="text" name="stud_first_name" value="<%= s.stud_first_name %>">
+            
+            <label for="stud_last_name">Last Name:</label>
+            <input type="text" name="stud_last_name" value="<%= s.stud_last_name %>">
+            
+            <label for="birth_date">Birth Date:</label>
+            <input type="date" name="birth_date" value="<%= s.birth_date %>">
+            
+            <input type="submit" value="Update Student">
+        </form>
+    </div>
     
 <% end %><!--End student data access-->

@@ -3,21 +3,18 @@
 
     <h1 class="title">Add Subject</h1>
     
-    <!--Form to add a new subject to the account-->
-    <form method="post" action="/subjects/create/<%= i.account_id %>">
-        <table>
-            <tr>
-                <td><label for="subject_name">Subject Name:</label></td>
-                <td><input type="text" name="subject_name"></td>
-            </tr>
-            <tr>
-                <td><label for="description">Description (Opt):</label></td>
-                <td><input type="text" name="description"></td>
-            </tr>
-                <td><input type="submit"></td>
-            </tr>
-        </table>
-    </form>
+    <div>
+        <!--Form to add a new subject to the account-->
+        <form method="post" action="/subjects/create/<%= i.account_id %>">
+            <label for="subject_name">Subject Name:</label>
+            <input type="text" name="subject_name" placeholder="Subject Name...">
+        
+            <label for="description">Description (Opt):</label>
+            <input type="text" name="description">
+        
+            <input type="submit" value="Submit">
+        </form>
+    </div>
     
     <h2 class="subjects">Current Subjects</h2>
     

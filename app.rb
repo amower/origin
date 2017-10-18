@@ -1,7 +1,12 @@
 require 'sinatra' #load the gem
 require 'models' #load the ruby file
 require 'erb'
+#require 'forme'
+#require 'forme/erb'
 require 'time' #load gem?
+
+#include Forme::ERB::Helper
+#Sequel::Model.plugin :forme
 
 #require 'string_helpers' #load gem (allows use of .slug!)
 
@@ -581,7 +586,7 @@ get('/subjects/update/:acct_id/:subj_id') do
    
    @account = Account.where(account_id: i)
    @subject = Subject.where(subject_id: j)
-   @subjects = Subject.where(account_id: i)
+   @subjects = Subject.where(account_id: i).by_name
    
    erb :update_subject
 end

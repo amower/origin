@@ -7,16 +7,11 @@
     <!--Warning message-->
     <p>Deleting <strong><%= s.stud_first_name %></strong> from your account will delete <strong><%= s.stud_first_name %></strong> from all activities and books.</p>
     
-    <p>Are you sure you want to delete <%= s.stud_first_name %> from your account?</p>
+    <p>Are you sure you want to delete <strong><%= s.stud_first_name %></strong> from your account?</p>
     
     <!--Button to delete student from account-->
     <form method="post" action="/students/delete/<%= s.account_id %>/<%= s.student_id %>">
-        <table>   
-            <tr>
-                <td><label for="submit">Delete Student</label></td>
-                <td><input type="submit"></td>
-            </tr>
-        </table>
+        <input type="submit" value="Delete Student">
     </form>
 
 <% end %><!--End student data access-->
