@@ -10,23 +10,19 @@
         
         <!--Enter login info-->
         <form method="post" action="">
-            <table>
-                <tr>
-                    <td><label for="email">Email:</label></td>
-                    <td><input type="text" name="email"></td>
-                </tr>
-                <tr>
-                    <td><label for="password">Password:</label></td>
-                    <td><input type="password" name="password"></td>
-                </tr>
-            </table>
+            <label for="email">Email:</label>
+            <input type="text" name="email">
+            
+            <label for="password">Password:</label>
+            <input type="password" name="password">
         </form>
         
-        <!--Button to login to existing account-->
-        <a class="button" href="/accounts/login">Login</a>
-        
-        <!--Button to create new account-->
-        <a class="button" href="/accounts/new">Create New Account</a>
-        
+        <div class="actions">
+            <!--Button to login to existing account-->
+            <a class="button" href="/accounts/login">Login</a>
+            
+            <!--Button to create new account-->
+            <a class="button" href="/accounts/new">Create New Account</a> 
+        </div>
     </body>
 </html>
