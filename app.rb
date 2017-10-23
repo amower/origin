@@ -1,12 +1,7 @@
 require 'sinatra' #load the gem
 require 'models' #load the ruby file
 require 'erb'
-#require 'forme'
-#require 'forme/erb'
 require 'time' #load gem?
-
-#include Forme::ERB::Helper
-#Sequel::Model.plugin :forme
 
 #require 'string_helpers' #load gem (allows use of .slug!)
 
@@ -18,7 +13,7 @@ static_subjects = ['Foreign Language', 'Health & Fitness', 'Home Economics', 'La
 
 
 #Homepage currently with just a list of account holders
-get('/home/') do
+get('/') do
    
    @accounts = Account.by_first_name
    
@@ -30,7 +25,7 @@ end
 
 #Form to create a new account
 get('/accounts/new') do
-   erb :new_account, :layout => false
+   erb :'new/new_account', :layout => false
 end
 
 
@@ -39,6 +34,10 @@ end
 get('/accounts/login') do
    #Disable layout for this file
    erb :login, :layout => false
+end
+
+post('/accounts/login') do
+   
 end
 
 
@@ -82,7 +81,7 @@ get('/accounts/:acct_id') do
    
    @account = Account.where(account_id: i)
    
-   erb :account_info
+   erb :'info/account_info'
 end
 
 
@@ -93,7 +92,7 @@ get('/accounts/update/:acct_id') do
    
    @account = Account.where(account_id: i)
    
-   erb :update_account
+   erb :'update/update_account'
 end
 
 
@@ -121,7 +120,7 @@ get('/accounts/change/:acct_id') do
    
    @account = Account.where(account_id: i)
    
-   erb :delete_account
+   erb :'delete/delete_account'
 end
 
 
@@ -157,7 +156,7 @@ get('/dashboard/:acct_id') do
    @books = Book.where(account_id: i).by_date.reverse.ten
    @students = Student.where(account_id: i).by_birth
    
-   erb :dashboard
+   erb :'show/dashboard'
 end
 
 
@@ -173,7 +172,7 @@ get('/activities/:acct_id') do
    @account = Account.where(account_id: i)
    @activities = Activity.where(account_id: i).by_date.reverse
    
-   erb :show_activities
+   erb :'show/show_activities'
 end
 
 
@@ -186,7 +185,7 @@ get('/activities/new/:acct_id') do
    @students = Student.where(account_id: i).by_birth.reverse
    @subjects = Subject.where(account_id: i).by_name
   
-   erb :new_activity
+   erb :'new/new_activity'
 end
 
 
@@ -243,7 +242,7 @@ get('/activities/update/:acct_id/:actv_id') do
    @activities_students = ActivitiesStudent.where(activity_id: a)
    @activities_subjects = ActivitiesSubject.where(activity_id: a)
    
-   erb :update_activity
+   erb :'update/update_activity'
 end
 
 
@@ -295,7 +294,7 @@ get('/activities/change/:acct_id/:actv_id') do
    @account = Account.where(account_id: i)
    @activity = Activity.where(activity_id: a)
    
-   erb :delete_activity
+   erb :'delete/delete_activity'
 end
 
 
@@ -325,7 +324,7 @@ get('/books/:acct_id') do
    @account = Account.where(account_id: i)
    @books = Book.where(account_id: i).by_date.reverse
    
-   erb :show_books
+   erb :'show/show_books'
 end
 
 
@@ -338,7 +337,7 @@ get('/books/new/:acct_id') do
    @students = Student.where(account_id: i).by_birth.reverse
    @subjects = Subject.where(account_id: i).by_name
    
-   erb :new_book
+   erb :'new/new_book'
 end
 
 
@@ -401,7 +400,7 @@ get('/books/update/:acct_id/:book_id') do
    @books_students = BooksStudent.where(book_id: b)
    @books_subjects = BooksSubject.where(book_id: b)
    
-   erb :update_book
+   erb :'update/update_book'
 end
 
 
@@ -460,7 +459,7 @@ get('/books/change/:acct_id/:book_id') do
    @account = Account.where(account_id: i)
    @book = Book.where(book_id: b)
    
-   erb :delete_book
+   erb :'delete/delete_book'
 end
 
 
@@ -487,7 +486,7 @@ get('/books/sort/:acct_id/:letter') do
    @account = Account.where(account_id: i)
    @books = Book.where(account_id: i).where(Sequel.like(:last_name, "#{l}%")).by_date.reverse
    
-   erb :sort_author
+   erb :'show/sort_author'
 end
 
 
@@ -500,7 +499,7 @@ get('/books/author/:acct_id/:name') do
    @account = Account.where(account_id: i)
    @books = Book.where(account_id: i).where(Sequel.like(:last_name, "#{last_name}%")).by_date.reverse
    
-   erb :show_author
+   erb :'show/show_author'
 end
 
 
@@ -515,7 +514,7 @@ get('/books/author/:acct_id/:stud_id/:name') do
    @student = Student.where(student_id: s, account_id: i)
    @books = Book.association_join(:books_students).where(student_id: s).where(Sequel.like(:last_name, "#{last_name}%")).by_date.reverse
    
-   erb :student_author
+   erb :'show/student_author'
 end
 
 
@@ -534,7 +533,7 @@ get('/subjects/:acct_id') do
    @activities = Activity.association_join(:activities_subjects)
    @books = Book.association_join(:books_subjects)
    
-   erb :show_subjects
+   erb :'show/show_subjects'
 end
 
 
@@ -546,7 +545,7 @@ get('/subjects/manage/:acct_id') do
    @account = Account.where(account_id: i)
    @subjects = Subject.where(account_id: i).by_name
    
-   erb :manage_subjects
+   erb :'show/manage_subjects'
 end
 
 
@@ -558,7 +557,7 @@ get('/subjects/new/:acct_id') do
    @account = Account.where(account_id: i)
    @subjects = Subject.where(account_id: i).by_name
    
-   erb :new_subject
+   erb :'new/new_subject'
 end
 
 
@@ -588,7 +587,7 @@ get('/subjects/update/:acct_id/:subj_id') do
    @subject = Subject.where(subject_id: j)
    @subjects = Subject.where(account_id: i).by_name
    
-   erb :update_subject
+   erb :'update/update_subject'
 end
 
 
@@ -617,7 +616,7 @@ get('/subjects/change/:acct_id/:subj_id') do
    @account = Account.where(account_id: i)
    @subject = Subject.where(subject_id: j)
    
-   erb :delete_subject
+   erb :'delete/delete_subject'
 end
 
 
@@ -648,7 +647,7 @@ get('/students/:acct_id') do
    @account = Account.where(account_id: i)
    @students = Student.where(account_id: i).by_birth
    
-   erb :manage_students
+   erb :'show/manage_students'
 end
 
 
@@ -659,7 +658,7 @@ get('/students/new/:acct_id') do
    
    @account = Account.where(account_id: i)
    
-   erb :new_student
+   erb :'new/new_student'
 end
 
 
@@ -689,7 +688,7 @@ get('/students/update/:acct_id/:stud_id') do
    @account = Account.where(account_id: i)
    @student = Student.where(student_id: s)
    
-   erb :update_student
+   erb :'update/update_student'
 end
 
 
@@ -718,7 +717,7 @@ get('/students/change/:acct_id/:stud_id') do
    @account = Account.where(account_id: i)
    @student = Student.where(student_id: s)
    
-   erb :delete_student
+   erb :'delete/delete_student'
 end
 
 
@@ -753,7 +752,7 @@ get('/portfolio/:acct_id/:stud_id') do
    @activities = Activity.association_join(:activities_students).where(student_id: s).by_date.reverse
    @books = Book.association_join(:books_students).where(student_id: s).by_date.reverse
    
-   erb :student_portfolio
+   erb :'show/student_portfolio'
 end
 
 
@@ -769,7 +768,7 @@ get('/activities/:acct_id/:actv_id') do
    @students = Student.association_join(:activities_students).where(activity_id: a).by_birth
    @subjects = Subject.association_join(:activities_subjects).where(activity_id: a).by_name
    
-   erb :activity_info
+   erb :'info/activity_info'
 end
 
 
@@ -785,7 +784,7 @@ get('/books/:acct_id/:book_id') do
    @students = Student.association_join(:books_students).where(book_id: b).by_birth
    @subjects = Subject.association_join(:books_subjects).where(book_id: b).by_name
    
-   erb :book_info
+   erb :'info/book_info'
 end
 
 
@@ -798,7 +797,7 @@ get('/students/:acct_id/:stud_id') do
    @account = Account.where(account_id: i)
    @student = Student.where(student_id: s)
    
-   erb :student_info
+   erb :'info/student_info'
 end
 
 
@@ -815,7 +814,7 @@ get('/subjects/:acct_id/:subj_id') do
    @books = Book.association_join(:books_subjects).where(subject_id: j).by_date.reverse
    @book_students = Student.association_join(:books_students)
    
-   erb :subject_filter
+   erb :'show/subject_filter'
 end
 
 
@@ -832,5 +831,5 @@ get('/portfolio/:acct_id/:stud_id/:subj_id') do
    @activities = Activity.association_join(:activities_subjects).where(subject_id: j).association_join(:activities_students).where(student_id: s).by_date.reverse
    @books = Book.association_join(:books_subjects).where(subject_id: j).association_join(:books_students).where(student_id: s).by_date.reverse
    
-   erb :student_subjects
+   erb :'show/student_subjects'
 end
