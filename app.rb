@@ -2,6 +2,7 @@ require 'sinatra' #load the gem
 require 'models' #load the ruby file
 require 'erb'
 require 'time' #load gem?
+enable :sessions
 
 #require 'string_helpers' #load gem (allows use of .slug!)
 
@@ -14,7 +15,8 @@ static_subjects = ['Foreign Language', 'Health & Fitness', 'Home Economics', 'La
 
 #Homepage currently with just a list of account holders
 get('/') do
-   
+   @message = session.delete(:message)
+   session.clear
    @accounts = Account.by_first_name
    
    #Templates take a second argument, the options hash. Here I disable the layout for this file.
@@ -24,29 +26,26 @@ end
 
 
 #Form to create a new account
-get('/accounts/new') do
-   erb :'new/new_account', :layout => false
-end
-
-
-
-#Form to login to existing account
-get('/accounts/login') do
-   #Disable layout for this file
-   erb :login, :layout => false
-end
-
-post('/accounts/login') do
-   
+get('/registrations/signup') do
+   erb :'registrations/signup', :layout => false
 end
 
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 #Create new_account & insert basic subjects
-post('/accounts/create') do
+post('/registrations') do
    #Insert new_account form values into accounts table as new object
-   Account.insert(
+   #Account.insert(
+   #   :acct_first_name => params[:acct_first_name],
+   #   :acct_last_name => params[:acct_last_name],
+   #   :zipcode => params[:zipcode],
+   #   :email => params[:email],
+   #   :password => params[:password],
+   #   :join_date => params[:join_date],
+   #   :account_hash => params[:acct_last_name].downcase)
+      
+   @account = Account.new(
       :acct_first_name => params[:acct_first_name],
       :acct_last_name => params[:acct_last_name],
       :zipcode => params[:zipcode],
@@ -55,31 +54,89 @@ post('/accounts/create') do
       :join_date => params[:join_date],
       :account_hash => params[:acct_last_name].downcase)
    
-   #Snag newly-created auto-incremented account_id   
-   last_insert_id = Account.max(:account_id)
+   @account.save
+     
+   session[:id] = @account.account_id
+   session[:message] = "Thank you for creating your education portfolio account! Let's get started by Adding Students to your account."
+   
+   #Snag newly-created auto-incremented account_id  
+   #last_insert_id = Account.max(:account_id)
+   
    #Alternate way to snag new account_id (doesn't work)
    #last_id = Account.order(:account_id).last
    
    #Insert basic subjects automatically when new account is created
    static_subjects.each do |name|
       Subject.insert(
-         :account_id => last_insert_id,
+         :account_id => session[:id],
          :subject_name => name,
          :subject_slug => name.downcase.strip.gsub(' ', '-').gsub('&', 'and').gsub(/[^\w-]/, ''))
    end
    
    #Go immediately to account info page   
-   redirect "/accounts/#{last_insert_id}"
+   #redirect "/dashboard/#{session[:id]}"
+   redirect '/account/dashboard'
 end
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
 
-#Personal account information page
-get('/accounts/:acct_id') do
-   i = params['acct_id'].to_i
+#Form to log in to existing account
+get('/sessions/login') do
+   erb :'sessions/login', :layout => false
+end
+
+
+
+post('/sessions') do
+   @account = Account.where(email: params[:email], password: params[:password]).first
+   session[:id] = @account.account_id
+   session[:message] = "Welcome back!"
    
-   @account = Account.where(account_id: i)
+   redirect '/account/dashboard'
+end
+
+
+
+get('/sessions/logout') do
+   session.clear
+   
+   session[:message] = "You have successfully logged out."
+   
+   redirect '/'
+end
+
+
+
+#Personal Account Dashboard
+#get('/dashboard/:acct_id') do
+get('/account/dashboard') do
+   #@id = session[:id]
+   @account = Account.where(account_id: session[:id])
+   #@account = Account.where(account_id: @id)
+   #@account = Account[@id]
+   
+   #i = params['acct_id'].to_i
+   @message = session.delete(:message)
+   
+   #@account = Account.where(account_id: i)
+   @activities = Activity.where(account_id: session[:id]).by_date.reverse.ten
+   @activity_subjects = Subject.association_join(:activities_subjects)
+   @subjects = Subject.where(account_id: session[:id]).by_name
+   @books = Book.where(account_id: session[:id]).by_date.reverse.ten
+   @students = Student.where(account_id: session[:id]).by_birth
+   
+   erb :'show/dashboard'
+end
+
+
+
+#Personal account information page
+get('/account/profile') do ###########I'm changing this w/o updating connections!!!!!#######################################################
+   #i = params['acct_id'].to_i
+   #@id = session[:id]
+   @message = session.delete(:message)
+   @account = Account.where(account_id: session[:id])
    
    erb :'info/account_info'
 end
@@ -87,10 +144,11 @@ end
 
 
 #Form to update account info
-get('/accounts/update/:acct_id') do
-   i = params['acct_id'].to_i
+get('/account/profile/update') do
+   #i = params['acct_id'].to_i
+   #@id = session[:id]
    
-   @account = Account.where(account_id: i)
+   @account = Account.where(account_id: session[:id])
    
    erb :'update/update_account'
 end
@@ -98,10 +156,12 @@ end
 
 
 #Update an existing account
-post('/accounts/create/:acct_id') do
-   i = params['acct_id'].to_i
+post('/account/profile/create') do
+   #i = params['acct_id'].to_i
+   #@id = session[:id]
+   session[:message] = "Your profile has been updated."
    
-   Account.where(:account_id => i).update(
+   Account.where(:account_id => session[:id]).update(
       :acct_first_name => params[:acct_first_name],
       :acct_last_name => params[:acct_last_name],
       :zipcode => params[:zipcode],
@@ -109,16 +169,17 @@ post('/accounts/create/:acct_id') do
       :password => params[:password],
       :account_hash => params[:acct_last_name].downcase)
    
-   redirect "/accounts/#{i}"
+   redirect "/account/profile"
 end
 
 
 
 #Form to confirm account deletion
-get('/accounts/change/:acct_id') do
-   i = params['acct_id'].to_i
+get('/account/profile/change') do
+   #i = params['acct_id'].to_i
+   #@id = session[:id]
    
-   @account = Account.where(account_id: i)
+   @account = Account.where(account_id: session[:id])
    
    erb :'delete/delete_account'
 end
@@ -126,37 +187,23 @@ end
 
 
 #Delete selected account and all associated data
-post('/accounts/delete/:acct_id') do
-   i = params['acct_id'].to_i
+post('/account/profile/delete') do
+   #i = params['acct_id'].to_i
+   #@id = session[:id]
+   session[:message] = "Your account was deleted."
    
    #First delete metadata
-   ActivitiesStudent.where(:account_id => i).delete
-   ActivitiesSubject.where(:account_id => i).delete
-   Activity.where(:account_id => i).delete
-   BooksStudent.where(:account_id => i).delete
-   BooksSubject.where(:account_id => i).delete
-   Book.where(:account_id => i).delete
-   Subject.where(:account_id => i).delete
-   Student.where(:account_id => i).delete
-   Account.where(:account_id => i).delete
+   ActivitiesStudent.where(:account_id => session[:id]).delete
+   ActivitiesSubject.where(:account_id => session[:id]).delete
+   Activity.where(:account_id => session[:id]).delete
+   BooksStudent.where(:account_id => session[:id]).delete
+   BooksSubject.where(:account_id => session[:id]).delete
+   Book.where(:account_id => session[:id]).delete
+   Subject.where(:account_id => session[:id]).delete
+   Student.where(:account_id => session[:id]).delete
+   Account.where(:account_id => session[:id]).delete
    
-   redirect "/home/"
-end
-
-
-
-#Personal Account Dashboard
-get('/dashboard/:acct_id') do
-   i = params['acct_id'].to_i
-   
-   @account = Account.where(account_id: i)
-   @activities = Activity.where(account_id: i).by_date.reverse.ten
-   @activity_subjects = Subject.association_join(:activities_subjects)
-   @subjects = Subject.where(account_id: i).by_name
-   @books = Book.where(account_id: i).by_date.reverse.ten
-   @students = Student.where(account_id: i).by_birth
-   
-   erb :'show/dashboard'
+   redirect "/"
 end
 
 
@@ -640,12 +687,13 @@ end
 
 
 #Page that displays list of students related to the current account
-get('/students/:acct_id') do
-   i = params['acct_id'].to_i
+get('account/students') do
+   #i = params['acct_id'].to_i
+   #@id = session[:id]
    
    #Define instance variables for filtering
-   @account = Account.where(account_id: i)
-   @students = Student.where(account_id: i).by_birth
+   @account = Account.where(account_id: session[:id])
+   @students = Student.where(account_id: session[:id]).by_birth
    
    erb :'show/manage_students'
 end
@@ -653,10 +701,10 @@ end
 
 
 #Form for submitting a new student
-get('/students/new/:acct_id') do
-   i = params['acct_id'].to_i
+get('/account/students/new') do
+   #i = params['acct_id'].to_i
    
-   @account = Account.where(account_id: i)
+   @account = Account.where(account_id: session[:id])
    
    erb :'new/new_student'
 end
@@ -664,18 +712,18 @@ end
 
 
 #Data inserted for new student
-post('/students/create/:acct_id') do
-   i = params['acct_id'].to_i
+post('/account/students/create') do
+   #i = params['acct_id'].to_i
    
    #Insert values into the db
    Student.insert(
-      :account_id => i,
+      :account_id => session[:id],
       :stud_first_name => params[:stud_first_name], 
       :stud_last_name => params[:stud_last_name],
       :birth_date => params[:birth_date],
       :student_slug => params[:stud_first_name].downcase)
       
-   redirect "/students/#{i}"
+   redirect "/account/students"
 end
 
 

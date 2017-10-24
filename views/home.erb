@@ -6,25 +6,34 @@
     </head>
     
     <body>
-        <p class="greeting">WELCOME!</p>
+        <p class="message"><%= @message %></p>
+        <p class="greeting">Welcome!</p>
         <h1 class="title">Education Portfolio For Lifelong Learners</h1>
-        <h2>Select Your Account</h2>
+        <h2 class="subtitle">For Homeschoolers and Self-Educators Everywhere</h2>
+        <!--<h2>Select Your Account</h2>-->
         
         <!--Currently, listed links to all accounts-->
-        <ul><% @accounts.each do |i| %>
+        <!--
+        <ul><%# @accounts.each do |i| %>
             <li>
-                <a class="button" href="/dashboard/<%= i.account_id %>"><%= i.acct_first_name %> <%= i.acct_last_name %></a>
+                <a class="button" href="/account/dashboard"><%#= i.acct_first_name %> <%#= i.acct_last_name %></a>
             </li>
-            <% end %><!--End accounts loop-->
-        </ul>
+            <%# end %><!--End accounts loop-->
+        <!--</ul>-->
         
-        <!--Button to login to existing account-->
-        <a class="button" href="/accounts/login">Login</a>
+        <div class="button signup">
+            <h3>Start creating your education portfolio Today!</h3>
+            <!--Button to create new account-->
+            <a class="button" href="/registrations/signup">Sign Up</a>
+        </div>
         
-        <!--Button to create new account-->
-        <a class="button" href="/accounts/new">Create New Account</a>
+        <p><strong>OR</strong></p>
         
-        
+        <div class="login">
+            <h3>Already have an account?</h3>
+            <!--Button to login to existing account-->
+            <a class="button" href="/sessions/login">Log In</a>
+        </div>
         
     </body>
 </html>

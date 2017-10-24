@@ -3,6 +3,7 @@
 <% @account.all do |i| %>
 
     <!--You can read record values as object attributes if attribute names are valid columns in the dataset (i.e. row.account_id). If attribute names are not valid columns, you can access values with [] (i.e. row[:account_id]).-->
+    <p class="message"><%= @message %></p>
    
     <!--Page title-->
     <h1 class="title"><%= i.acct_first_name %> <%= i.acct_last_name %> Account Info</h1>
@@ -38,15 +39,15 @@
     <!--Links to edit/delete account-->
     <div class="actions">
         <!--Link to edit Account Info-->
-        <a class="button edit" href="/accounts/update/<%= i.account_id %>">Edit Account</a>
+        <a class="button edit" href="/account/profile/update">Edit Account</a>
         <!--Link to delete Account-->
-        <a class="button delete" href="/accounts/change/<%= i.account_id %>">Delete Account</a>
+        <a class="button delete" href="/account/profile/change">Delete Account</a>
     </div>
     
     <!--Links to manage account students/subjects-->
     <div class="manage">
         <!--Link to manage students on account-->
-        <a class="button acct_students" href="/students/<%= i.account_id %>">Manage Students</a>
+        <a class="button acct_students" href="/account/students">Manage Students</a>
         <!--Link to manage subjects on account-->
         <a class="button acct_subjects" href="/subjects/manage/<%= i.account_id %>">Manage Subjects</a>
     </div>
