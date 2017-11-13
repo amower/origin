@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset='UTF-8' />
+        <title>Education Portfolio for Lifelong Learners</title>
+    </head>
+    
+    <body>
+        <!--MENU-->
+        <div class="menu">
+            <ul>
+                <li><a href="/">EPLL Home</a></li>
+                <li><a href="">Features</a></li>
+                <li><a href="">Community</a></li>
+                <li><a href="">Pricing</a></li>
+                <li><a href="">Blog</a></li>
+            </ul>
+        </div>
+        
+        <div class="">
+            <ul><% if session[:id] %>
+                    <li><a href="/account/profile">Profile</a></li>
+                    <li><a href="/sessions/logout">Log Out</a></li>
+                <% else %>
+                    <li><a class="button" href="/registrations/signup">Sign Up</a></li>
+                    <li><a class="button" href="/sessions/login">Log In</a></li>
+                <% end %>
+            </ul>
+        </div>
+        
+        <!--YIELD to VIEWS-->
+        <%= yield %>
+        <!--End VIEWS script-->
+    </body>
+
+</html>
