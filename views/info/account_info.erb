@@ -6,7 +6,7 @@
     <p class="message"><%= @message %></p>
    
     <!--Page title-->
-    <h1 class="title"><%= i.acct_first_name %> <%= i.acct_last_name %> Account Info</h1>
+    <h1 class="title"><%= i.acct_first_name %> <%= i.acct_last_name %>'s Account Profile</h1>
     
     <!--Account email-->
     <div class="email">
@@ -49,7 +49,7 @@
         <!--Link to manage students on account-->
         <a class="button acct_students" href="/account/students">Manage Students</a>
         <!--Link to manage subjects on account-->
-        <a class="button acct_subjects" href="/subjects/manage/<%= i.account_id %>">Manage Subjects</a>
+        <a class="button acct_subjects" href="/account/subjects/manage">Manage Subjects</a>
     </div>
 
 <% end %><!--End account data access-->

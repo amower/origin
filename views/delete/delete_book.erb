@@ -10,10 +10,10 @@
     <p>Are you sure you want to delete '<%= b.title %>', by <%= b.prefix %> <%= b.first_name %> <%= b.middle_name %> <%= b.last_name %> <%= b.suffix %>?</p>
     
     <!--Button to delete book-->
-    <form method="post" action="/books/delete/<%= b.account_id %>/<%= b.book_id %>">
+    <form method="post" action="/account/books/delete/<%= b.book_id %>">
         <div class="actions">
             <input type="submit" value="Delete">
-            <a class="button" href="/books/<%= b.account_id %>/<%= b.book_id %>">Cancel</a> 
+            <a class="button" href="/account/books/<%= b.book_id %>">Cancel</a> 
         </div>
     </form>
     

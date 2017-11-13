@@ -1,10 +1,12 @@
 <!--Access account data-->
-<% @account.all do |i| %>        
+<% @account.all do |i| %>      
+
+    <p class="message"><%= @message %></p>
         
     <h1 class="title">Activities</h1>
     
     <!--Link to add new activity-->
-    <a class="button" href="/activities/new/<%= i.account_id %>">Add New Activity</a>
+    <a class="button" href="/account/activities/new">Add New Activity</a>
     
 <!------Setup to organize activities by year---------------------------------->
     <!--Create empty array for years-->    
@@ -24,7 +26,7 @@
             <% @activities.where(Sequel.like(:activity_date, "#{year}%")).each do |a| %>
             <li>
                 <!--Linked title-->
-                <a class="title" href="/activities/<%= a.account_id %>/<%= a.activity_id %>"><%= a.title %></a> 
+                <a class="title" href="/account/activities/<%= a.activity_id %>"><%= a.title %></a> 
                     
                 <!--List each subject connected to the activity-->
                 <%# Subject.association_join(:activities_subjects).where(:activity_id => a.pk).each do |j| %>

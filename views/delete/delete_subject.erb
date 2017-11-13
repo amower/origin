@@ -10,7 +10,7 @@
     <p>Are you sure you want to delete '<%= j.subject_name %>'?</p>
     
     <!--Button to delete the subject-->
-    <form method="post" action="/subjects/delete/<%= j.account_id %>/<%= j.subject_id %>">
+    <form method="post" action="/account/subjects/delete/<%= j.subject_id %>">
         <input type="submit" value="Delete It!">
     </form>
     

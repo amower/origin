@@ -1,7 +1,3 @@
-<!--<div>
-    <%# yield %>
-</div>-->
-
 <!DOCTYPE html>
 <html>
     
@@ -17,17 +13,17 @@
         <!--MENU-->
         <div class="menu">
             <ul>
-                <li><a href="/">Home</a></li>
+                <li><a href="/">EPLL Home</a></li>
                 <li><a href="/account/dashboard">Dashboard</a></li>
-                <li><a href="/activities/<%= i.account_id %>">Activities</a></li>
-                <li><a href="/books/<%= i.account_id %>">Books</a></li>
-                <li><a href="/subjects/<%= i.account_id %>">Subjects</a></li>
+                <li><a href="/account/activities">Activities</a></li>
+                <li><a href="/account/books">Books</a></li>
+                <li><a href="/account/subjects">Subjects</a></li>
             </ul>
         </div>
         
         <div class="">
             <ul>
-                <li><a href="/account/profile">Profile</a></li>
+                <li><a href="/account/profile">Profile</a> (<%= i.acct_last_name %>)</li>
                 <li><a href="/sessions/logout">Log Out</a></li>
             </ul>
         </div>

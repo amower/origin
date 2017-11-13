@@ -9,7 +9,7 @@
         <% @books.each do |b| %>
         <li>
             <!--Linked title-->
-            <a href="/books/<%= b.account_id %>/<%= b.book_id %>">
+            <a href="/account/books/<%= b.book_id %>">
                 <span class="title"><%= b.title %></span>
                 <span class="subtitle"><em><%= b.subtitle %></em></span>
             </a> 
@@ -28,7 +28,7 @@
     </ol>
     
     <!--Link to add new book-->
-    <a class="button" href="/books/new/<%= s.account_id %>">Add New Book</a><br>
+    <a class="button" href="/account/books/new">Add New Book</a><br>
         
 <% end %><!--End student data access-->
         

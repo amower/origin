@@ -59,16 +59,16 @@
     <!--Links to edit/delete current book-->
     <div class="actions">
         <!--Link to edit book-->
-        <a class="button edit" href="/books/update/<%= b.account_id %>/<%= b.book_id %>">Edit Book</a>
+        <a class="button edit" href="/account/books/update/<%= b.book_id %>">Edit Book</a>
         <!--Link to delete book-->
-        <a class="button delete" href="/books/change/<%= b.account_id %>/<%= b.book_id %>">Delete Book</a>
+        <a class="button delete" href="/account/books/change/<%= b.book_id %>">Delete Book</a>
     </div>
     
     <!--Link to portfolio of each student who read the book-->
     <div class="stud_portfolios">
         <span class="label">View Student's Portfolio:</span>
         <% @students.each do |s| %>
-        <a class="button" href="/portfolio/<%= s.account_id %>/<%= s.student_id %>"><%= s.stud_first_name %></a>
+        <a class="button" href="/account/portfolio/<%= s.student_id %>"><%= s.stud_first_name %></a>
         <% end %><!--End to students loop-->
     </div>
     

@@ -58,16 +58,16 @@
     <!--Links to edit/delete current activity-->
     <div class="actions">
         <!--Link to edit activity-->
-        <a class="button edit" href="/activities/update/<%= a.account_id %>/<%= a.activity_id %>">Edit Activity</a>
+        <a class="button edit" href="/account/activities/update/<%= a.activity_id %>">Edit Activity</a>
         <!--Link to delete activity-->
-        <a class="button delete" href="/activities/change/<%= a.account_id %>/<%= a.activity_id %>">Delete Activity</a>
+        <a class="button delete" href="/account/activities/change/<%= a.activity_id %>">Delete Activity</a>
     </div>
     
     <!--Link to portfolio of each student who participated in activity-->
     <div class="stud_portfolios">
         <span class="label">View Student's Portfolio:</span>
         <% @students.each do |s| %>
-        <a class="button" href="/portfolio/<%= s.account_id %>/<%= s.student_id %>"><%= s.stud_first_name %></a>
+        <a class="button" href="/account/portfolio/<%= s.student_id %>"><%= s.stud_first_name %></a>
         <% end %><!--End to students loop-->
     </div>
     

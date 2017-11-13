@@ -5,7 +5,7 @@
     
     <div>
         <!--Form prefilled with current book info but checkboxes unchecked-->
-        <form method="post" action="/books/create/<%= b.account_id %>/<%= b.book_id %>">
+        <form method="post" action="/account/books/create/<%= b.book_id %>">
             <div class="book_title">
                 <label for="title">Title:</label>
                 <input type="text" name="title" value="<%= b.title %>" placeholder="title...">
@@ -143,7 +143,7 @@
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - --->
             <div class="actions">    
                 <input type="submit" value="Update">
-                <a class="button" href="/books/<%= b.account_id %>/<%= b.book_id %>">Cancel</a>
+                <a class="button" href="/account/books/<%= b.book_id %>">Cancel</a>
             </div>
         </form>
     </div>

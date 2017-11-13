@@ -7,7 +7,7 @@
     <ul><% @subjects.each do |j| %>
         <li>
             <!--Link to individual subject page-->
-            <a class="subject" href="/subjects/<%= j.account_id %>/<%= j.subject_id %>"><%= j.subject_name %></a> 
+            <a class="subject" href="/account/subjects/<%= j.subject_id %>"><%= j.subject_name %></a> 
             
             <!--Count # of activities logged in that subject-->
             <div class="num_activities">

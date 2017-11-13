@@ -10,15 +10,15 @@
             <span class="subject"><%= j.subject_name %></span> 
             
             <!--Link to edit subject name-->
-            <a class="button edit" href="/subjects/update/<%= j.account_id %>/<%= j.subject_id %>">Edit</a> 
+            <a class="button edit" href="/account/subjects/update/<%= j.subject_id %>">Edit</a> 
             
             <!--Link to delete subject-->
-            <a class="button delete" href="/subjects/change/<%= j.account_id %>/<%= j.subject_id %>">Delete</a>
+            <a class="button delete" href="/account/subjects/change/<%= j.subject_id %>">Delete</a>
         </li>
         <% end %><!--End subject loop-->
     </ol>
     
     <!--Link to add new subject to account-->
-    <a class="button" href="/subjects/new/<%= i.account_id %>">Add New Subject</a>
+    <a class="button" href="/account/subjects/new">Add New Subject</a>
     
 <% end %><!--End account data access-->

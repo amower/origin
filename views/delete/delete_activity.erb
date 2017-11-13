@@ -10,10 +10,10 @@
     <p>Are you sure you want to delete '<%= a.title %>'?</p>
     
     <!--Button to delete activity-->
-    <form method="post" action="/activities/delete/<%= a.account_id %>/<%= a.activity_id %>">
+    <form method="post" action="/account/activities/delete/<%= a.activity_id %>">
         <div class="actions">
             <input type="submit" value="Delete">
-            <a class="button" href="/activities/<%= a.account_id %>/<%= a.activity_id %>">Cancel</a>
+            <a class="button" href="/account/activities/<%= a.activity_id %>">Cancel</a>
         </div>
     </form>
     

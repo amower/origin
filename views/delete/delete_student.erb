@@ -10,7 +10,7 @@
     <p>Are you sure you want to delete <strong><%= s.stud_first_name %></strong> from your account?</p>
     
     <!--Button to delete student from account-->
-    <form method="post" action="/students/delete/<%= s.account_id %>/<%= s.student_id %>">
+    <form method="post" action="/account/students/delete/<%= s.student_id %>">
         <input type="submit" value="Delete Student">
     </form>
 
