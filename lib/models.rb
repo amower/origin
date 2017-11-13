@@ -1,12 +1,17 @@
+#require 'rubygems'
 require 'sequel'
+#require 'mysql2'
+
 #require 'forme'
 #require 'forme/erb'
 #include Forme::ERB::Helper
 
-DB = Sequel.connect('mysql://portfolio_god:password@localhost/hs_portfolio')
+#client = Mysql2::Client.new(:host => "localhost", :username => "portfolio_god")
+
+DB = Sequel.connect('mysql2://portfolio_god:password@localhost/hs_portfolio')
 
 #Another way to connect to the database
-#DB = Sequel.connect(:adapter=>'mysql', :host=>'localhost', :database=>'hs_portfolio', :user=>'portfolio_god', :password=>'password')
+#DB = Sequel.connect(:adapter=>'mysql2', :host=>'localhost', :database=>'hs_portfolio', :user=>'portfolio_god', :password=>'password')
 
 #Note: When a model class is created, it parses the schema in the table from the database, and automatically sets up accessor methods for all of the columns in the table. Sequel model classes assume that the table name is an underscored plural of the class name.
 
@@ -22,7 +27,7 @@ class Account < Sequel::Model #dataset for DB[:accounts]
     one_to_many :books_students
     one_to_many :books_subjects
     one_to_many :subjects
-    
+
     #Dataset functions
     dataset_module do
         order :by_first_name, :acct_first_name
@@ -34,7 +39,7 @@ class Activity < Sequel::Model #dataset for DB[:activities]
     one_to_many :activities_students
     one_to_many :activities_subjects
     many_to_one :account
-    
+
     #Dataset functions
     dataset_module do
         order :by_date, :activity_date
@@ -60,14 +65,14 @@ class Book < Sequel::Model #dataset for DB[:books]
     one_to_many :books_students
     one_to_many :books_subjects
     many_to_one :account
-    
+
     #Dataset functions
     dataset_module do
         order :by_date, :finish_date
         limit :five, 5
         limit :ten, 10
     end
-    
+
 end
 
 class BooksStudent < Sequel::Model #dataset for DB[:books_students]
@@ -87,7 +92,7 @@ class Student < Sequel::Model #dataset for DB[:students]
     many_to_one :account
     one_to_many :activities_students
     one_to_many :books_students
-    
+
     #Dataset functions
     dataset_module do
         order :by_birth, :birth_date
@@ -99,12 +104,12 @@ class Subject < Sequel::Model #dataset for DB[:subjects]
     many_to_one :account
     one_to_many :activities_subjects
     one_to_many :books_subjects
-    
+
     #Dataset functions
     dataset_module do
         order :by_name, :subject_name
     end
-    
+
 end
 
 class String
